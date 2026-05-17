@@ -1,0 +1,15 @@
+../Core/Src/main.c:144:6:HAL_DAC_ConvCpltCallbackCh1	1
+../Core/Src/main.c:149:13:AnalyzeMicBlock	4
+../Core/Src/main.c:172:6:HAL_ADC_ConvHalfCpltCallback	2
+../Core/Src/main.c:181:6:HAL_ADC_ConvCpltCallback	2
+../Core/Src/main.c:195:5:main	13
+../Core/Src/main.c:338:6:SystemClock_Config	3
+../Core/Src/main.c:386:13:MX_ADC1_Init	3
+../Core/Src/main.c:438:13:MX_DAC_Init	3
+../Core/Src/main.c:478:13:MX_TIM2_Init	4
+../Core/Src/main.c:523:13:MX_TIM7_Init	3
+../Core/Src/main.c:561:13:MX_USART2_UART_Init	2
+../Core/Src/main.c:592:13:MX_DMA_Init	1
+../Core/Src/main.c:614:13:MX_GPIO_Init	1
+../Core/Src/main.c:660:6:HAL_TIM_PeriodElapsedCallback	3
+../Core/Src/main.c:680:6:Error_Handler	1
