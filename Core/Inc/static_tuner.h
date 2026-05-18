@@ -63,6 +63,14 @@ typedef struct
   volatile float fft_peak_mag;
   volatile uint32_t signal_amplitude;
   volatile uint32_t yin_tau;
+  volatile uint32_t corr_tau;
+  volatile uint32_t corr_detected_string;
+  volatile uint32_t corr_state;
+  volatile int32_t corr_cents_error_x10;
+  volatile float corr_detected_hz;
+  volatile float corr_confidence;
+  volatile uint32_t corr_pass_count;
+  volatile uint32_t corr_fail_count;
   volatile uint32_t fft_peak_bin;
   volatile uint32_t last_error;
 } StaticTunerDiagnostics;
@@ -70,9 +78,22 @@ typedef struct
 extern int16_t tunerStaticInput[STATIC_TUNER_FRAME_LENGTH];
 extern volatile float tunerFftStringMagnitudes[STATIC_TUNER_STRING_COUNT];
 extern volatile float tunerSpectrum64[STATIC_TUNER_SPECTRUM_BIN_COUNT];
+extern volatile float tunerGraphLowE;
+extern volatile float tunerGraphA;
+extern volatile float tunerGraphD;
+extern volatile float tunerGraphG;
+extern volatile float tunerGraphB;
+extern volatile float tunerGraphHighE;
+extern volatile float tunerGraphPeakHz;
+extern volatile float tunerGraphPeakMagnitude;
+extern volatile int32_t tunerGraphCentsErrorX10;
+extern volatile float tunerGraphCorrHz;
+extern volatile int32_t tunerGraphCorrCentsErrorX10;
 extern volatile StaticTunerDiagnostics tunerDiag;
 extern volatile uint32_t tunerSelectedTest;
 extern volatile uint32_t tunerRunRequest;
+extern volatile uint32_t tunerAutoDemoEnabled;
+extern volatile uint32_t tunerAutoDemoPeriodMs;
 
 void StaticTuner_Init(void);
 void StaticTuner_Task(void);

@@ -21,6 +21,14 @@ Add these to Live Expressions:
 - `tunerDiag.detected_hz`
 - `tunerDiag.cents_error_x10`
 - `tunerDiag.confidence`
+- `tunerDiag.corr_detected_hz`
+- `tunerDiag.corr_cents_error_x10`
+- `tunerDiag.corr_confidence`
+- `tunerDiag.corr_tau`
+- `tunerDiag.corr_detected_string`
+- `tunerDiag.corr_state`
+- `tunerDiag.corr_pass_count`
+- `tunerDiag.corr_fail_count`
 - `tunerDiag.fft_low_e_mag`
 - `tunerDiag.fft_a_mag`
 - `tunerDiag.fft_d_mag`
@@ -45,6 +53,37 @@ For graph-style views, also add individual spectrum entries:
 `tunerSpectrum64` spans about 0 to 500 Hz, so each entry represents roughly
 7.8 Hz. The six named `fft_*_mag` fields are easier for SWV timeline graphs
 focused on standard guitar strings.
+
+## SWV Graph Variables
+
+For SWV Data Trace, prefer these plain global symbols instead of struct fields:
+
+- `tunerGraphLowE`
+- `tunerGraphA`
+- `tunerGraphD`
+- `tunerGraphG`
+- `tunerGraphB`
+- `tunerGraphHighE`
+- `tunerGraphPeakHz`
+- `tunerGraphPeakMagnitude`
+- `tunerGraphCentsErrorX10`
+- `tunerGraphCorrHz`
+- `tunerGraphCorrCentsErrorX10`
+
+Set the SWV comparator access to `Write`, because the graph should update when
+the firmware writes a new value.
+
+CubeIDE usually provides four data comparators, so graph four values at a time.
+For example:
+
+- `tunerGraphLowE`
+- `tunerGraphA`
+- `tunerGraphD`
+- `tunerGraphHighE`
+
+The firmware enables `tunerAutoDemoEnabled = 1` by default and advances to the
+next in-tune string every `tunerAutoDemoPeriodMs = 1000`, so the graph changes
+once per second without manually editing `tunerSelectedTest`.
 
 ## Test Index Map
 
@@ -82,6 +121,26 @@ Each string has three tests: flat, in tune, sharp.
 The in-tune tolerance is `+/-5 cents`, reported as `+/-50` in
 `cents_error_x10`.
 
+## Correlation Detector
+
+The branch now runs a second detector based on CMSIS-DSP
+`arm_correlate_f32`. The original YIN-style detector still drives
+`tunerDiag.detected_hz`, `tunerDiag.cents_error_x10`, and
+`tunerDiag.tuning_state`.
+
+The correlation result is published separately:
+
+- `tunerDiag.corr_detected_hz`
+- `tunerDiag.corr_cents_error_x10`
+- `tunerDiag.corr_confidence`
+- `tunerDiag.corr_tau`
+- `tunerDiag.corr_state`
+- `tunerDiag.corr_pass_count`
+- `tunerDiag.corr_fail_count`
+
+For the correlation detector, `corr_fail_count` should also stay at `0` after
+the startup test run.
+
 ## Running Tests
 
 At startup, all 18 tests run once, then the selected display test is refreshed.
@@ -93,6 +152,8 @@ To rerun one test:
 2. Set `tunerRunRequest` to `1`.
 
 To rerun all tests, set `tunerRunRequest` to `0xFFFFFFFF`.
+
+To stop the automatic graph demo, set `tunerAutoDemoEnabled` to `0`.
 
 ## FFT View
 
