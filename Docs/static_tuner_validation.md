@@ -3,6 +3,26 @@
 This branch validates the guitar tuner algorithm with synthetic inputs and an
 embedded real-audio WAV slice instead of the microphone.
 
+## Validation Summary
+
+| Check | What it proves | Expected result |
+| --- | --- | --- |
+| Synthetic YIN tests | The main pitch detector classifies known generated inputs. | `tunerDiag.fail_count = 0` |
+| Synthetic correlation tests | The `arm_correlate_f32` detector agrees on known generated inputs. | `tunerDiag.corr_fail_count = 0` |
+| Real WAV provenance | The embedded input comes from the stored `gc.wav` file. | `tunerDiag.real_sample_checksum = 0xC1E6FA47` |
+| Real replay sequence | The firmware analyzes a stream of overlapping frames, not one fixed sample. | `tunerDiag.real_sequence_done = 1` |
+
+Independent offline analysis of the same WAV excerpt found the same broad
+sequence as the STM32 replay:
+
+| Approx. replay time | Interpreted region |
+| ---: | --- |
+| `0 ms` to `192 ms` | A-region around 110 Hz, with strong harmonics |
+| `256 ms` to `384 ms` | unstable transition |
+| `448 ms` to `768 ms` | G-ish region around 170-186 Hz |
+| `832 ms` to `1024 ms` | unstable transition |
+| `1088 ms` to `1792 ms` | D-class region around 130 Hz, flat relative to D3 |
+
 ## Debug Variables
 
 Add these to Live Expressions:
@@ -168,12 +188,12 @@ full pass through the embedded excerpt.
 
 String values are:
 
-- `0`: low E
-- `1`: A
-- `2`: D
-- `3`: G
-- `4`: B
-- `5`: high E
+- `0`: low E / E2 / 82.41 Hz
+- `1`: A / A2 / 110.00 Hz
+- `2`: D / D3 / 146.83 Hz
+- `3`: G / G3 / 196.00 Hz
+- `4`: B / B3 / 246.94 Hz
+- `5`: high E / E4 / 329.63 Hz
 - `255`: unknown or low-confidence frame
 
 The summary counters show the distribution of detected strings across the pass,
