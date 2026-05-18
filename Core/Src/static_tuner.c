@@ -390,8 +390,8 @@ void StaticTuner_Init(void)
 {
   tunerDiag.initialized = 1U;
   tunerDiag.last_error = 0U;
-  tunerSelectedTest = 1U;
-  tunerRunRequest = 0U;
+  tunerSelectedTest = 16U;
+  tunerRunRequest = 1U;
   StaticTuner_RunAllTests();
   StaticTuner_RunSelectedTest(tunerSelectedTest);
 }

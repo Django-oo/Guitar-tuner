@@ -2346,13 +2346,13 @@ void StaticTuner_Init(void)
  800136e:	4b09      	ldr	r3, [pc, #36]	@ (8001394 <StaticTuner_Init+0x30>)
  8001370:	2200      	movs	r2, #0
  8001372:	649a      	str	r2, [r3, #72]	@ 0x48
-  tunerSelectedTest = 1U;
+  tunerSelectedTest = 16U;
  8001374:	4b08      	ldr	r3, [pc, #32]	@ (8001398 <StaticTuner_Init+0x34>)
- 8001376:	2201      	movs	r2, #1
+ 8001376:	2210      	movs	r2, #16
  8001378:	601a      	str	r2, [r3, #0]
-  tunerRunRequest = 0U;
+  tunerRunRequest = 1U;
  800137a:	4b08      	ldr	r3, [pc, #32]	@ (800139c <StaticTuner_Init+0x38>)
- 800137c:	2200      	movs	r2, #0
+ 800137c:	2201      	movs	r2, #1
  800137e:	601a      	str	r2, [r3, #0]
   StaticTuner_RunAllTests();
  8001380:	f7ff ffce 	bl	8001320 <StaticTuner_RunAllTests>
