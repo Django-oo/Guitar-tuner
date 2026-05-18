@@ -199,6 +199,28 @@ String values are:
 The summary counters show the distribution of detected strings across the pass,
 for example `real_sequence_a_count` and `real_sequence_d_count`.
 
+## Full WAV Analysis
+
+The firmware embeds a 2.048 s excerpt for STM32-side validation. The complete
+`gc.wav` file is analyzed on the host PC with:
+
+```powershell
+python Tools/analyze_full_wav.py
+```
+
+The script uses the same frame layout as the firmware replay:
+
+- sample rate: `16000 Hz`
+- frame length: `4096` samples / `256 ms`
+- hop length: `1024` samples / `64 ms`
+
+Generated outputs:
+
+- `Samples/static_tuner/analysis/gc_full_analysis.csv`
+- `Samples/static_tuner/analysis/gc_full_analysis.md`
+
+The current full-file report analyzes `403` frames over `26.011 s`.
+
 ## Test Index Map
 
 Each string has three tests: flat, in tune, sharp.

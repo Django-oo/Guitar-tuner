@@ -132,6 +132,28 @@ tunerDiag.fail_count == 0
 tunerDiag.corr_fail_count == 0
 ```
 
+## Full WAV Analysis
+
+The STM32 cannot embed the whole `gc.wav` file because the complete downsampled
+audio would exceed the practical flash budget. To inspect the whole recording,
+use the host-side analyzer:
+
+```powershell
+python Tools/analyze_full_wav.py
+```
+
+It analyzes the full WAV with the same 16 kHz sample rate, 4096-sample frame,
+and 1024-sample hop used by the firmware replay.
+
+Generated outputs:
+
+```text
+Samples/static_tuner/analysis/gc_full_analysis.csv
+Samples/static_tuner/analysis/gc_full_analysis.md
+```
+
+The current full-file analysis covers `403` frames over `26.011 s`.
+
 ## Next Engineering Steps
 
 1. Keep the static/replay branch as an algorithm validation baseline.
