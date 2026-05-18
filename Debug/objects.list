@@ -1,6 +1,7 @@
 "./Core/Src/arm_fir_data.o"
 "./Core/Src/main.o"
 "./Core/Src/math_helper.o"
+"./Core/Src/microphone_dma.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
 "./Core/Src/stm32f4xx_hal_timebase_tim.o"
 "./Core/Src/stm32f4xx_it.o"

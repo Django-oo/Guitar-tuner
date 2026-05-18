@@ -1,0 +1,42 @@
+﻿[
+    {
+        "label":  "voice",
+        "filename":  "voice.wav",
+        "path":  "D:\\APP5\\Architecture_calcul_rapide_DSP\\TP\\stCube_workspace\\TP_Calcul_Rapide\\Samples\\reference_audio\\voice.wav",
+        "source_page":  "https://github.com/pdx-cs-sound/wavs",
+        "download_url":  "https://raw.githubusercontent.com/pdx-cs-sound/wavs/main/voice.wav",
+        "description":  "Short voice sample",
+        "author":  "Bart Massey",
+        "license":  "CC0"
+    },
+    {
+        "label":  "voice_note",
+        "filename":  "voice_note.wav",
+        "path":  "D:\\APP5\\Architecture_calcul_rapide_DSP\\TP\\stCube_workspace\\TP_Calcul_Rapide\\Samples\\reference_audio\\voice_note.wav",
+        "source_page":  "https://github.com/pdx-cs-sound/wavs",
+        "download_url":  "https://raw.githubusercontent.com/pdx-cs-sound/wavs/main/voice-note.wav",
+        "description":  "Single sung voice note",
+        "author":  "Bart Massey",
+        "license":  "CC0"
+    },
+    {
+        "label":  "guitar",
+        "filename":  "guitar.wav",
+        "path":  "D:\\APP5\\Architecture_calcul_rapide_DSP\\TP\\stCube_workspace\\TP_Calcul_Rapide\\Samples\\reference_audio\\guitar.wav",
+        "source_page":  "https://github.com/pdx-cs-sound/wavs",
+        "download_url":  "https://raw.githubusercontent.com/pdx-cs-sound/wavs/main/gc.wav",
+        "description":  "Short acoustic guitar sample",
+        "author":  "Bart Massey",
+        "license":  "CC0"
+    },
+    {
+        "label":  "clap",
+        "filename":  "clap.wav",
+        "path":  "D:\\APP5\\Architecture_calcul_rapide_DSP\\TP\\stCube_workspace\\TP_Calcul_Rapide\\Samples\\reference_audio\\clap.wav",
+        "source_page":  "https://oramics.github.io/sampled/DM/LM-2/",
+        "download_url":  "https://oramics.github.io/sampled/DM/LM-2/samples/clap.wav",
+        "description":  "LM-2 clap sample",
+        "author":  "Oramics sampled library",
+        "license":  "Public domain"
+    }
+]

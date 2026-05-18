@@ -1,0 +1,9 @@
+﻿{
+    "sample":  "D:\\APP5\\Architecture_calcul_rapide_DSP\\TP\\stCube_workspace\\TP_Calcul_Rapide\\Samples\\reference_audio\\clap.wav",
+    "started_at":  "20260517_184500",
+    "polls":  40,
+    "delay_ms":  250,
+    "pre_arm_delay_ms":  300,
+    "stm_csv":  "D:\\APP5\\Architecture_calcul_rapide_DSP\\TP\\stCube_workspace\\TP_Calcul_Rapide\\Samples\\microphone_dma\\20260517_184500_clap\\stm.csv",
+    "stm_poll":  "D:\\APP5\\Architecture_calcul_rapide_DSP\\TP\\stCube_workspace\\TP_Calcul_Rapide\\Samples\\microphone_dma\\20260517_184500_clap\\stm_poll.txt"
+}

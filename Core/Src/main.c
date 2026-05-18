@@ -21,11 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "arm_math.h"
-#include "math_helper.h"
-
-#include <stdio.h>
-#include <string.h>
+#include "microphone_dma.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,15 +32,10 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define SAMPLE_RATE_HZ 16000U
-#define ADC_BUF_LEN    4096U
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define TEST_LENGTH_SAMPLES  320
-#define SNR_THRESHOLD_F32    140.0f
-#define BLOCK_SIZE            32
-#define NUM_TAPS              29
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -63,66 +54,9 @@ UART_HandleTypeDef huart2;
 
 
 /* USER CODE BEGIN PV */
-uint16_t adcBuf[ADC_BUF_LEN];
+volatile uint32_t micDmaProcessedBlocks = 0;
+volatile uint32_t appDebugStep = 0;
 
-volatile uint8_t adcHalfReady = 0;
-volatile uint8_t adcFullReady = 0;
-
-volatile uint32_t adcHalfCallbackCounter = 0;
-volatile uint32_t adcFullCallbackCounter = 0;
-
-volatile uint32_t micValue = 0;
-volatile uint32_t micMin = 0;
-volatile uint32_t micMax = 0;
-volatile uint32_t micMean = 0;
-volatile uint32_t micAmp = 0;
-volatile uint32_t micBlockCounter = 0;
-
-
-/* -------------------------------------------------------------------
- * The input signal and reference output (computed with MATLAB)
- * are defined externally in arm_fir_lpf_data.c.
- * ------------------------------------------------------------------- */
-
-extern float32_t testInput_f32_1kHz_15kHz[TEST_LENGTH_SAMPLES];
-extern float32_t refOutput[TEST_LENGTH_SAMPLES];
-
-/* -------------------------------------------------------------------
- * Declare Test output buffer
- * ------------------------------------------------------------------- */
-
-static float32_t testOutput[TEST_LENGTH_SAMPLES];
-
-/* -------------------------------------------------------------------
- * Declare State buffer of size (numTaps + blockSize - 1)
- * ------------------------------------------------------------------- */
-
-static float32_t firStateF32[BLOCK_SIZE + NUM_TAPS - 1];
-
-/* ----------------------------------------------------------------------
-** FIR Coefficients buffer generated using fir1() MATLAB function.
-** fir1(28, 6/24)
-** ------------------------------------------------------------------- */
-
-const float32_t firCoeffs32[NUM_TAPS] = {
-  -0.0018225230f, -0.0015879294f, +0.0000000000f, +0.0036977508f, +0.0080754303f, +0.0085302217f, -0.0000000000f, -0.0173976984f,
-  -0.0341458607f, -0.0333591565f, +0.0000000000f, +0.0676308395f, +0.1522061835f, +0.2229246956f, +0.2504960933f, +0.2229246956f,
-  +0.1522061835f, +0.0676308395f, +0.0000000000f, -0.0333591565f, -0.0341458607f, -0.0173976984f, -0.0000000000f, +0.0085302217f,
-  +0.0080754303f, +0.0036977508f, +0.0000000000f, -0.0015879294f, -0.0018225230f
-};
-
-/* ------------------------------------------------------------------
- * Global variables for FIR LPF Example
- * ------------------------------------------------------------------- */
-
-uint32_t blockSize = BLOCK_SIZE;
-uint32_t numBlocks = TEST_LENGTH_SAMPLES/BLOCK_SIZE;
-
-float32_t  snr;
-
-
-volatile int16_t flagSWV = 0;
-volatile int16_t outSWV, n_outSWV;
 
 /* USER CODE END PV */
 
@@ -141,50 +75,19 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_DAC_ConvCpltCallbackCh1(DAC_HandleTypeDef *hdac)
-{
-	flagSWV = 1;
-}
-
-static void AnalyzeMicBlock(uint16_t *buf, uint32_t len)
-{
-    uint32_t minVal = 4095;
-    uint32_t maxVal = 0;
-    uint32_t sum = 0;
-
-    for (uint32_t i = 0; i < len; i++)
-    {
-        uint32_t v = buf[i];
-
-        if (v < minVal) minVal = v;
-        if (v > maxVal) maxVal = v;
-
-        sum += v;
-    }
-
-    micMin = minVal;
-    micMax = maxVal;
-    micMean = sum / len;
-    micAmp = maxVal - minVal;
-    micBlockCounter++;
-}
-
 void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc)
 {
-    if (hadc->Instance == ADC1)
-    {
-        adcHalfCallbackCounter++;
-        adcHalfReady = 1;
-    }
+    MicrophoneDma_OnAdcHalfCplt(hadc);
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-    if (hadc->Instance == ADC1)
-    {
-        adcFullCallbackCounter++;
-        adcFullReady = 1;
-    }
+    MicrophoneDma_OnAdcCplt(hadc);
+}
+
+void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc)
+{
+    MicrophoneDma_OnAdcError(hadc);
 }
 /* USER CODE END 0 */
 
@@ -216,88 +119,27 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  appDebugStep = 10;
   MX_GPIO_Init();
+  appDebugStep = 11;
   MX_DMA_Init();
+  appDebugStep = 12;
   MX_USART2_UART_Init();
-  MX_DAC_Init();
-  MX_TIM7_Init();
+  appDebugStep = 13;
   MX_ADC1_Init();
+  appDebugStep = 16;
   MX_TIM2_Init();
+  appDebugStep = 17;
   /* USER CODE BEGIN 2 */
-  uint32_t i;
-	arm_fir_instance_f32 S;
-	arm_status status;
-	float32_t  *inputF32, *outputF32;
+  appDebugStep = 1;
 
-	/* Initialize input and output buffer pointers */
-	inputF32 = &testInput_f32_1kHz_15kHz[0];
-	outputF32 = &testOutput[0];
+  if (MicrophoneDma_Start(&hadc1, &htim2) != HAL_OK)
+  {
+    appDebugStep = 90;
+    Error_Handler();
+  }
 
-	/* Call FIR init function to initialize the instance structure. */
-	arm_fir_init_f32(&S, NUM_TAPS, (float32_t *)&firCoeffs32[0], &firStateF32[0], blockSize);
-
-	/* ----------------------------------------------------------------------
-	** Call the FIR process function for every blockSize samples
-	** ------------------------------------------------------------------- */
-
-	for(i=0; i < numBlocks; i++)
-	{
-	  arm_fir_f32(&S, inputF32 + (i * blockSize), outputF32 + (i * blockSize), blockSize);
-	}
-
-	/* ----------------------------------------------------------------------
-	** Compare the generated output against the reference output computed
-	** in MATLAB.
-	** ------------------------------------------------------------------- */
-
-	snr = arm_snr_f32(&refOutput[0], &testOutput[0], TEST_LENGTH_SAMPLES);
-
-	if (snr < SNR_THRESHOLD_F32)
-	{
-	  status = ARM_MATH_TEST_FAILURE;
-	}
-	else
-	{
-	  status = ARM_MATH_SUCCESS;
-	}
-
-	/* ----------------------------------------------------------------------
-	** Loop here if the signal does not match the reference output.
-	** ------------------------------------------------------------------- */
-
-	if( status != ARM_MATH_SUCCESS)
-	{
-	  while(1);
-	}
-
-	// Ce code est place apres les initialisations
-	// et avant la boucle de la tâche de fond (idle task)
-
-	// initialization du tableau out12bit
-	static uint16_t out12bit[TEST_LENGTH_SAMPLES];
-	for(i=0; i< TEST_LENGTH_SAMPLES;i++)
-	{
-	out12bit[i] = 2048 + 1024* testOutput[i];
-	}
-	//Démarrage du timer 7 avec interruptions
-	if (HAL_TIM_Base_Start_IT(&htim7) != HAL_OK) {
-	Error_Handler();
-	}
-	//Démarrage du DAC associé au tableau out12bit via le DMA1
-	if (HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, (uint32_t*) out12bit, TEST_LENGTH_SAMPLES,
-	DAC_ALIGN_12B_R) != HAL_OK) {Error_Handler();
-	}
-
-	if (HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuf, ADC_BUF_LEN) != HAL_OK)
-	{
-	    Error_Handler();
-	}
-
-	if (HAL_TIM_Base_Start(&htim2) != HAL_OK)
-	{
-	    Error_Handler();
-	}
-
+  appDebugStep = 2;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -307,26 +149,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  if (adcHalfReady)
-	  {
-	      adcHalfReady = 0;
-	      AnalyzeMicBlock(&adcBuf[0], ADC_BUF_LEN / 2);
-	  }
-
-	  if (adcFullReady)
-	  {
-	      adcFullReady = 0;
-	      AnalyzeMicBlock(&adcBuf[ADC_BUF_LEN / 2], ADC_BUF_LEN / 2);
-	  }
-
-
-
-
-	  if (flagSWV == 1) {
-	  outSWV = out12bit[n_outSWV++ % TEST_LENGTH_SAMPLES];
-	  if (n_outSWV%TEST_LENGTH_SAMPLES == 0) n_outSWV=0;
-	  flagSWV = 0;
-	  }
+    micDmaProcessedBlocks += MicrophoneDma_Task();
+    appDebugStep = 3;
   }
   /* USER CODE END 3 */
 }
