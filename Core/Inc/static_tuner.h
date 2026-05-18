@@ -15,6 +15,7 @@
 #define STATIC_TUNER_IN_TUNE_LIMIT_X10    50
 #define STATIC_TUNER_INPUT_SYNTH          0U
 #define STATIC_TUNER_INPUT_REAL           1U
+#define STATIC_TUNER_REAL_REPLAY_HOP      1024U
 
 typedef enum
 {
@@ -78,6 +79,11 @@ typedef struct
   volatile uint32_t real_sample_rate_hz;
   volatile uint32_t real_sample_original_rate_hz;
   volatile uint32_t real_sample_start_output_frame;
+  volatile uint32_t real_sample_duration_ms;
+  volatile uint32_t real_replay_frame_index;
+  volatile uint32_t real_replay_frame_start;
+  volatile uint32_t real_replay_time_ms;
+  volatile uint32_t real_replay_loop_count;
   volatile uint32_t real_sample_checksum;
   volatile uint32_t fft_peak_bin;
   volatile uint32_t last_error;

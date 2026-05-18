@@ -35,6 +35,11 @@ Add these to Live Expressions:
 - `tunerDiag.real_sample_rate_hz`
 - `tunerDiag.real_sample_original_rate_hz`
 - `tunerDiag.real_sample_start_output_frame`
+- `tunerDiag.real_sample_duration_ms`
+- `tunerDiag.real_replay_frame_index`
+- `tunerDiag.real_replay_frame_start`
+- `tunerDiag.real_replay_time_ms`
+- `tunerDiag.real_replay_loop_count`
 - `tunerDiag.real_sample_checksum`
 - `tunerDiag.fft_low_e_mag`
 - `tunerDiag.fft_a_mag`
@@ -97,11 +102,12 @@ once per second without manually editing `tunerSelectedTest`.
 The tuner can analyze two input sources:
 
 - `tunerInputSource = 0`: synthetic generated guitar tone
-- `tunerInputSource = 1`: embedded real WAV slice
+- `tunerInputSource = 1`: embedded real WAV replay stream
 
-The real input is generated from `Samples/static_tuner/gc.wav`, a CC0 acoustic
-guitar WAV from `pdx-cs-sound/wavs`. The converter stores the source URL,
-source SHA-256, and sample checksum in `Core/Inc/static_tuner_real_sample.h`.
+The real input is generated from a 2.048 s excerpt of
+`Samples/static_tuner/gc.wav`, a CC0 acoustic guitar WAV from
+`pdx-cs-sound/wavs`. The converter stores the source URL, source SHA-256, and
+sample checksum in `Core/Inc/static_tuner_real_sample.h`.
 
 For proof in STM32CubeIDE, watch:
 
@@ -110,12 +116,19 @@ For proof in STM32CubeIDE, watch:
 - `tunerRealAudioSourceSha256`
 - `tunerRealAudioLicense`
 - `tunerDiag.real_sample_checksum`
+- `tunerDiag.real_sample_duration_ms`
+- `tunerDiag.real_replay_time_ms`
 
 To analyze the real audio:
 
 1. Set `tunerAutoDemoEnabled` to `0`.
 2. Set `tunerInputSource` to `1`.
 3. Set `tunerRunRequest` to `1`.
+
+Each real-audio run analyzes a 4096-sample frame and advances by
+`STATIC_TUNER_REAL_REPLAY_HOP = 1024` samples. At 16 kHz, the analysis frame is
+256 ms and the replay advances by 64 ms per run. `real_replay_time_ms` tells
+you where the current frame starts inside the embedded excerpt.
 
 Real-audio runs do not increment `pass_count` or `fail_count`, because the WAV
 is an external recording, not one of the 18 synthetic flat/in-tune/sharp test

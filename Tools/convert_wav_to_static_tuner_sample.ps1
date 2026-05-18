@@ -3,7 +3,7 @@ param(
   [string]$OutputHeader = "Core\Inc\static_tuner_real_sample.h",
   [double]$StartSecond = 6.0,
   [int]$OutputSampleRate = 16000,
-  [int]$FrameLength = 4096,
+  [int]$SampleCount = 32768,
   [string]$SourceUrl = "https://raw.githubusercontent.com/pdx-cs-sound/wavs/main/gc.wav",
   [string]$License = "CC0, from pdx-cs-sound/wavs README"
 )
@@ -73,17 +73,17 @@ $ratio = [int]($sampleRate / $OutputSampleRate)
 $startInputFrame = [int][Math]::Round($StartSecond * $sampleRate)
 $availableOutputFrames = [int](($inputFrames - $startInputFrame) / $ratio)
 
-if ($startInputFrame -lt 0 -or $availableOutputFrames -lt $FrameLength) {
-  throw "Not enough WAV data from StartSecond=$StartSecond for $FrameLength output samples"
+if ($startInputFrame -lt 0 -or $availableOutputFrames -lt $SampleCount) {
+  throw "Not enough WAV data from StartSecond=$StartSecond for $SampleCount output samples"
 }
 
-$samples = New-Object int[] $FrameLength
+$samples = New-Object int[] $SampleCount
 $sumAbs = 0L
 $min = 32767
 $max = -32768
 $checksum = 2166136261L
 
-for ($i = 0; $i -lt $FrameLength; $i++) {
+for ($i = 0; $i -lt $SampleCount; $i++) {
   $frame = $startInputFrame + ($i * $ratio)
   $sampleOffset = $dataOffset + ($frame * $bytesPerFrame)
   $sum = 0
@@ -106,7 +106,7 @@ for ($i = 0; $i -lt $FrameLength; $i++) {
 }
 
 $sourceHash = (Get-FileHash -Algorithm SHA256 -Path $wavPath).Hash
-$avgAbs = [int]($sumAbs / $FrameLength)
+$avgAbs = [int]($sumAbs / $SampleCount)
 $sourceFile = Split-Path -Leaf $wavPath
 $generatedUtc = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
 $outPath = Join-Path (Get-Location) $OutputHeader
@@ -124,7 +124,7 @@ $lines.Add("/* Source SHA256: $sourceHash */")
 $lines.Add("/* License: $License */")
 $lines.Add("/* Generated UTC: $generatedUtc */")
 $lines.Add("")
-$lines.Add("#define STATIC_TUNER_REAL_SAMPLE_COUNT ${FrameLength}U")
+$lines.Add("#define STATIC_TUNER_REAL_SAMPLE_COUNT ${SampleCount}U")
 $lines.Add("#define STATIC_TUNER_REAL_SAMPLE_RATE_HZ ${OutputSampleRate}U")
 $lines.Add("#define STATIC_TUNER_REAL_SAMPLE_ORIGINAL_RATE_HZ ${sampleRate}U")
 $lines.Add("#define STATIC_TUNER_REAL_SAMPLE_ORIGINAL_CHANNELS ${channels}U")
@@ -141,9 +141,9 @@ $lines.Add("#define STATIC_TUNER_REAL_SAMPLE_LICENSE ""$License""")
 $lines.Add("")
 $lines.Add("static const int16_t staticTunerRealSample[STATIC_TUNER_REAL_SAMPLE_COUNT] = {")
 
-for ($i = 0; $i -lt $FrameLength; $i += 8) {
+for ($i = 0; $i -lt $SampleCount; $i += 8) {
   $chunk = @()
-  for ($j = 0; $j -lt 8 -and ($i + $j) -lt $FrameLength; $j++) {
+  for ($j = 0; $j -lt 8 -and ($i + $j) -lt $SampleCount; $j++) {
     $chunk += $samples[$i + $j].ToString()
   }
   $lines.Add("  " + ($chunk -join ", ") + ",")
@@ -161,7 +161,7 @@ New-Item -ItemType Directory -Force -Path (Split-Path $outPath) | Out-Null
   source = $wavPath.Path
   sha256 = $sourceHash
   start_second = $StartSecond
-  output_samples = $FrameLength
+  output_samples = $SampleCount
   checksum = ("0x{0:X8}" -f $checksum)
   min = $min
   max = $max

@@ -1,7 +1,7 @@
 # Static Tuner Real Audio Sample
 
-`gc.wav` is the source file used to generate the embedded real-audio input in
-`Core/Inc/static_tuner_real_sample.h`.
+`gc.wav` is the source file used to generate the embedded real-audio replay
+stream in `Core/Inc/static_tuner_real_sample.h`.
 
 - Source URL: https://raw.githubusercontent.com/pdx-cs-sound/wavs/main/gc.wav
 - Repository: https://github.com/pdx-cs-sound/wavs
@@ -16,5 +16,6 @@ To regenerate the embedded C array:
 powershell.exe -ExecutionPolicy Bypass -File .\Tools\convert_wav_to_static_tuner_sample.ps1
 ```
 
-The converter takes a 4096-sample mono slice at 16 kHz and writes its source
-metadata and checksum into the generated header.
+The converter takes a 32768-sample mono excerpt at 16 kHz, about 2.048 s, and
+writes its source metadata and checksum into the generated header. The firmware
+then analyzes overlapping 4096-sample frames from that embedded excerpt.

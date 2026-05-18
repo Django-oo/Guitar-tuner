@@ -87,6 +87,8 @@ static float tunerCorrInput[STATIC_TUNER_CORR_FRAME_LENGTH];
 static float tunerCorrOutput[STATIC_TUNER_CORR_OUTPUT_LENGTH];
 static uint32_t tunerAutoDemoLastTickMs;
 static uint32_t tunerAutoDemoTestIndex;
+static uint32_t tunerRealReplayFrameStart;
+static uint32_t tunerRealReplayFrameIndex;
 
 static const StaticTunerStringInfo tunerStrings[STATIC_TUNER_STRING_COUNT] = {
   { 82.41f },
@@ -373,20 +375,55 @@ static void StaticTuner_GenerateTone(uint32_t string_index,
 static void StaticTuner_LoadRealAudioInput(int16_t *samples, uint32_t length)
 {
   uint32_t copy_length = length;
+  uint32_t max_start = 0U;
 
-  if (copy_length > STATIC_TUNER_REAL_SAMPLE_COUNT)
+  if (STATIC_TUNER_REAL_SAMPLE_COUNT > length)
   {
-    copy_length = STATIC_TUNER_REAL_SAMPLE_COUNT;
+    max_start = STATIC_TUNER_REAL_SAMPLE_COUNT - length;
+  }
+
+  if (tunerRealReplayFrameStart > max_start)
+  {
+    tunerRealReplayFrameStart = 0U;
+    tunerRealReplayFrameIndex = 0U;
+    tunerDiag.real_replay_loop_count++;
+  }
+
+  if ((tunerRealReplayFrameStart + copy_length) > STATIC_TUNER_REAL_SAMPLE_COUNT)
+  {
+    copy_length = STATIC_TUNER_REAL_SAMPLE_COUNT - tunerRealReplayFrameStart;
   }
 
   for (uint32_t i = 0U; i < copy_length; i++)
   {
-    samples[i] = staticTunerRealSample[i];
+    samples[i] = staticTunerRealSample[tunerRealReplayFrameStart + i];
   }
 
   for (uint32_t i = copy_length; i < length; i++)
   {
     samples[i] = 0;
+  }
+
+  tunerDiag.real_replay_frame_index = tunerRealReplayFrameIndex;
+  tunerDiag.real_replay_frame_start = tunerRealReplayFrameStart;
+  tunerDiag.real_replay_time_ms =
+      (tunerRealReplayFrameStart * 1000U) / STATIC_TUNER_SAMPLE_RATE_HZ;
+
+  if (tunerRealReplayFrameStart >= max_start)
+  {
+    tunerRealReplayFrameStart = 0U;
+    tunerRealReplayFrameIndex = 0U;
+    tunerDiag.real_replay_loop_count++;
+  }
+  else
+  {
+    tunerRealReplayFrameStart += STATIC_TUNER_REAL_REPLAY_HOP;
+    tunerRealReplayFrameIndex++;
+
+    if (tunerRealReplayFrameStart > max_start)
+    {
+      tunerRealReplayFrameStart = max_start;
+    }
   }
 }
 
@@ -862,7 +899,7 @@ void StaticTuner_Init(void)
 {
   tunerDiag.initialized = 1U;
   tunerDiag.last_error = 0U;
-  tunerInputSource = STATIC_TUNER_INPUT_SYNTH;
+  tunerInputSource = STATIC_TUNER_INPUT_REAL;
   tunerDiag.input_source = tunerInputSource;
   tunerDiag.real_sample_count = STATIC_TUNER_REAL_SAMPLE_COUNT;
   tunerDiag.real_sample_rate_hz = STATIC_TUNER_REAL_SAMPLE_RATE_HZ;
@@ -870,15 +907,24 @@ void StaticTuner_Init(void)
       STATIC_TUNER_REAL_SAMPLE_ORIGINAL_RATE_HZ;
   tunerDiag.real_sample_start_output_frame =
       STATIC_TUNER_REAL_SAMPLE_START_OUTPUT_FRAME;
+  tunerDiag.real_sample_duration_ms =
+      (STATIC_TUNER_REAL_SAMPLE_COUNT * 1000U) /
+      STATIC_TUNER_REAL_SAMPLE_RATE_HZ;
   tunerDiag.real_sample_checksum = STATIC_TUNER_REAL_SAMPLE_CHECKSUM;
+  tunerDiag.real_replay_loop_count = 0U;
+  tunerDiag.real_replay_frame_index = 0U;
+  tunerDiag.real_replay_frame_start = 0U;
+  tunerDiag.real_replay_time_ms = 0U;
+  tunerRealReplayFrameStart = 0U;
+  tunerRealReplayFrameIndex = 0U;
   tunerRealAudioMetadataKeepAlive =
       (uint32_t)tunerRealAudioSourceFileKeep[0] +
       (uint32_t)tunerRealAudioSourceUrlKeep[0] +
       (uint32_t)tunerRealAudioSourceSha256Keep[0] +
       (uint32_t)tunerRealAudioLicenseKeep[0];
   tunerSelectedTest = 16U;
-  tunerRunRequest = 0U;
-  tunerAutoDemoEnabled = 1U;
+  tunerRunRequest = 1U;
+  tunerAutoDemoEnabled = 0U;
   tunerAutoDemoPeriodMs = 1000U;
   tunerAutoDemoLastTickMs = HAL_GetTick();
   tunerAutoDemoTestIndex = tunerSelectedTest;
