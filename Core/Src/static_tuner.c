@@ -2,6 +2,7 @@
 
 #include "arm_math.h"
 
+#include <math.h>
 #include <stddef.h>
 
 #define STATIC_TUNER_MIN_FREQ_HZ      70.0f
@@ -10,6 +11,8 @@
 #define STATIC_TUNER_SIGNAL_MIN_AMP   200U
 #define STATIC_TUNER_PI               3.14159265358979323846f
 #define STATIC_TUNER_TWO_PI           (2.0f * STATIC_TUNER_PI)
+#define STATIC_TUNER_FFT_BIN_HZ       \
+  ((float)STATIC_TUNER_SAMPLE_RATE_HZ / (float)STATIC_TUNER_FRAME_LENGTH)
 
 typedef struct
 {
@@ -29,11 +32,17 @@ typedef struct
 } StaticTunerResult;
 
 int16_t tunerStaticInput[STATIC_TUNER_FRAME_LENGTH];
+volatile float tunerFftStringMagnitudes[STATIC_TUNER_STRING_COUNT];
+volatile float tunerSpectrum64[STATIC_TUNER_SPECTRUM_BIN_COUNT];
 volatile StaticTunerDiagnostics tunerDiag;
 volatile uint32_t tunerSelectedTest;
 volatile uint32_t tunerRunRequest;
 
 static float tunerYinDiff[(STATIC_TUNER_SAMPLE_RATE_HZ / 70U) + 2U];
+static arm_rfft_fast_instance_f32 tunerFftInstance;
+static uint32_t tunerFftInitialized;
+static float tunerFftInput[STATIC_TUNER_FRAME_LENGTH];
+static float tunerFftOutput[STATIC_TUNER_FRAME_LENGTH];
 
 static const StaticTunerStringInfo tunerStrings[STATIC_TUNER_STRING_COUNT] = {
   { 82.41f },
@@ -55,6 +64,8 @@ static const StaticTunerState tunerExpectedStates[STATIC_TUNER_TESTS_PER_STRING]
   STATIC_TUNER_STATE_IN_TUNE,
   STATIC_TUNER_STATE_SHARP
 };
+
+static float StaticTuner_GetMean(const int16_t *samples, uint32_t length);
 
 static float StaticTuner_AbsF(float value)
 {
@@ -91,6 +102,168 @@ static uint32_t StaticTuner_GetOffsetIndex(uint32_t test_index)
 static uint32_t StaticTuner_IsValidTest(uint32_t test_index)
 {
   return test_index < STATIC_TUNER_TEST_COUNT;
+}
+
+static uint32_t StaticTuner_FftBinFromHz(float frequency_hz)
+{
+  return (uint32_t)((frequency_hz / STATIC_TUNER_FFT_BIN_HZ) + 0.5f);
+}
+
+static float StaticTuner_GetFftMagnitude(uint32_t bin)
+{
+  float real;
+  float imag;
+
+  if (bin == 0U)
+  {
+    real = tunerFftOutput[0];
+    imag = 0.0f;
+  }
+  else if (bin == (STATIC_TUNER_FRAME_LENGTH / 2U))
+  {
+    real = tunerFftOutput[1];
+    imag = 0.0f;
+  }
+  else
+  {
+    real = tunerFftOutput[2U * bin];
+    imag = tunerFftOutput[(2U * bin) + 1U];
+  }
+
+  return sqrtf((real * real) + (imag * imag));
+}
+
+static float StaticTuner_GetLocalFftMagnitude(float frequency_hz)
+{
+  uint32_t center_bin = StaticTuner_FftBinFromHz(frequency_hz);
+  uint32_t max_bin = STATIC_TUNER_FRAME_LENGTH / 2U;
+  uint32_t first_bin = (center_bin > 1U) ? (center_bin - 1U) : center_bin;
+  uint32_t last_bin = center_bin + 1U;
+  float best_magnitude = 0.0f;
+
+  if (last_bin > max_bin)
+  {
+    last_bin = max_bin;
+  }
+
+  for (uint32_t bin = first_bin; bin <= last_bin; bin++)
+  {
+    float magnitude = StaticTuner_GetFftMagnitude(bin);
+
+    if (magnitude > best_magnitude)
+    {
+      best_magnitude = magnitude;
+    }
+  }
+
+  return best_magnitude;
+}
+
+static void StaticTuner_UpdateFftDiagnostics(const int16_t *samples,
+                                             uint32_t length)
+{
+  float mean = StaticTuner_GetMean(samples, length);
+  uint32_t peak_bin = 0U;
+  float peak_magnitude = 0.0f;
+  uint32_t max_graph_bin =
+      StaticTuner_FftBinFromHz((float)STATIC_TUNER_SPECTRUM_MAX_HZ);
+
+  if (tunerFftInitialized == 0U)
+  {
+    if (arm_rfft_fast_init_f32(&tunerFftInstance,
+                               STATIC_TUNER_FRAME_LENGTH) != ARM_MATH_SUCCESS)
+    {
+      tunerDiag.last_error = 2U;
+      return;
+    }
+
+    tunerFftInitialized = 1U;
+  }
+
+  for (uint32_t i = 0U; i < STATIC_TUNER_FRAME_LENGTH; i++)
+  {
+    float window =
+        0.5f -
+        (0.5f * arm_cos_f32(STATIC_TUNER_TWO_PI *
+                            (float)i /
+                            (float)(STATIC_TUNER_FRAME_LENGTH - 1U)));
+
+    tunerFftInput[i] = ((float)samples[i] - mean) * window;
+  }
+
+  arm_rfft_fast_f32(&tunerFftInstance, tunerFftInput, tunerFftOutput, 0);
+
+  tunerDiag.fft_low_e_mag =
+      StaticTuner_GetLocalFftMagnitude(tunerStrings[STATIC_TUNER_STRING_LOW_E].frequency_hz);
+  tunerDiag.fft_a_mag =
+      StaticTuner_GetLocalFftMagnitude(tunerStrings[STATIC_TUNER_STRING_A].frequency_hz);
+  tunerDiag.fft_d_mag =
+      StaticTuner_GetLocalFftMagnitude(tunerStrings[STATIC_TUNER_STRING_D].frequency_hz);
+  tunerDiag.fft_g_mag =
+      StaticTuner_GetLocalFftMagnitude(tunerStrings[STATIC_TUNER_STRING_G].frequency_hz);
+  tunerDiag.fft_b_mag =
+      StaticTuner_GetLocalFftMagnitude(tunerStrings[STATIC_TUNER_STRING_B].frequency_hz);
+  tunerDiag.fft_high_e_mag =
+      StaticTuner_GetLocalFftMagnitude(tunerStrings[STATIC_TUNER_STRING_HIGH_E].frequency_hz);
+
+  tunerFftStringMagnitudes[STATIC_TUNER_STRING_LOW_E] = tunerDiag.fft_low_e_mag;
+  tunerFftStringMagnitudes[STATIC_TUNER_STRING_A] = tunerDiag.fft_a_mag;
+  tunerFftStringMagnitudes[STATIC_TUNER_STRING_D] = tunerDiag.fft_d_mag;
+  tunerFftStringMagnitudes[STATIC_TUNER_STRING_G] = tunerDiag.fft_g_mag;
+  tunerFftStringMagnitudes[STATIC_TUNER_STRING_B] = tunerDiag.fft_b_mag;
+  tunerFftStringMagnitudes[STATIC_TUNER_STRING_HIGH_E] = tunerDiag.fft_high_e_mag;
+
+  if (max_graph_bin >= (STATIC_TUNER_FRAME_LENGTH / 2U))
+  {
+    max_graph_bin = (STATIC_TUNER_FRAME_LENGTH / 2U) - 1U;
+  }
+
+  for (uint32_t i = 0U; i < STATIC_TUNER_SPECTRUM_BIN_COUNT; i++)
+  {
+    uint32_t first_bin =
+        (i * max_graph_bin) / STATIC_TUNER_SPECTRUM_BIN_COUNT;
+    uint32_t last_bin =
+        ((i + 1U) * max_graph_bin) / STATIC_TUNER_SPECTRUM_BIN_COUNT;
+    float max_magnitude = 0.0f;
+
+    if (first_bin == 0U)
+    {
+      first_bin = 1U;
+    }
+
+    if (last_bin < first_bin)
+    {
+      last_bin = first_bin;
+    }
+
+    for (uint32_t bin = first_bin; bin <= last_bin; bin++)
+    {
+      float magnitude = StaticTuner_GetFftMagnitude(bin);
+
+      if (magnitude > max_magnitude)
+      {
+        max_magnitude = magnitude;
+      }
+
+    }
+
+    tunerSpectrum64[i] = max_magnitude;
+  }
+
+  for (uint32_t bin = 1U; bin <= max_graph_bin; bin++)
+  {
+    float magnitude = StaticTuner_GetFftMagnitude(bin);
+
+    if (magnitude > peak_magnitude)
+    {
+      peak_magnitude = magnitude;
+      peak_bin = bin;
+    }
+  }
+
+  tunerDiag.fft_peak_bin = peak_bin;
+  tunerDiag.fft_peak_hz = (float)peak_bin * STATIC_TUNER_FFT_BIN_HZ;
+  tunerDiag.fft_peak_mag = peak_magnitude;
 }
 
 static uint32_t StaticTuner_GetSignalAmplitude(const int16_t *samples,
@@ -365,6 +538,7 @@ void StaticTuner_RunSelectedTest(uint32_t test_index)
                            cents_offset_x10,
                            tunerStaticInput,
                            STATIC_TUNER_FRAME_LENGTH);
+  StaticTuner_UpdateFftDiagnostics(tunerStaticInput, STATIC_TUNER_FRAME_LENGTH);
   StaticTuner_Analyze(tunerStaticInput, STATIC_TUNER_FRAME_LENGTH, &result);
   StaticTuner_PublishResult(test_index,
                             string_index,
@@ -391,7 +565,7 @@ void StaticTuner_Init(void)
   tunerDiag.initialized = 1U;
   tunerDiag.last_error = 0U;
   tunerSelectedTest = 16U;
-  tunerRunRequest = 1U;
+  tunerRunRequest = 0U;
   StaticTuner_RunAllTests();
   StaticTuner_RunSelectedTest(tunerSelectedTest);
 }

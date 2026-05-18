@@ -9,6 +9,8 @@
 #define STATIC_TUNER_TESTS_PER_STRING     3U
 #define STATIC_TUNER_TEST_COUNT           \
   (STATIC_TUNER_STRING_COUNT * STATIC_TUNER_TESTS_PER_STRING)
+#define STATIC_TUNER_SPECTRUM_BIN_COUNT   64U
+#define STATIC_TUNER_SPECTRUM_MAX_HZ      500U
 #define STATIC_TUNER_RUN_ALL_TESTS        0xFFFFFFFFU
 #define STATIC_TUNER_IN_TUNE_LIMIT_X10    50
 
@@ -51,12 +53,23 @@ typedef struct
   volatile float detected_hz;
   volatile float target_hz;
   volatile float confidence;
+  volatile float fft_low_e_mag;
+  volatile float fft_a_mag;
+  volatile float fft_d_mag;
+  volatile float fft_g_mag;
+  volatile float fft_b_mag;
+  volatile float fft_high_e_mag;
+  volatile float fft_peak_hz;
+  volatile float fft_peak_mag;
   volatile uint32_t signal_amplitude;
   volatile uint32_t yin_tau;
+  volatile uint32_t fft_peak_bin;
   volatile uint32_t last_error;
 } StaticTunerDiagnostics;
 
 extern int16_t tunerStaticInput[STATIC_TUNER_FRAME_LENGTH];
+extern volatile float tunerFftStringMagnitudes[STATIC_TUNER_STRING_COUNT];
+extern volatile float tunerSpectrum64[STATIC_TUNER_SPECTRUM_BIN_COUNT];
 extern volatile StaticTunerDiagnostics tunerDiag;
 extern volatile uint32_t tunerSelectedTest;
 extern volatile uint32_t tunerRunRequest;

@@ -21,8 +21,30 @@ Add these to Live Expressions:
 - `tunerDiag.detected_hz`
 - `tunerDiag.cents_error_x10`
 - `tunerDiag.confidence`
+- `tunerDiag.fft_low_e_mag`
+- `tunerDiag.fft_a_mag`
+- `tunerDiag.fft_d_mag`
+- `tunerDiag.fft_g_mag`
+- `tunerDiag.fft_b_mag`
+- `tunerDiag.fft_high_e_mag`
+- `tunerDiag.fft_peak_hz`
+- `tunerDiag.fft_peak_mag`
 - `tunerDiag.signal_amplitude`
 - `tunerDiag.yin_tau`
+- `tunerDiag.fft_peak_bin`
+
+For graph-style views, also add individual spectrum entries:
+
+- `tunerSpectrum64[0]`
+- `tunerSpectrum64[10]`
+- `tunerSpectrum64[20]`
+- `tunerSpectrum64[30]`
+- `tunerSpectrum64[40]`
+- `tunerSpectrum64[50]`
+
+`tunerSpectrum64` spans about 0 to 500 Hz, so each entry represents roughly
+7.8 Hz. The six named `fft_*_mag` fields are easier for SWV timeline graphs
+focused on standard guitar strings.
 
 ## Test Index Map
 
@@ -62,7 +84,8 @@ The in-tune tolerance is `+/-5 cents`, reported as `+/-50` in
 
 ## Running Tests
 
-At startup, all 18 tests run once. `fail_count` should stay at `0`.
+At startup, all 18 tests run once, then the selected display test is refreshed.
+`fail_count` should stay at `0`.
 
 To rerun one test:
 
@@ -70,3 +93,14 @@ To rerun one test:
 2. Set `tunerRunRequest` to `1`.
 
 To rerun all tests, set `tunerRunRequest` to `0xFFFFFFFF`.
+
+## FFT View
+
+The firmware computes an FFT after each generated test input and exposes:
+
+- six string-focused magnitudes in `tunerDiag.fft_*_mag`
+- a compact 64-point graph array in `tunerSpectrum64`
+- the strongest low-frequency bin in `tunerDiag.fft_peak_hz`
+
+For example, with `tunerSelectedTest = 16`, high E in tune, the high-E
+magnitude and peak should dominate near 330 Hz.
