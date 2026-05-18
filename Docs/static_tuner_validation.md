@@ -128,6 +128,10 @@ The branch now runs a second detector based on CMSIS-DSP
 `tunerDiag.detected_hz`, `tunerDiag.cents_error_x10`, and
 `tunerDiag.tuning_state`.
 
+The correlation detector uses a 2048-sample frame and chooses the first strong
+autocorrelation peak. This avoids octave errors where a later, larger peak
+would report half the real frequency.
+
 The correlation result is published separately:
 
 - `tunerDiag.corr_detected_hz`

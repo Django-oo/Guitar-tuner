@@ -14,10 +14,11 @@
 #define STATIC_TUNER_TWO_PI           (2.0f * STATIC_TUNER_PI)
 #define STATIC_TUNER_FFT_BIN_HZ       \
   ((float)STATIC_TUNER_SAMPLE_RATE_HZ / (float)STATIC_TUNER_FRAME_LENGTH)
-#define STATIC_TUNER_CORR_FRAME_LENGTH 1024U
+#define STATIC_TUNER_CORR_FRAME_LENGTH 2048U
 #define STATIC_TUNER_CORR_OUTPUT_LENGTH \
   ((2U * STATIC_TUNER_CORR_FRAME_LENGTH) - 1U)
 #define STATIC_TUNER_CORR_MIN_CONFIDENCE 0.30f
+#define STATIC_TUNER_CORR_FIRST_PEAK_RATIO 0.75f
 
 typedef struct
 {
@@ -531,6 +532,29 @@ static void StaticTuner_AnalyzeCorrelation(const int16_t *samples,
   {
     result->corr_state = STATIC_TUNER_STATE_ERROR;
     return;
+  }
+
+  for (uint32_t tau = min_lag; tau <= max_lag; tau++)
+  {
+    float previous = StaticTuner_GetCorrScore(tau - 1U, zero_lag);
+    float current = StaticTuner_GetCorrScore(tau, zero_lag);
+    float next = StaticTuner_GetCorrScore(tau + 1U, zero_lag);
+    float strong_peak_threshold =
+        best_score * STATIC_TUNER_CORR_FIRST_PEAK_RATIO;
+
+    if (strong_peak_threshold < STATIC_TUNER_CORR_MIN_CONFIDENCE)
+    {
+      strong_peak_threshold = STATIC_TUNER_CORR_MIN_CONFIDENCE;
+    }
+
+    if ((current >= previous) &&
+        (current >= next) &&
+        (current >= strong_peak_threshold))
+    {
+      best_score = current;
+      best_tau = tau;
+      break;
+    }
   }
 
   {
