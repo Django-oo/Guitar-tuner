@@ -40,6 +40,16 @@ Add these to Live Expressions:
 - `tunerDiag.real_replay_frame_start`
 - `tunerDiag.real_replay_time_ms`
 - `tunerDiag.real_replay_loop_count`
+- `tunerDiag.real_sequence_done`
+- `tunerDiag.real_sequence_frame_count`
+- `tunerDiag.real_sequence_confident_count`
+- `tunerDiag.real_sequence_unknown_count`
+- `tunerDiag.real_sequence_low_e_count`
+- `tunerDiag.real_sequence_a_count`
+- `tunerDiag.real_sequence_d_count`
+- `tunerDiag.real_sequence_g_count`
+- `tunerDiag.real_sequence_b_count`
+- `tunerDiag.real_sequence_high_e_count`
 - `tunerDiag.real_sample_checksum`
 - `tunerDiag.fft_low_e_mag`
 - `tunerDiag.fft_a_mag`
@@ -133,6 +143,35 @@ you where the current frame starts inside the embedded excerpt.
 Real-audio runs do not increment `pass_count` or `fail_count`, because the WAV
 is an external recording, not one of the 18 synthetic flat/in-tune/sharp test
 cases.
+
+## Real Replay Sequence
+
+The firmware stores one full replay pass in history arrays. The replay has 29
+overlapping frames:
+
+- `tunerRealHistoryTimeMs[i]`
+- `tunerRealHistoryString[i]`
+- `tunerRealHistoryState[i]`
+- `tunerRealHistoryHz[i]`
+- `tunerRealHistoryCentsX10[i]`
+- `tunerRealHistoryConfidence[i]`
+
+When `tunerDiag.real_sequence_done` becomes `1`, entries `0` to
+`tunerDiag.real_sequence_frame_count - 1` contain the detected sequence for one
+full pass through the embedded excerpt.
+
+String values are:
+
+- `0`: low E
+- `1`: A
+- `2`: D
+- `3`: G
+- `4`: B
+- `5`: high E
+- `255`: unknown or low-confidence frame
+
+The summary counters show the distribution of detected strings across the pass,
+for example `real_sequence_a_count` and `real_sequence_d_count`.
 
 ## Test Index Map
 

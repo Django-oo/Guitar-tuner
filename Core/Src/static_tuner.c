@@ -47,6 +47,12 @@ typedef struct
 int16_t tunerStaticInput[STATIC_TUNER_FRAME_LENGTH];
 volatile float tunerFftStringMagnitudes[STATIC_TUNER_STRING_COUNT];
 volatile float tunerSpectrum64[STATIC_TUNER_SPECTRUM_BIN_COUNT];
+volatile uint32_t tunerRealHistoryTimeMs[STATIC_TUNER_REAL_HISTORY_LENGTH];
+volatile uint32_t tunerRealHistoryString[STATIC_TUNER_REAL_HISTORY_LENGTH];
+volatile uint32_t tunerRealHistoryState[STATIC_TUNER_REAL_HISTORY_LENGTH];
+volatile float tunerRealHistoryHz[STATIC_TUNER_REAL_HISTORY_LENGTH];
+volatile int32_t tunerRealHistoryCentsX10[STATIC_TUNER_REAL_HISTORY_LENGTH];
+volatile float tunerRealHistoryConfidence[STATIC_TUNER_REAL_HISTORY_LENGTH];
 volatile float tunerGraphLowE;
 volatile float tunerGraphA;
 volatile float tunerGraphD;
@@ -112,6 +118,104 @@ static const StaticTunerState tunerExpectedStates[STATIC_TUNER_TESTS_PER_STRING]
 };
 
 static float StaticTuner_GetMean(const int16_t *samples, uint32_t length);
+
+static void StaticTuner_ResetRealSequence(void)
+{
+  tunerDiag.real_sequence_done = 0U;
+  tunerDiag.real_sequence_frame_count = 0U;
+  tunerDiag.real_sequence_confident_count = 0U;
+  tunerDiag.real_sequence_unknown_count = 0U;
+  tunerDiag.real_sequence_low_e_count = 0U;
+  tunerDiag.real_sequence_a_count = 0U;
+  tunerDiag.real_sequence_d_count = 0U;
+  tunerDiag.real_sequence_g_count = 0U;
+  tunerDiag.real_sequence_b_count = 0U;
+  tunerDiag.real_sequence_high_e_count = 0U;
+
+  for (uint32_t i = 0U; i < STATIC_TUNER_REAL_HISTORY_LENGTH; i++)
+  {
+    tunerRealHistoryTimeMs[i] = 0U;
+    tunerRealHistoryString[i] = STATIC_TUNER_STRING_UNKNOWN;
+    tunerRealHistoryState[i] = STATIC_TUNER_STATE_UNDEFINED;
+    tunerRealHistoryHz[i] = 0.0f;
+    tunerRealHistoryCentsX10[i] = 0;
+    tunerRealHistoryConfidence[i] = 0.0f;
+  }
+}
+
+static void StaticTuner_CountRealSequenceString(uint32_t string_index)
+{
+  switch (string_index)
+  {
+    case STATIC_TUNER_STRING_LOW_E:
+      tunerDiag.real_sequence_low_e_count++;
+      break;
+
+    case STATIC_TUNER_STRING_A:
+      tunerDiag.real_sequence_a_count++;
+      break;
+
+    case STATIC_TUNER_STRING_D:
+      tunerDiag.real_sequence_d_count++;
+      break;
+
+    case STATIC_TUNER_STRING_G:
+      tunerDiag.real_sequence_g_count++;
+      break;
+
+    case STATIC_TUNER_STRING_B:
+      tunerDiag.real_sequence_b_count++;
+      break;
+
+    case STATIC_TUNER_STRING_HIGH_E:
+      tunerDiag.real_sequence_high_e_count++;
+      break;
+
+    default:
+      tunerDiag.real_sequence_unknown_count++;
+      break;
+  }
+}
+
+static void StaticTuner_RecordRealSequenceFrame(const StaticTunerResult *result)
+{
+  uint32_t index = tunerDiag.real_replay_frame_index;
+  uint32_t detected_string = result->detected_string;
+
+  if (index >= STATIC_TUNER_REAL_HISTORY_LENGTH)
+  {
+    return;
+  }
+
+  if (index == 0U)
+  {
+    StaticTuner_ResetRealSequence();
+  }
+
+  if (result->confidence < 0.70f)
+  {
+    detected_string = STATIC_TUNER_STRING_UNKNOWN;
+  }
+  else
+  {
+    tunerDiag.real_sequence_confident_count++;
+  }
+
+  tunerRealHistoryTimeMs[index] = tunerDiag.real_replay_time_ms;
+  tunerRealHistoryString[index] = detected_string;
+  tunerRealHistoryState[index] = result->state;
+  tunerRealHistoryHz[index] = result->detected_hz;
+  tunerRealHistoryCentsX10[index] = result->cents_error_x10;
+  tunerRealHistoryConfidence[index] = result->confidence;
+
+  tunerDiag.real_sequence_frame_count = index + 1U;
+  StaticTuner_CountRealSequenceString(detected_string);
+
+  if ((index + 1U) >= STATIC_TUNER_REAL_HISTORY_LENGTH)
+  {
+    tunerDiag.real_sequence_done = 1U;
+  }
+}
 
 static float StaticTuner_AbsF(float value)
 {
@@ -873,6 +977,11 @@ void StaticTuner_RunSelectedTest(uint32_t test_index)
 
   StaticTuner_UpdateFftDiagnostics(tunerStaticInput, STATIC_TUNER_FRAME_LENGTH);
   StaticTuner_Analyze(tunerStaticInput, STATIC_TUNER_FRAME_LENGTH, &result);
+  if (input_source == STATIC_TUNER_INPUT_REAL)
+  {
+    StaticTuner_RecordRealSequenceFrame(&result);
+  }
+
   StaticTuner_PublishResult(test_index,
                             expected_string,
                             expected_state,
@@ -917,6 +1026,7 @@ void StaticTuner_Init(void)
   tunerDiag.real_replay_time_ms = 0U;
   tunerRealReplayFrameStart = 0U;
   tunerRealReplayFrameIndex = 0U;
+  StaticTuner_ResetRealSequence();
   tunerRealAudioMetadataKeepAlive =
       (uint32_t)tunerRealAudioSourceFileKeep[0] +
       (uint32_t)tunerRealAudioSourceUrlKeep[0] +

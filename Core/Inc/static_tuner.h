@@ -16,6 +16,8 @@
 #define STATIC_TUNER_INPUT_SYNTH          0U
 #define STATIC_TUNER_INPUT_REAL           1U
 #define STATIC_TUNER_REAL_REPLAY_HOP      1024U
+#define STATIC_TUNER_REAL_HISTORY_LENGTH  \
+  (((32768U - STATIC_TUNER_FRAME_LENGTH) / STATIC_TUNER_REAL_REPLAY_HOP) + 1U)
 
 typedef enum
 {
@@ -84,6 +86,16 @@ typedef struct
   volatile uint32_t real_replay_frame_start;
   volatile uint32_t real_replay_time_ms;
   volatile uint32_t real_replay_loop_count;
+  volatile uint32_t real_sequence_done;
+  volatile uint32_t real_sequence_frame_count;
+  volatile uint32_t real_sequence_confident_count;
+  volatile uint32_t real_sequence_unknown_count;
+  volatile uint32_t real_sequence_low_e_count;
+  volatile uint32_t real_sequence_a_count;
+  volatile uint32_t real_sequence_d_count;
+  volatile uint32_t real_sequence_g_count;
+  volatile uint32_t real_sequence_b_count;
+  volatile uint32_t real_sequence_high_e_count;
   volatile uint32_t real_sample_checksum;
   volatile uint32_t fft_peak_bin;
   volatile uint32_t last_error;
@@ -92,6 +104,12 @@ typedef struct
 extern int16_t tunerStaticInput[STATIC_TUNER_FRAME_LENGTH];
 extern volatile float tunerFftStringMagnitudes[STATIC_TUNER_STRING_COUNT];
 extern volatile float tunerSpectrum64[STATIC_TUNER_SPECTRUM_BIN_COUNT];
+extern volatile uint32_t tunerRealHistoryTimeMs[STATIC_TUNER_REAL_HISTORY_LENGTH];
+extern volatile uint32_t tunerRealHistoryString[STATIC_TUNER_REAL_HISTORY_LENGTH];
+extern volatile uint32_t tunerRealHistoryState[STATIC_TUNER_REAL_HISTORY_LENGTH];
+extern volatile float tunerRealHistoryHz[STATIC_TUNER_REAL_HISTORY_LENGTH];
+extern volatile int32_t tunerRealHistoryCentsX10[STATIC_TUNER_REAL_HISTORY_LENGTH];
+extern volatile float tunerRealHistoryConfidence[STATIC_TUNER_REAL_HISTORY_LENGTH];
 extern volatile float tunerGraphLowE;
 extern volatile float tunerGraphA;
 extern volatile float tunerGraphD;

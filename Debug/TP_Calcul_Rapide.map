@@ -4650,7 +4650,7 @@ LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.extern
                 0x08000000                g_pfnVectors
                 0x080001c4                        . = ALIGN (0x4)
 
-.text           0x080001c4     0x59f4
+.text           0x080001c4     0x5c74
                 0x080001c4                        . = ALIGN (0x4)
  *(.text)
  .text          0x080001c4       0x40 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
@@ -4694,526 +4694,532 @@ LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.extern
  .text.Error_Handler
                 0x08000a9c        0xc ./Core/Src/main.o
                 0x08000a9c                Error_Handler
+ .text.StaticTuner_ResetRealSequence
+                0x08000aa8       0xd8 ./Core/Src/static_tuner.o
+ .text.StaticTuner_CountRealSequenceString
+                0x08000b80       0xac ./Core/Src/static_tuner.o
+ .text.StaticTuner_RecordRealSequenceFrame
+                0x08000c2c       0xe8 ./Core/Src/static_tuner.o
  .text.StaticTuner_AbsF
-                0x08000aa8       0x34 ./Core/Src/static_tuner.o
+                0x08000d14       0x34 ./Core/Src/static_tuner.o
  .text.StaticTuner_RoundToI32
-                0x08000adc       0x4a ./Core/Src/static_tuner.o
- *fill*         0x08000b26        0x2 
+                0x08000d48       0x4a ./Core/Src/static_tuner.o
+ *fill*         0x08000d92        0x2 
  .text.StaticTuner_CentsFactor
-                0x08000b28       0x48 ./Core/Src/static_tuner.o
+                0x08000d94       0x48 ./Core/Src/static_tuner.o
  .text.StaticTuner_GetStringIndex
-                0x08000b70       0x24 ./Core/Src/static_tuner.o
+                0x08000ddc       0x24 ./Core/Src/static_tuner.o
  .text.StaticTuner_GetOffsetIndex
-                0x08000b94       0x2c ./Core/Src/static_tuner.o
+                0x08000e00       0x2c ./Core/Src/static_tuner.o
  .text.StaticTuner_IsValidTest
-                0x08000bc0       0x20 ./Core/Src/static_tuner.o
+                0x08000e2c       0x20 ./Core/Src/static_tuner.o
  .text.StaticTuner_FftBinFromHz
-                0x08000be0       0x38 ./Core/Src/static_tuner.o
+                0x08000e4c       0x38 ./Core/Src/static_tuner.o
  .text.StaticTuner_GetFftMagnitude
-                0x08000c18       0x80 ./Core/Src/static_tuner.o
+                0x08000e84       0x80 ./Core/Src/static_tuner.o
  .text.StaticTuner_GetLocalFftMagnitude
-                0x08000c98       0x86 ./Core/Src/static_tuner.o
- *fill*         0x08000d1e        0x2 
+                0x08000f04       0x86 ./Core/Src/static_tuner.o
+ *fill*         0x08000f8a        0x2 
  .text.StaticTuner_UpdateFftDiagnostics
-                0x08000d20      0x330 ./Core/Src/static_tuner.o
+                0x08000f8c      0x330 ./Core/Src/static_tuner.o
  .text.StaticTuner_GetSignalAmplitude
-                0x08001050       0x80 ./Core/Src/static_tuner.o
+                0x080012bc       0x80 ./Core/Src/static_tuner.o
  .text.StaticTuner_GenerateTone
-                0x080010d0      0x174 ./Core/Src/static_tuner.o
+                0x0800133c      0x174 ./Core/Src/static_tuner.o
  .text.StaticTuner_LoadRealAudioInput
-                0x08001244      0x144 ./Core/Src/static_tuner.o
+                0x080014b0      0x144 ./Core/Src/static_tuner.o
  .text.StaticTuner_GetMean
-                0x08001388       0x7a ./Core/Src/static_tuner.o
- *fill*         0x08001402        0x2 
+                0x080015f4       0x7a ./Core/Src/static_tuner.o
+ *fill*         0x0800166e        0x2 
  .text.StaticTuner_FindNearestString
-                0x08001404       0x7c ./Core/Src/static_tuner.o
+                0x08001670       0x7c ./Core/Src/static_tuner.o
  .text.StaticTuner_InterpolateTau
-                0x08001480       0xc4 ./Core/Src/static_tuner.o
+                0x080016ec       0xc4 ./Core/Src/static_tuner.o
  .text.StaticTuner_GetTuningState
-                0x08001544       0x2c ./Core/Src/static_tuner.o
+                0x080017b0       0x2c ./Core/Src/static_tuner.o
  .text.StaticTuner_FillPitchResult
-                0x08001570       0x98 ./Core/Src/static_tuner.o
+                0x080017dc       0x98 ./Core/Src/static_tuner.o
  .text.StaticTuner_GetCorrScore
-                0x08001608       0x8c ./Core/Src/static_tuner.o
+                0x08001874       0x8c ./Core/Src/static_tuner.o
  .text.StaticTuner_AnalyzeCorrelation
-                0x08001694      0x3a0 ./Core/Src/static_tuner.o
+                0x08001900      0x3a0 ./Core/Src/static_tuner.o
  .text.StaticTuner_Analyze
-                0x08001a34      0x298 ./Core/Src/static_tuner.o
+                0x08001ca0      0x298 ./Core/Src/static_tuner.o
  .text.StaticTuner_PublishResult
-                0x08001ccc      0x160 ./Core/Src/static_tuner.o
+                0x08001f38      0x160 ./Core/Src/static_tuner.o
  .text.StaticTuner_RunSelectedTest
-                0x08001e2c      0x11c ./Core/Src/static_tuner.o
-                0x08001e2c                StaticTuner_RunSelectedTest
+                0x08002098      0x12c ./Core/Src/static_tuner.o
+                0x08002098                StaticTuner_RunSelectedTest
  .text.StaticTuner_RunAllTests
-                0x08001f48       0x54 ./Core/Src/static_tuner.o
-                0x08001f48                StaticTuner_RunAllTests
+                0x080021c4       0x54 ./Core/Src/static_tuner.o
+                0x080021c4                StaticTuner_RunAllTests
  .text.StaticTuner_Init
-                0x08001f9c      0x12c ./Core/Src/static_tuner.o
-                0x08001f9c                StaticTuner_Init
+                0x08002218      0x130 ./Core/Src/static_tuner.o
+                0x08002218                StaticTuner_Init
  .text.StaticTuner_Task
-                0x080020c8       0xa4 ./Core/Src/static_tuner.o
-                0x080020c8                StaticTuner_Task
+                0x08002348       0xa4 ./Core/Src/static_tuner.o
+                0x08002348                StaticTuner_Task
  .text.HAL_MspInit
-                0x0800216c       0x50 ./Core/Src/stm32f4xx_hal_msp.o
-                0x0800216c                HAL_MspInit
+                0x080023ec       0x50 ./Core/Src/stm32f4xx_hal_msp.o
+                0x080023ec                HAL_MspInit
  .text.HAL_TIM_Base_MspInit
-                0x080021bc       0x78 ./Core/Src/stm32f4xx_hal_msp.o
-                0x080021bc                HAL_TIM_Base_MspInit
+                0x0800243c       0x78 ./Core/Src/stm32f4xx_hal_msp.o
+                0x0800243c                HAL_TIM_Base_MspInit
  .text.HAL_UART_MspInit
-                0x08002234       0x90 ./Core/Src/stm32f4xx_hal_msp.o
-                0x08002234                HAL_UART_MspInit
+                0x080024b4       0x90 ./Core/Src/stm32f4xx_hal_msp.o
+                0x080024b4                HAL_UART_MspInit
  .text.HAL_InitTick
-                0x080022c4       0xe4 ./Core/Src/stm32f4xx_hal_timebase_tim.o
-                0x080022c4                HAL_InitTick
+                0x08002544       0xe4 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+                0x08002544                HAL_InitTick
  .text.NMI_Handler
-                0x080023a8        0x8 ./Core/Src/stm32f4xx_it.o
-                0x080023a8                NMI_Handler
+                0x08002628        0x8 ./Core/Src/stm32f4xx_it.o
+                0x08002628                NMI_Handler
  .text.HardFault_Handler
-                0x080023b0        0x8 ./Core/Src/stm32f4xx_it.o
-                0x080023b0                HardFault_Handler
+                0x08002630        0x8 ./Core/Src/stm32f4xx_it.o
+                0x08002630                HardFault_Handler
  .text.MemManage_Handler
-                0x080023b8        0x8 ./Core/Src/stm32f4xx_it.o
-                0x080023b8                MemManage_Handler
+                0x08002638        0x8 ./Core/Src/stm32f4xx_it.o
+                0x08002638                MemManage_Handler
  .text.BusFault_Handler
-                0x080023c0        0x8 ./Core/Src/stm32f4xx_it.o
-                0x080023c0                BusFault_Handler
+                0x08002640        0x8 ./Core/Src/stm32f4xx_it.o
+                0x08002640                BusFault_Handler
  .text.UsageFault_Handler
-                0x080023c8        0x8 ./Core/Src/stm32f4xx_it.o
-                0x080023c8                UsageFault_Handler
+                0x08002648        0x8 ./Core/Src/stm32f4xx_it.o
+                0x08002648                UsageFault_Handler
  .text.SVC_Handler
-                0x080023d0        0xe ./Core/Src/stm32f4xx_it.o
-                0x080023d0                SVC_Handler
+                0x08002650        0xe ./Core/Src/stm32f4xx_it.o
+                0x08002650                SVC_Handler
  .text.DebugMon_Handler
-                0x080023de        0xe ./Core/Src/stm32f4xx_it.o
-                0x080023de                DebugMon_Handler
+                0x0800265e        0xe ./Core/Src/stm32f4xx_it.o
+                0x0800265e                DebugMon_Handler
  .text.PendSV_Handler
-                0x080023ec        0xe ./Core/Src/stm32f4xx_it.o
-                0x080023ec                PendSV_Handler
+                0x0800266c        0xe ./Core/Src/stm32f4xx_it.o
+                0x0800266c                PendSV_Handler
  .text.SysTick_Handler
-                0x080023fa        0xe ./Core/Src/stm32f4xx_it.o
-                0x080023fa                SysTick_Handler
+                0x0800267a        0xe ./Core/Src/stm32f4xx_it.o
+                0x0800267a                SysTick_Handler
  .text.DMA1_Stream5_IRQHandler
-                0x08002408       0x14 ./Core/Src/stm32f4xx_it.o
-                0x08002408                DMA1_Stream5_IRQHandler
+                0x08002688       0x14 ./Core/Src/stm32f4xx_it.o
+                0x08002688                DMA1_Stream5_IRQHandler
  .text.TIM1_UP_TIM10_IRQHandler
-                0x0800241c       0x14 ./Core/Src/stm32f4xx_it.o
-                0x0800241c                TIM1_UP_TIM10_IRQHandler
+                0x0800269c       0x14 ./Core/Src/stm32f4xx_it.o
+                0x0800269c                TIM1_UP_TIM10_IRQHandler
  .text.TIM7_IRQHandler
-                0x08002430       0x14 ./Core/Src/stm32f4xx_it.o
-                0x08002430                TIM7_IRQHandler
+                0x080026b0       0x14 ./Core/Src/stm32f4xx_it.o
+                0x080026b0                TIM7_IRQHandler
  .text.DMA2_Stream0_IRQHandler
-                0x08002444       0x14 ./Core/Src/stm32f4xx_it.o
-                0x08002444                DMA2_Stream0_IRQHandler
+                0x080026c4       0x14 ./Core/Src/stm32f4xx_it.o
+                0x080026c4                DMA2_Stream0_IRQHandler
  .text.SystemInit
-                0x08002458       0x24 ./Core/Src/system_stm32f4xx.o
-                0x08002458                SystemInit
+                0x080026d8       0x24 ./Core/Src/system_stm32f4xx.o
+                0x080026d8                SystemInit
  .text.Reset_Handler
-                0x0800247c       0x50 ./Core/Startup/startup_stm32f446retx.o
-                0x0800247c                Reset_Handler
+                0x080026fc       0x50 ./Core/Startup/startup_stm32f446retx.o
+                0x080026fc                Reset_Handler
  .text.Default_Handler
-                0x080024cc        0x2 ./Core/Startup/startup_stm32f446retx.o
-                0x080024cc                RTC_Alarm_IRQHandler
-                0x080024cc                EXTI2_IRQHandler
-                0x080024cc                TIM8_CC_IRQHandler
-                0x080024cc                FMPI2C1_EV_IRQHandler
-                0x080024cc                SPI4_IRQHandler
-                0x080024cc                TIM1_CC_IRQHandler
-                0x080024cc                DMA2_Stream5_IRQHandler
-                0x080024cc                PVD_IRQHandler
-                0x080024cc                SDIO_IRQHandler
-                0x080024cc                TAMP_STAMP_IRQHandler
-                0x080024cc                CAN2_RX1_IRQHandler
-                0x080024cc                EXTI3_IRQHandler
-                0x080024cc                TIM8_TRG_COM_TIM14_IRQHandler
-                0x080024cc                TIM8_UP_TIM13_IRQHandler
-                0x080024cc                I2C3_ER_IRQHandler
-                0x080024cc                EXTI0_IRQHandler
-                0x080024cc                I2C2_EV_IRQHandler
-                0x080024cc                DMA1_Stream2_IRQHandler
-                0x080024cc                CAN1_RX0_IRQHandler
-                0x080024cc                FPU_IRQHandler
-                0x080024cc                OTG_HS_WKUP_IRQHandler
-                0x080024cc                CAN2_SCE_IRQHandler
-                0x080024cc                DMA2_Stream2_IRQHandler
-                0x080024cc                SPI1_IRQHandler
-                0x080024cc                TIM6_DAC_IRQHandler
-                0x080024cc                TIM1_BRK_TIM9_IRQHandler
-                0x080024cc                DCMI_IRQHandler
-                0x080024cc                CAN2_RX0_IRQHandler
-                0x080024cc                DMA2_Stream3_IRQHandler
-                0x080024cc                SAI2_IRQHandler
-                0x080024cc                USART6_IRQHandler
-                0x080024cc                USART3_IRQHandler
-                0x080024cc                CAN1_RX1_IRQHandler
-                0x080024cc                UART5_IRQHandler
-                0x080024cc                TIM4_IRQHandler
-                0x080024cc                QUADSPI_IRQHandler
-                0x080024cc                I2C1_EV_IRQHandler
-                0x080024cc                DMA1_Stream6_IRQHandler
-                0x080024cc                DMA1_Stream1_IRQHandler
-                0x080024cc                UART4_IRQHandler
-                0x080024cc                TIM3_IRQHandler
-                0x080024cc                RCC_IRQHandler
-                0x080024cc                TIM8_BRK_TIM12_IRQHandler
-                0x080024cc                Default_Handler
-                0x080024cc                CEC_IRQHandler
-                0x080024cc                EXTI15_10_IRQHandler
-                0x080024cc                ADC_IRQHandler
-                0x080024cc                DMA1_Stream7_IRQHandler
-                0x080024cc                CAN2_TX_IRQHandler
-                0x080024cc                TIM5_IRQHandler
-                0x080024cc                DMA2_Stream7_IRQHandler
-                0x080024cc                I2C3_EV_IRQHandler
-                0x080024cc                EXTI9_5_IRQHandler
-                0x080024cc                RTC_WKUP_IRQHandler
-                0x080024cc                SPDIF_RX_IRQHandler
-                0x080024cc                SPI2_IRQHandler
-                0x080024cc                OTG_HS_EP1_IN_IRQHandler
-                0x080024cc                DMA1_Stream0_IRQHandler
-                0x080024cc                CAN1_TX_IRQHandler
-                0x080024cc                FMPI2C1_ER_IRQHandler
-                0x080024cc                EXTI4_IRQHandler
-                0x080024cc                OTG_HS_EP1_OUT_IRQHandler
-                0x080024cc                WWDG_IRQHandler
-                0x080024cc                TIM2_IRQHandler
-                0x080024cc                OTG_FS_WKUP_IRQHandler
-                0x080024cc                TIM1_TRG_COM_TIM11_IRQHandler
-                0x080024cc                OTG_HS_IRQHandler
-                0x080024cc                EXTI1_IRQHandler
-                0x080024cc                USART2_IRQHandler
-                0x080024cc                I2C2_ER_IRQHandler
-                0x080024cc                DMA2_Stream1_IRQHandler
-                0x080024cc                CAN1_SCE_IRQHandler
-                0x080024cc                FLASH_IRQHandler
-                0x080024cc                DMA2_Stream4_IRQHandler
-                0x080024cc                USART1_IRQHandler
-                0x080024cc                OTG_FS_IRQHandler
-                0x080024cc                SPI3_IRQHandler
-                0x080024cc                DMA1_Stream4_IRQHandler
-                0x080024cc                I2C1_ER_IRQHandler
-                0x080024cc                FMC_IRQHandler
-                0x080024cc                DMA2_Stream6_IRQHandler
-                0x080024cc                SAI1_IRQHandler
-                0x080024cc                DMA1_Stream3_IRQHandler
- *fill*         0x080024ce        0x2 
+                0x0800274c        0x2 ./Core/Startup/startup_stm32f446retx.o
+                0x0800274c                RTC_Alarm_IRQHandler
+                0x0800274c                EXTI2_IRQHandler
+                0x0800274c                TIM8_CC_IRQHandler
+                0x0800274c                FMPI2C1_EV_IRQHandler
+                0x0800274c                SPI4_IRQHandler
+                0x0800274c                TIM1_CC_IRQHandler
+                0x0800274c                DMA2_Stream5_IRQHandler
+                0x0800274c                PVD_IRQHandler
+                0x0800274c                SDIO_IRQHandler
+                0x0800274c                TAMP_STAMP_IRQHandler
+                0x0800274c                CAN2_RX1_IRQHandler
+                0x0800274c                EXTI3_IRQHandler
+                0x0800274c                TIM8_TRG_COM_TIM14_IRQHandler
+                0x0800274c                TIM8_UP_TIM13_IRQHandler
+                0x0800274c                I2C3_ER_IRQHandler
+                0x0800274c                EXTI0_IRQHandler
+                0x0800274c                I2C2_EV_IRQHandler
+                0x0800274c                DMA1_Stream2_IRQHandler
+                0x0800274c                CAN1_RX0_IRQHandler
+                0x0800274c                FPU_IRQHandler
+                0x0800274c                OTG_HS_WKUP_IRQHandler
+                0x0800274c                CAN2_SCE_IRQHandler
+                0x0800274c                DMA2_Stream2_IRQHandler
+                0x0800274c                SPI1_IRQHandler
+                0x0800274c                TIM6_DAC_IRQHandler
+                0x0800274c                TIM1_BRK_TIM9_IRQHandler
+                0x0800274c                DCMI_IRQHandler
+                0x0800274c                CAN2_RX0_IRQHandler
+                0x0800274c                DMA2_Stream3_IRQHandler
+                0x0800274c                SAI2_IRQHandler
+                0x0800274c                USART6_IRQHandler
+                0x0800274c                USART3_IRQHandler
+                0x0800274c                CAN1_RX1_IRQHandler
+                0x0800274c                UART5_IRQHandler
+                0x0800274c                TIM4_IRQHandler
+                0x0800274c                QUADSPI_IRQHandler
+                0x0800274c                I2C1_EV_IRQHandler
+                0x0800274c                DMA1_Stream6_IRQHandler
+                0x0800274c                DMA1_Stream1_IRQHandler
+                0x0800274c                UART4_IRQHandler
+                0x0800274c                TIM3_IRQHandler
+                0x0800274c                RCC_IRQHandler
+                0x0800274c                TIM8_BRK_TIM12_IRQHandler
+                0x0800274c                Default_Handler
+                0x0800274c                CEC_IRQHandler
+                0x0800274c                EXTI15_10_IRQHandler
+                0x0800274c                ADC_IRQHandler
+                0x0800274c                DMA1_Stream7_IRQHandler
+                0x0800274c                CAN2_TX_IRQHandler
+                0x0800274c                TIM5_IRQHandler
+                0x0800274c                DMA2_Stream7_IRQHandler
+                0x0800274c                I2C3_EV_IRQHandler
+                0x0800274c                EXTI9_5_IRQHandler
+                0x0800274c                RTC_WKUP_IRQHandler
+                0x0800274c                SPDIF_RX_IRQHandler
+                0x0800274c                SPI2_IRQHandler
+                0x0800274c                OTG_HS_EP1_IN_IRQHandler
+                0x0800274c                DMA1_Stream0_IRQHandler
+                0x0800274c                CAN1_TX_IRQHandler
+                0x0800274c                FMPI2C1_ER_IRQHandler
+                0x0800274c                EXTI4_IRQHandler
+                0x0800274c                OTG_HS_EP1_OUT_IRQHandler
+                0x0800274c                WWDG_IRQHandler
+                0x0800274c                TIM2_IRQHandler
+                0x0800274c                OTG_FS_WKUP_IRQHandler
+                0x0800274c                TIM1_TRG_COM_TIM11_IRQHandler
+                0x0800274c                OTG_HS_IRQHandler
+                0x0800274c                EXTI1_IRQHandler
+                0x0800274c                USART2_IRQHandler
+                0x0800274c                I2C2_ER_IRQHandler
+                0x0800274c                DMA2_Stream1_IRQHandler
+                0x0800274c                CAN1_SCE_IRQHandler
+                0x0800274c                FLASH_IRQHandler
+                0x0800274c                DMA2_Stream4_IRQHandler
+                0x0800274c                USART1_IRQHandler
+                0x0800274c                OTG_FS_IRQHandler
+                0x0800274c                SPI3_IRQHandler
+                0x0800274c                DMA1_Stream4_IRQHandler
+                0x0800274c                I2C1_ER_IRQHandler
+                0x0800274c                FMC_IRQHandler
+                0x0800274c                DMA2_Stream6_IRQHandler
+                0x0800274c                SAI1_IRQHandler
+                0x0800274c                DMA1_Stream3_IRQHandler
+ *fill*         0x0800274e        0x2 
  .text.HAL_Init
-                0x080024d0       0x44 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
-                0x080024d0                HAL_Init
+                0x08002750       0x44 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+                0x08002750                HAL_Init
  .text.HAL_IncTick
-                0x08002514       0x28 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
-                0x08002514                HAL_IncTick
+                0x08002794       0x28 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+                0x08002794                HAL_IncTick
  .text.HAL_GetTick
-                0x0800253c       0x18 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
-                0x0800253c                HAL_GetTick
+                0x080027bc       0x18 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+                0x080027bc                HAL_GetTick
  .text.NVIC_SetPriorityGrouping
-                0x08002554       0x48 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x080027d4       0x48 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
  .text.NVIC_GetPriorityGrouping
-                0x0800259c       0x1c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x0800281c       0x1c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
  .text.NVIC_EnableIRQ
-                0x080025b8       0x34 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x08002838       0x34 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
  .text.NVIC_SetPriority
-                0x080025ec       0x54 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x0800286c       0x54 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
  .text.NVIC_EncodePriority
-                0x08002640       0x66 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x080028c0       0x66 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
  .text.HAL_NVIC_SetPriorityGrouping
-                0x080026a6       0x16 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
-                0x080026a6                HAL_NVIC_SetPriorityGrouping
+                0x08002926       0x16 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x08002926                HAL_NVIC_SetPriorityGrouping
  .text.HAL_NVIC_SetPriority
-                0x080026bc       0x38 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
-                0x080026bc                HAL_NVIC_SetPriority
+                0x0800293c       0x38 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x0800293c                HAL_NVIC_SetPriority
  .text.HAL_NVIC_EnableIRQ
-                0x080026f4       0x1c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
-                0x080026f4                HAL_NVIC_EnableIRQ
+                0x08002974       0x1c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x08002974                HAL_NVIC_EnableIRQ
  .text.HAL_DMA_IRQHandler
-                0x08002710      0x314 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
-                0x08002710                HAL_DMA_IRQHandler
+                0x08002990      0x314 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+                0x08002990                HAL_DMA_IRQHandler
  .text.HAL_GPIO_Init
-                0x08002a24      0x328 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
-                0x08002a24                HAL_GPIO_Init
+                0x08002ca4      0x328 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+                0x08002ca4                HAL_GPIO_Init
  .text.HAL_GPIO_WritePin
-                0x08002d4c       0x32 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
-                0x08002d4c                HAL_GPIO_WritePin
+                0x08002fcc       0x32 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+                0x08002fcc                HAL_GPIO_WritePin
  .text.HAL_GPIO_TogglePin
-                0x08002d7e       0x34 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
-                0x08002d7e                HAL_GPIO_TogglePin
- *fill*         0x08002db2        0x2 
+                0x08002ffe       0x34 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+                0x08002ffe                HAL_GPIO_TogglePin
+ *fill*         0x08003032        0x2 
  .text.HAL_RCC_ClockConfig
-                0x08002db4      0x1cc ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
-                0x08002db4                HAL_RCC_ClockConfig
+                0x08003034      0x1cc ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+                0x08003034                HAL_RCC_ClockConfig
  .text.HAL_RCC_GetHCLKFreq
-                0x08002f80       0x18 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
-                0x08002f80                HAL_RCC_GetHCLKFreq
+                0x08003200       0x18 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+                0x08003200                HAL_RCC_GetHCLKFreq
  .text.HAL_RCC_GetPCLK1Freq
-                0x08002f98       0x28 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
-                0x08002f98                HAL_RCC_GetPCLK1Freq
+                0x08003218       0x28 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+                0x08003218                HAL_RCC_GetPCLK1Freq
  .text.HAL_RCC_GetPCLK2Freq
-                0x08002fc0       0x28 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
-                0x08002fc0                HAL_RCC_GetPCLK2Freq
+                0x08003240       0x28 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+                0x08003240                HAL_RCC_GetPCLK2Freq
  .text.HAL_RCC_GetClockConfig
-                0x08002fe8       0x64 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
-                0x08002fe8                HAL_RCC_GetClockConfig
+                0x08003268       0x64 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+                0x08003268                HAL_RCC_GetClockConfig
  .text.HAL_RCC_GetSysClockFreq
-                0x0800304c      0x460 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
-                0x0800304c                HAL_RCC_GetSysClockFreq
+                0x080032cc      0x460 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+                0x080032cc                HAL_RCC_GetSysClockFreq
  .text.HAL_RCC_OscConfig
-                0x080034ac      0x53c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
-                0x080034ac                HAL_RCC_OscConfig
+                0x0800372c      0x53c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+                0x0800372c                HAL_RCC_OscConfig
  .text.HAL_TIM_Base_Init
-                0x080039e8       0x9e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
-                0x080039e8                HAL_TIM_Base_Init
- *fill*         0x08003a86        0x2 
+                0x08003c68       0x9e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x08003c68                HAL_TIM_Base_Init
+ *fill*         0x08003d06        0x2 
  .text.HAL_TIM_Base_Start_IT
-                0x08003a88       0xe0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
-                0x08003a88                HAL_TIM_Base_Start_IT
+                0x08003d08       0xe0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x08003d08                HAL_TIM_Base_Start_IT
  .text.HAL_TIM_IRQHandler
-                0x08003b68      0x1e0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
-                0x08003b68                HAL_TIM_IRQHandler
+                0x08003de8      0x1e0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x08003de8                HAL_TIM_IRQHandler
  .text.HAL_TIM_OC_DelayElapsedCallback
-                0x08003d48       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
-                0x08003d48                HAL_TIM_OC_DelayElapsedCallback
+                0x08003fc8       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x08003fc8                HAL_TIM_OC_DelayElapsedCallback
  .text.HAL_TIM_IC_CaptureCallback
-                0x08003d5c       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
-                0x08003d5c                HAL_TIM_IC_CaptureCallback
+                0x08003fdc       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x08003fdc                HAL_TIM_IC_CaptureCallback
  .text.HAL_TIM_PWM_PulseFinishedCallback
-                0x08003d70       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
-                0x08003d70                HAL_TIM_PWM_PulseFinishedCallback
+                0x08003ff0       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x08003ff0                HAL_TIM_PWM_PulseFinishedCallback
  .text.HAL_TIM_TriggerCallback
-                0x08003d84       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
-                0x08003d84                HAL_TIM_TriggerCallback
+                0x08004004       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x08004004                HAL_TIM_TriggerCallback
  .text.TIM_Base_SetConfig
-                0x08003d98      0x14c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
-                0x08003d98                TIM_Base_SetConfig
+                0x08004018      0x14c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x08004018                TIM_Base_SetConfig
  .text.HAL_TIMEx_CommutCallback
-                0x08003ee4       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
-                0x08003ee4                HAL_TIMEx_CommutCallback
+                0x08004164       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+                0x08004164                HAL_TIMEx_CommutCallback
  .text.HAL_TIMEx_BreakCallback
-                0x08003ef8       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
-                0x08003ef8                HAL_TIMEx_BreakCallback
+                0x08004178       0x14 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+                0x08004178                HAL_TIMEx_BreakCallback
  .text.HAL_UART_Init
-                0x08003f0c       0xa0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
-                0x08003f0c                HAL_UART_Init
+                0x0800418c       0xa0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+                0x0800418c                HAL_UART_Init
  .text.UART_SetConfig
-                0x08003fac      0x4e8 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+                0x0800422c      0x4e8 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
  .text.arm_rfft_fast_init_f32
-                0x08004494      0x108 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
-                0x08004494                arm_rfft_fast_init_f32
+                0x08004714      0x108 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x08004714                arm_rfft_fast_init_f32
  .text.arm_rfft_fast_f32
-                0x0800459c      0x18c D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
-                0x0800459c                arm_rfft_fast_f32
+                0x0800481c      0x18c D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+                0x0800481c                arm_rfft_fast_f32
  .text.arm_cfft_radix8by2_f32
-                0x08004728      0x1c4 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
-                0x08004728                arm_cfft_radix8by2_f32
+                0x080049a8      0x1c4 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+                0x080049a8                arm_cfft_radix8by2_f32
  .text.arm_cfft_radix8by4_f32
-                0x080048ec      0x4e8 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
-                0x080048ec                arm_cfft_radix8by4_f32
+                0x08004b6c      0x4e8 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+                0x08004b6c                arm_cfft_radix8by4_f32
  .text.arm_cfft_f32
-                0x08004dd4      0x100 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
-                0x08004dd4                arm_cfft_f32
+                0x08005054      0x100 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+                0x08005054                arm_cfft_f32
  .text.arm_correlate_f32
-                0x08004ed4      0x538 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
-                0x08004ed4                arm_correlate_f32
+                0x08005154      0x538 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
+                0x08005154                arm_correlate_f32
  .text.arm_sin_f32
-                0x0800540c       0x78 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
-                0x0800540c                arm_sin_f32
+                0x0800568c       0x78 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+                0x0800568c                arm_sin_f32
  .text.arm_cos_f32
-                0x08005484       0x80 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
-                0x08005484                arm_cos_f32
+                0x08005704       0x80 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+                0x08005704                arm_cos_f32
  .text.arm_radix8_butterfly_f32
-                0x08005504      0x5f4 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
-                0x08005504                arm_radix8_butterfly_f32
- .text.memset   0x08005af8       0x10 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-memset.o)
-                0x08005af8                memset
- .text.__errno  0x08005b08        0xc D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-errno.o)
-                0x08005b08                __errno
+                0x08005784      0x5f4 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+                0x08005784                arm_radix8_butterfly_f32
+ .text.memset   0x08005d78       0x10 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-memset.o)
+                0x08005d78                memset
+ .text.__errno  0x08005d88        0xc D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-errno.o)
+                0x08005d88                __errno
  .text.__libc_init_array
-                0x08005b14       0x48 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
-                0x08005b14                __libc_init_array
- .text.sqrtf    0x08005b5c       0x3c D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-wf_sqrt.o)
-                0x08005b5c                sqrtf
+                0x08005d94       0x48 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
+                0x08005d94                __libc_init_array
+ .text.sqrtf    0x08005ddc       0x3c D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-wf_sqrt.o)
+                0x08005ddc                sqrtf
  .text.__ieee754_sqrtf
-                0x08005b98        0x6 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-ef_sqrt.o)
-                0x08005b98                __ieee754_sqrtf
+                0x08005e18        0x6 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-ef_sqrt.o)
+                0x08005e18                __ieee754_sqrtf
  *(.glue_7)
- .glue_7        0x08005b9e        0x0 linker stubs
+ .glue_7        0x08005e1e        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x08005b9e        0x0 linker stubs
+ .glue_7t       0x08005e1e        0x0 linker stubs
  *(.eh_frame)
- *fill*         0x08005b9e        0x2 
- .eh_frame      0x08005ba0        0x0 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ *fill*         0x08005e1e        0x2 
+ .eh_frame      0x08005e20        0x0 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x08005ba0        0x4 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x08005ba0                _init
- .init          0x08005ba4        0x8 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x08005e20        0x4 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x08005e20                _init
+ .init          0x08005e24        0x8 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x08005bac        0x4 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x08005bac                _fini
- .fini          0x08005bb0        0x8 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtn.o
-                0x08005bb8                        . = ALIGN (0x4)
-                0x08005bb8                        _etext = .
+ .fini          0x08005e2c        0x4 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x08005e2c                _fini
+ .fini          0x08005e30        0x8 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x08005e38                        . = ALIGN (0x4)
+                0x08005e38                        _etext = .
 
-.vfp11_veneer   0x08005bb8        0x0
- .vfp11_veneer  0x08005bb8        0x0 linker stubs
+.vfp11_veneer   0x08005e38        0x0
+ .vfp11_veneer  0x08005e38        0x0 linker stubs
 
-.v4_bx          0x08005bb8        0x0
- .v4_bx         0x08005bb8        0x0 linker stubs
+.v4_bx          0x08005e38        0x0
+ .v4_bx         0x08005e38        0x0 linker stubs
 
-.iplt           0x08005bb8        0x0
- .iplt          0x08005bb8        0x0 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x08005e38        0x0
+ .iplt          0x08005e38        0x0 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x08005bb8    0x23d4c
-                0x08005bb8                        . = ALIGN (0x4)
+.rodata         0x08005e38    0x23d4c
+                0x08005e38                        . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.staticTunerRealSample
-                0x08005bb8    0x10000 ./Core/Src/static_tuner.o
+                0x08005e38    0x10000 ./Core/Src/static_tuner.o
  .rodata.tunerRealAudioSourceFile
-                0x08015bb8        0x7 ./Core/Src/static_tuner.o
-                0x08015bb8                tunerRealAudioSourceFile
- *fill*         0x08015bbf        0x1 
+                0x08015e38        0x7 ./Core/Src/static_tuner.o
+                0x08015e38                tunerRealAudioSourceFile
+ *fill*         0x08015e3f        0x1 
  .rodata.tunerRealAudioSourceUrl
-                0x08015bc0       0x40 ./Core/Src/static_tuner.o
-                0x08015bc0                tunerRealAudioSourceUrl
+                0x08015e40       0x40 ./Core/Src/static_tuner.o
+                0x08015e40                tunerRealAudioSourceUrl
  .rodata.tunerRealAudioSourceSha256
-                0x08015c00       0x41 ./Core/Src/static_tuner.o
-                0x08015c00                tunerRealAudioSourceSha256
- *fill*         0x08015c41        0x3 
+                0x08015e80       0x41 ./Core/Src/static_tuner.o
+                0x08015e80                tunerRealAudioSourceSha256
+ *fill*         0x08015ec1        0x3 
  .rodata.tunerRealAudioLicense
-                0x08015c44       0x23 ./Core/Src/static_tuner.o
-                0x08015c44                tunerRealAudioLicense
- *fill*         0x08015c67        0x1 
+                0x08015ec4       0x23 ./Core/Src/static_tuner.o
+                0x08015ec4                tunerRealAudioLicense
+ *fill*         0x08015ee7        0x1 
  .rodata.tunerStrings
-                0x08015c68       0x18 ./Core/Src/static_tuner.o
+                0x08015ee8       0x18 ./Core/Src/static_tuner.o
  .rodata.tunerTestOffsetsX10
-                0x08015c80        0xc ./Core/Src/static_tuner.o
+                0x08015f00        0xc ./Core/Src/static_tuner.o
  .rodata.tunerExpectedStates
-                0x08015c8c        0x3 ./Core/Src/static_tuner.o
- *fill*         0x08015c8f        0x1 
+                0x08015f0c        0x3 ./Core/Src/static_tuner.o
+ *fill*         0x08015f0f        0x1 
  .rodata.AHBPrescTable
-                0x08015c90       0x10 ./Core/Src/system_stm32f4xx.o
-                0x08015c90                AHBPrescTable
+                0x08015f10       0x10 ./Core/Src/system_stm32f4xx.o
+                0x08015f10                AHBPrescTable
  .rodata.APBPrescTable
-                0x08015ca0        0x8 ./Core/Src/system_stm32f4xx.o
-                0x08015ca0                APBPrescTable
+                0x08015f20        0x8 ./Core/Src/system_stm32f4xx.o
+                0x08015f20                APBPrescTable
  .rodata.twiddleCoef_2048
-                0x08015ca8     0x4000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08015ca8                twiddleCoef_2048
+                0x08015f28     0x4000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08015f28                twiddleCoef_2048
  .rodata.twiddleCoef_rfft_64
-                0x08019ca8      0x100 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08019ca8                twiddleCoef_rfft_64
+                0x08019f28      0x100 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08019f28                twiddleCoef_rfft_64
  .rodata.armBitRevIndexTable64
-                0x08019da8       0x70 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08019da8                armBitRevIndexTable64
+                0x0801a028       0x70 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0801a028                armBitRevIndexTable64
  .rodata.twiddleCoef_rfft_2048
-                0x08019e18     0x2000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08019e18                twiddleCoef_rfft_2048
+                0x0801a098     0x2000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0801a098                twiddleCoef_rfft_2048
  .rodata.twiddleCoef_rfft_4096
-                0x0801be18     0x4000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0801be18                twiddleCoef_rfft_4096
+                0x0801c098     0x4000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x0801c098                twiddleCoef_rfft_4096
  .rodata.twiddleCoef_256
-                0x0801fe18      0x800 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x0801fe18                twiddleCoef_256
+                0x08020098      0x800 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08020098                twiddleCoef_256
  .rodata.twiddleCoef_16
-                0x08020618       0x80 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08020618                twiddleCoef_16
+                0x08020898       0x80 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08020898                twiddleCoef_16
  .rodata.twiddleCoef_1024
-                0x08020698     0x2000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08020698                twiddleCoef_1024
+                0x08020918     0x2000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08020918                twiddleCoef_1024
  .rodata.twiddleCoef_32
-                0x08022698      0x100 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08022698                twiddleCoef_32
+                0x08022918      0x100 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08022918                twiddleCoef_32
  .rodata.armBitRevIndexTable1024
-                0x08022798      0xe10 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08022798                armBitRevIndexTable1024
+                0x08022a18      0xe10 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08022a18                armBitRevIndexTable1024
  .rodata.armBitRevIndexTable16
-                0x080235a8       0x28 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x080235a8                armBitRevIndexTable16
+                0x08023828       0x28 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08023828                armBitRevIndexTable16
  .rodata.twiddleCoef_rfft_32
-                0x080235d0       0x80 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x080235d0                twiddleCoef_rfft_32
+                0x08023850       0x80 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08023850                twiddleCoef_rfft_32
  .rodata.armBitRevIndexTable32
-                0x08023650       0x60 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08023650                armBitRevIndexTable32
+                0x080238d0       0x60 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x080238d0                armBitRevIndexTable32
  .rodata.sinTable_f32
-                0x080236b0      0x804 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x080236b0                sinTable_f32
+                0x08023930      0x804 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08023930                sinTable_f32
  .rodata.twiddleCoef_128
-                0x08023eb4      0x400 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08023eb4                twiddleCoef_128
+                0x08024134      0x400 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08024134                twiddleCoef_128
  .rodata.twiddleCoef_512
-                0x080242b4     0x1000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x080242b4                twiddleCoef_512
+                0x08024534     0x1000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08024534                twiddleCoef_512
  .rodata.armBitRevIndexTable2048
-                0x080252b4     0x1dc0 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x080252b4                armBitRevIndexTable2048
+                0x08025534     0x1dc0 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08025534                armBitRevIndexTable2048
  .rodata.twiddleCoef_64
-                0x08027074      0x200 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08027074                twiddleCoef_64
+                0x080272f4      0x200 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x080272f4                twiddleCoef_64
  .rodata.twiddleCoef_rfft_512
-                0x08027274      0x800 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08027274                twiddleCoef_rfft_512
+                0x080274f4      0x800 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x080274f4                twiddleCoef_rfft_512
  .rodata.armBitRevIndexTable512
-                0x08027a74      0x380 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08027a74                armBitRevIndexTable512
+                0x08027cf4      0x380 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08027cf4                armBitRevIndexTable512
  .rodata.twiddleCoef_rfft_1024
-                0x08027df4     0x1000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08027df4                twiddleCoef_rfft_1024
+                0x08028074     0x1000 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08028074                twiddleCoef_rfft_1024
  .rodata.twiddleCoef_rfft_256
-                0x08028df4      0x400 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08028df4                twiddleCoef_rfft_256
+                0x08029074      0x400 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08029074                twiddleCoef_rfft_256
  .rodata.armBitRevIndexTable256
-                0x080291f4      0x370 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x080291f4                armBitRevIndexTable256
+                0x08029474      0x370 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x08029474                armBitRevIndexTable256
  .rodata.twiddleCoef_rfft_128
-                0x08029564      0x200 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08029564                twiddleCoef_rfft_128
+                0x080297e4      0x200 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x080297e4                twiddleCoef_rfft_128
  .rodata.armBitRevIndexTable128
-                0x08029764      0x1a0 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
-                0x08029764                armBitRevIndexTable128
-                0x08029904                        . = ALIGN (0x4)
+                0x080299e4      0x1a0 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x080299e4                armBitRevIndexTable128
+                0x08029b84                        . = ALIGN (0x4)
 
-.ARM.extab      0x08029904        0x0
-                0x08029904                        . = ALIGN (0x4)
+.ARM.extab      0x08029b84        0x0
+                0x08029b84                        . = ALIGN (0x4)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08029904                        . = ALIGN (0x4)
+                0x08029b84                        . = ALIGN (0x4)
 
-.ARM            0x08029904        0x8
-                0x08029904                        . = ALIGN (0x4)
-                0x08029904                        __exidx_start = .
+.ARM            0x08029b84        0x8
+                0x08029b84                        . = ALIGN (0x4)
+                0x08029b84                        __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x08029904        0x8 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x0802990c                        __exidx_end = .
-                0x0802990c                        . = ALIGN (0x4)
+ .ARM.exidx     0x08029b84        0x8 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x08029b8c                        __exidx_end = .
+                0x08029b8c                        . = ALIGN (0x4)
 
-.preinit_array  0x0802990c        0x0
-                0x0802990c                        . = ALIGN (0x4)
-                0x0802990c                        PROVIDE (__preinit_array_start = .)
+.preinit_array  0x08029b8c        0x0
+                0x08029b8c                        . = ALIGN (0x4)
+                0x08029b8c                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0802990c                        PROVIDE (__preinit_array_end = .)
-                0x0802990c                        . = ALIGN (0x4)
+                0x08029b8c                        PROVIDE (__preinit_array_end = .)
+                0x08029b8c                        . = ALIGN (0x4)
 
-.init_array     0x0802990c        0x4
-                0x0802990c                        . = ALIGN (0x4)
-                0x0802990c                        PROVIDE (__init_array_start = .)
+.init_array     0x08029b8c        0x4
+                0x08029b8c                        . = ALIGN (0x4)
+                0x08029b8c                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x0802990c        0x4 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x08029910                        PROVIDE (__init_array_end = .)
-                0x08029910                        . = ALIGN (0x4)
+ .init_array    0x08029b8c        0x4 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x08029b90                        PROVIDE (__init_array_end = .)
+                0x08029b90                        . = ALIGN (0x4)
 
-.fini_array     0x08029910        0x4
-                0x08029910                        . = ALIGN (0x4)
+.fini_array     0x08029b90        0x4
+                0x08029b90                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x08029910        0x4 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .fini_array    0x08029b90        0x4 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x08029914                        . = ALIGN (0x4)
-                0x08029914                        _sidata = LOADADDR (.data)
+                0x08029b94                        . = ALIGN (0x4)
+                0x08029b94                        _sidata = LOADADDR (.data)
 
-.rel.dyn        0x08029914        0x0
- .rel.iplt      0x08029914        0x0 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x08029b94        0x0
+ .rel.iplt      0x08029b94        0x0 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.data           0x20000000       0x6c load address 0x08029914
+.data           0x20000000       0x6c load address 0x08029b94
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        _sdata = .
  *(.data)
@@ -5247,11 +5253,11 @@ LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.extern
                 0x2000006c                        . = ALIGN (0x4)
                 0x2000006c                        _edata = .
 
-.igot.plt       0x2000006c        0x0 load address 0x08029980
+.igot.plt       0x2000006c        0x0 load address 0x08029c00
  .igot.plt      0x2000006c        0x0 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 0x2000006c                        . = ALIGN (0x4)
 
-.bss            0x2000006c    0x108cc load address 0x08029980
+.bss            0x2000006c    0x10bac load address 0x08029c00
                 0x2000006c                        _sbss = .
                 0x2000006c                        __bss_start__ = _sbss
  *(.bss)
@@ -5279,103 +5285,121 @@ LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.extern
  .bss.tunerSpectrum64
                 0x200021f4      0x100 ./Core/Src/static_tuner.o
                 0x200021f4                tunerSpectrum64
+ .bss.tunerRealHistoryTimeMs
+                0x200022f4       0x74 ./Core/Src/static_tuner.o
+                0x200022f4                tunerRealHistoryTimeMs
+ .bss.tunerRealHistoryString
+                0x20002368       0x74 ./Core/Src/static_tuner.o
+                0x20002368                tunerRealHistoryString
+ .bss.tunerRealHistoryState
+                0x200023dc       0x74 ./Core/Src/static_tuner.o
+                0x200023dc                tunerRealHistoryState
+ .bss.tunerRealHistoryHz
+                0x20002450       0x74 ./Core/Src/static_tuner.o
+                0x20002450                tunerRealHistoryHz
+ .bss.tunerRealHistoryCentsX10
+                0x200024c4       0x74 ./Core/Src/static_tuner.o
+                0x200024c4                tunerRealHistoryCentsX10
+ .bss.tunerRealHistoryConfidence
+                0x20002538       0x74 ./Core/Src/static_tuner.o
+                0x20002538                tunerRealHistoryConfidence
  .bss.tunerGraphLowE
-                0x200022f4        0x4 ./Core/Src/static_tuner.o
-                0x200022f4                tunerGraphLowE
+                0x200025ac        0x4 ./Core/Src/static_tuner.o
+                0x200025ac                tunerGraphLowE
  .bss.tunerGraphA
-                0x200022f8        0x4 ./Core/Src/static_tuner.o
-                0x200022f8                tunerGraphA
+                0x200025b0        0x4 ./Core/Src/static_tuner.o
+                0x200025b0                tunerGraphA
  .bss.tunerGraphD
-                0x200022fc        0x4 ./Core/Src/static_tuner.o
-                0x200022fc                tunerGraphD
+                0x200025b4        0x4 ./Core/Src/static_tuner.o
+                0x200025b4                tunerGraphD
  .bss.tunerGraphG
-                0x20002300        0x4 ./Core/Src/static_tuner.o
-                0x20002300                tunerGraphG
+                0x200025b8        0x4 ./Core/Src/static_tuner.o
+                0x200025b8                tunerGraphG
  .bss.tunerGraphB
-                0x20002304        0x4 ./Core/Src/static_tuner.o
-                0x20002304                tunerGraphB
+                0x200025bc        0x4 ./Core/Src/static_tuner.o
+                0x200025bc                tunerGraphB
  .bss.tunerGraphHighE
-                0x20002308        0x4 ./Core/Src/static_tuner.o
-                0x20002308                tunerGraphHighE
+                0x200025c0        0x4 ./Core/Src/static_tuner.o
+                0x200025c0                tunerGraphHighE
  .bss.tunerGraphPeakHz
-                0x2000230c        0x4 ./Core/Src/static_tuner.o
-                0x2000230c                tunerGraphPeakHz
+                0x200025c4        0x4 ./Core/Src/static_tuner.o
+                0x200025c4                tunerGraphPeakHz
  .bss.tunerGraphPeakMagnitude
-                0x20002310        0x4 ./Core/Src/static_tuner.o
-                0x20002310                tunerGraphPeakMagnitude
+                0x200025c8        0x4 ./Core/Src/static_tuner.o
+                0x200025c8                tunerGraphPeakMagnitude
  .bss.tunerGraphCentsErrorX10
-                0x20002314        0x4 ./Core/Src/static_tuner.o
-                0x20002314                tunerGraphCentsErrorX10
+                0x200025cc        0x4 ./Core/Src/static_tuner.o
+                0x200025cc                tunerGraphCentsErrorX10
  .bss.tunerGraphCorrHz
-                0x20002318        0x4 ./Core/Src/static_tuner.o
-                0x20002318                tunerGraphCorrHz
+                0x200025d0        0x4 ./Core/Src/static_tuner.o
+                0x200025d0                tunerGraphCorrHz
  .bss.tunerGraphCorrCentsErrorX10
-                0x2000231c        0x4 ./Core/Src/static_tuner.o
-                0x2000231c                tunerGraphCorrCentsErrorX10
+                0x200025d4        0x4 ./Core/Src/static_tuner.o
+                0x200025d4                tunerGraphCorrCentsErrorX10
  .bss.tunerDiag
-                0x20002320       0xbc ./Core/Src/static_tuner.o
-                0x20002320                tunerDiag
+                0x200025d8       0xe4 ./Core/Src/static_tuner.o
+                0x200025d8                tunerDiag
  .bss.tunerRealAudioMetadataKeepAlive
-                0x200023dc        0x4 ./Core/Src/static_tuner.o
-                0x200023dc                tunerRealAudioMetadataKeepAlive
+                0x200026bc        0x4 ./Core/Src/static_tuner.o
+                0x200026bc                tunerRealAudioMetadataKeepAlive
  .bss.tunerInputSource
-                0x200023e0        0x4 ./Core/Src/static_tuner.o
-                0x200023e0                tunerInputSource
+                0x200026c0        0x4 ./Core/Src/static_tuner.o
+                0x200026c0                tunerInputSource
  .bss.tunerSelectedTest
-                0x200023e4        0x4 ./Core/Src/static_tuner.o
-                0x200023e4                tunerSelectedTest
+                0x200026c4        0x4 ./Core/Src/static_tuner.o
+                0x200026c4                tunerSelectedTest
  .bss.tunerRunRequest
-                0x200023e8        0x4 ./Core/Src/static_tuner.o
-                0x200023e8                tunerRunRequest
+                0x200026c8        0x4 ./Core/Src/static_tuner.o
+                0x200026c8                tunerRunRequest
  .bss.tunerAutoDemoEnabled
-                0x200023ec        0x4 ./Core/Src/static_tuner.o
-                0x200023ec                tunerAutoDemoEnabled
+                0x200026cc        0x4 ./Core/Src/static_tuner.o
+                0x200026cc                tunerAutoDemoEnabled
  .bss.tunerAutoDemoPeriodMs
-                0x200023f0        0x4 ./Core/Src/static_tuner.o
-                0x200023f0                tunerAutoDemoPeriodMs
+                0x200026d0        0x4 ./Core/Src/static_tuner.o
+                0x200026d0                tunerAutoDemoPeriodMs
  .bss.tunerYinDiff
-                0x200023f4      0x398 ./Core/Src/static_tuner.o
+                0x200026d4      0x398 ./Core/Src/static_tuner.o
  .bss.tunerFftInstance
-                0x2000278c       0x18 ./Core/Src/static_tuner.o
+                0x20002a6c       0x18 ./Core/Src/static_tuner.o
  .bss.tunerFftInitialized
-                0x200027a4        0x4 ./Core/Src/static_tuner.o
+                0x20002a84        0x4 ./Core/Src/static_tuner.o
  .bss.tunerFftInput
-                0x200027a8     0x4000 ./Core/Src/static_tuner.o
+                0x20002a88     0x4000 ./Core/Src/static_tuner.o
  .bss.tunerFftOutput
-                0x200067a8     0x4000 ./Core/Src/static_tuner.o
+                0x20006a88     0x4000 ./Core/Src/static_tuner.o
  .bss.tunerCorrInput
-                0x2000a7a8     0x2000 ./Core/Src/static_tuner.o
+                0x2000aa88     0x2000 ./Core/Src/static_tuner.o
  .bss.tunerCorrOutput
-                0x2000c7a8     0x3ffc ./Core/Src/static_tuner.o
+                0x2000ca88     0x3ffc ./Core/Src/static_tuner.o
  .bss.tunerAutoDemoLastTickMs
-                0x200107a4        0x4 ./Core/Src/static_tuner.o
+                0x20010a84        0x4 ./Core/Src/static_tuner.o
  .bss.tunerAutoDemoTestIndex
-                0x200107a8        0x4 ./Core/Src/static_tuner.o
+                0x20010a88        0x4 ./Core/Src/static_tuner.o
  .bss.tunerRealReplayFrameStart
-                0x200107ac        0x4 ./Core/Src/static_tuner.o
+                0x20010a8c        0x4 ./Core/Src/static_tuner.o
  .bss.tunerRealReplayFrameIndex
-                0x200107b0        0x4 ./Core/Src/static_tuner.o
- .bss.htim10    0x200107b4       0x48 ./Core/Src/stm32f4xx_hal_timebase_tim.o
-                0x200107b4                htim10
- .bss.uwTick    0x200107fc        0x4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
-                0x200107fc                uwTick
- .bss.__sf      0x20010800      0x138 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-findfp.o)
-                0x20010800                __sf
+                0x20010a90        0x4 ./Core/Src/static_tuner.o
+ .bss.htim10    0x20010a94       0x48 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+                0x20010a94                htim10
+ .bss.uwTick    0x20010adc        0x4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+                0x20010adc                uwTick
+ .bss.__sf      0x20010ae0      0x138 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-findfp.o)
+                0x20010ae0                __sf
  *(COMMON)
-                0x20010938                        . = ALIGN (0x4)
-                0x20010938                        _ebss = .
-                0x20010938                        __bss_end__ = _ebss
+                0x20010c18                        . = ALIGN (0x4)
+                0x20010c18                        _ebss = .
+                0x20010c18                        __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x20010938      0x600 load address 0x08029980
-                0x20010938                        . = ALIGN (0x8)
+                0x20010c18      0x600 load address 0x08029c00
+                0x20010c18                        . = ALIGN (0x8)
                 [!provide]                        PROVIDE (end = .)
-                0x20010938                        PROVIDE (_end = .)
-                0x20010b38                        . = (. + _Min_Heap_Size)
- *fill*         0x20010938      0x200 
-                0x20010f38                        . = (. + _Min_Stack_Size)
- *fill*         0x20010b38      0x400 
-                0x20010f38                        . = ALIGN (0x8)
+                0x20010c18                        PROVIDE (_end = .)
+                0x20010e18                        . = (. + _Min_Heap_Size)
+ *fill*         0x20010c18      0x200 
+                0x20011218                        . = (. + _Min_Stack_Size)
+ *fill*         0x20010e18      0x400 
+                0x20011218                        . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)
@@ -5465,148 +5489,148 @@ LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.extern
 LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_info     0x00000000    0x12ddc
+.debug_info     0x00000000    0x12fce
  .debug_info    0x00000000     0x193d ./Core/Src/main.o
- .debug_info    0x0000193d     0x18d7 ./Core/Src/static_tuner.o
- .debug_info    0x00003214     0x153c ./Core/Src/stm32f4xx_hal_msp.o
- .debug_info    0x00004750      0xc36 ./Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_info    0x00005386      0x738 ./Core/Src/stm32f4xx_it.o
- .debug_info    0x00005abe      0x513 ./Core/Src/system_stm32f4xx.o
- .debug_info    0x00005fd1       0x30 ./Core/Startup/startup_stm32f446retx.o
- .debug_info    0x00006001      0x969 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_info    0x0000696a      0xdce ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_info    0x00007738      0x8e7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_info    0x0000801f      0x70b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_info    0x0000872a      0x8ff ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_info    0x00009029      0x960 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_info    0x00009989     0x299d ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_info    0x0000c326     0x14db ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_info    0x0000d801     0x2f4f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
- .debug_info    0x00010750      0x4c3 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_info    0x00010c13      0x729 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_info    0x0001133c      0x6b2 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_info    0x000119ee      0x29f D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
- .debug_info    0x00011c8d      0x18a D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_info    0x00011e17      0x18a D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_info    0x00011fa1      0x99d D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
- .debug_info    0x0001293e       0x85 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
- .debug_info    0x000129c3      0x419 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_info    0x0000193d     0x1ac9 ./Core/Src/static_tuner.o
+ .debug_info    0x00003406     0x153c ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_info    0x00004942      0xc36 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_info    0x00005578      0x738 ./Core/Src/stm32f4xx_it.o
+ .debug_info    0x00005cb0      0x513 ./Core/Src/system_stm32f4xx.o
+ .debug_info    0x000061c3       0x30 ./Core/Startup/startup_stm32f446retx.o
+ .debug_info    0x000061f3      0x969 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_info    0x00006b5c      0xdce ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_info    0x0000792a      0x8e7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_info    0x00008211      0x70b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_info    0x0000891c      0x8ff ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_info    0x0000921b      0x960 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_info    0x00009b7b     0x299d ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_info    0x0000c518     0x14db ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_info    0x0000d9f3     0x2f4f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_info    0x00010942      0x4c3 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_info    0x00010e05      0x729 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_info    0x0001152e      0x6b2 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_info    0x00011be0      0x29f D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
+ .debug_info    0x00011e7f      0x18a D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_info    0x00012009      0x18a D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_info    0x00012193      0x99d D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_info    0x00012b30       0x85 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
+ .debug_info    0x00012bb5      0x419 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
-.debug_abbrev   0x00000000     0x2ae2
+.debug_abbrev   0x00000000     0x2ac9
  .debug_abbrev  0x00000000      0x2e8 ./Core/Src/main.o
- .debug_abbrev  0x000002e8      0x334 ./Core/Src/static_tuner.o
- .debug_abbrev  0x0000061c      0x260 ./Core/Src/stm32f4xx_hal_msp.o
- .debug_abbrev  0x0000087c      0x1f4 ./Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_abbrev  0x00000a70      0x181 ./Core/Src/stm32f4xx_it.o
- .debug_abbrev  0x00000bf1      0x11c ./Core/Src/system_stm32f4xx.o
- .debug_abbrev  0x00000d0d       0x24 ./Core/Startup/startup_stm32f446retx.o
- .debug_abbrev  0x00000d31      0x216 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_abbrev  0x00000f47      0x300 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_abbrev  0x00001247      0x264 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_abbrev  0x000014ab      0x1d4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_abbrev  0x0000167f      0x2b7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_abbrev  0x00001936      0x211 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_abbrev  0x00001b47      0x278 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_abbrev  0x00001dbf      0x283 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_abbrev  0x00002042      0x30e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
- .debug_abbrev  0x00002350       0xfd D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_abbrev  0x0000244d      0x188 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_abbrev  0x000025d5      0x18b D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_abbrev  0x00002760       0x94 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
- .debug_abbrev  0x000027f4       0xd7 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_abbrev  0x000028cb       0xd7 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_abbrev  0x000029a2       0x84 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
- .debug_abbrev  0x00002a26       0x14 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
- .debug_abbrev  0x00002a3a       0xa8 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_abbrev  0x000002e8      0x31b ./Core/Src/static_tuner.o
+ .debug_abbrev  0x00000603      0x260 ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_abbrev  0x00000863      0x1f4 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_abbrev  0x00000a57      0x181 ./Core/Src/stm32f4xx_it.o
+ .debug_abbrev  0x00000bd8      0x11c ./Core/Src/system_stm32f4xx.o
+ .debug_abbrev  0x00000cf4       0x24 ./Core/Startup/startup_stm32f446retx.o
+ .debug_abbrev  0x00000d18      0x216 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_abbrev  0x00000f2e      0x300 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_abbrev  0x0000122e      0x264 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_abbrev  0x00001492      0x1d4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_abbrev  0x00001666      0x2b7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_abbrev  0x0000191d      0x211 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_abbrev  0x00001b2e      0x278 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_abbrev  0x00001da6      0x283 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_abbrev  0x00002029      0x30e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_abbrev  0x00002337       0xfd D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_abbrev  0x00002434      0x188 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_abbrev  0x000025bc      0x18b D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_abbrev  0x00002747       0x94 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
+ .debug_abbrev  0x000027db       0xd7 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_abbrev  0x000028b2       0xd7 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_abbrev  0x00002989       0x84 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_abbrev  0x00002a0d       0x14 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
+ .debug_abbrev  0x00002a21       0xa8 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
-.debug_aranges  0x00000000      0xf38
+.debug_aranges  0x00000000      0xf50
  .debug_aranges
                 0x00000000       0x70 ./Core/Src/main.o
  .debug_aranges
-                0x00000070       0xe8 ./Core/Src/static_tuner.o
+                0x00000070      0x100 ./Core/Src/static_tuner.o
  .debug_aranges
-                0x00000158       0x60 ./Core/Src/stm32f4xx_hal_msp.o
+                0x00000170       0x60 ./Core/Src/stm32f4xx_hal_msp.o
  .debug_aranges
-                0x000001b8       0x30 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+                0x000001d0       0x30 ./Core/Src/stm32f4xx_hal_timebase_tim.o
  .debug_aranges
-                0x000001e8       0x80 ./Core/Src/stm32f4xx_it.o
+                0x00000200       0x80 ./Core/Src/stm32f4xx_it.o
  .debug_aranges
-                0x00000268       0x28 ./Core/Src/system_stm32f4xx.o
+                0x00000280       0x28 ./Core/Src/system_stm32f4xx.o
  .debug_aranges
-                0x00000290       0x28 ./Core/Startup/startup_stm32f446retx.o
+                0x000002a8       0x28 ./Core/Startup/startup_stm32f446retx.o
  .debug_aranges
-                0x000002b8       0xf0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+                0x000002d0       0xf0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_aranges
-                0x000003a8      0x130 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x000003c0      0x130 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
  .debug_aranges
-                0x000004d8       0x90 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+                0x000004f0       0x90 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
  .debug_aranges
-                0x00000568       0x58 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+                0x00000580       0x58 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
  .debug_aranges
-                0x000005c0       0x88 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+                0x000005d8       0x88 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
  .debug_aranges
-                0x00000648       0x78 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+                0x00000660       0x78 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
  .debug_aranges
-                0x000006c0      0x3d0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x000006d8      0x3d0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
  .debug_aranges
-                0x00000a90      0x168 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+                0x00000aa8      0x168 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
  .debug_aranges
-                0x00000bf8      0x208 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+                0x00000c10      0x208 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
  .debug_aranges
-                0x00000e00       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+                0x00000e18       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
  .debug_aranges
-                0x00000e20       0x30 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+                0x00000e38       0x30 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
  .debug_aranges
-                0x00000e50       0x30 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+                0x00000e68       0x30 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
  .debug_aranges
-                0x00000e80       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
+                0x00000e98       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
  .debug_aranges
-                0x00000ea0       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+                0x00000eb8       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
  .debug_aranges
-                0x00000ec0       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+                0x00000ed8       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
  .debug_aranges
-                0x00000ee0       0x18 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+                0x00000ef8       0x18 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
  .debug_aranges
-                0x00000ef8       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
+                0x00000f10       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
  .debug_aranges
-                0x00000f18       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+                0x00000f30       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
 .debug_rnglists
-                0x00000000      0xafc
+                0x00000000      0xb11
  .debug_rnglists
                 0x00000000       0x53 ./Core/Src/main.o
  .debug_rnglists
-                0x00000053       0xb8 ./Core/Src/static_tuner.o
+                0x00000053       0xcd ./Core/Src/static_tuner.o
  .debug_rnglists
-                0x0000010b       0x46 ./Core/Src/stm32f4xx_hal_msp.o
+                0x00000120       0x46 ./Core/Src/stm32f4xx_hal_msp.o
  .debug_rnglists
-                0x00000151       0x20 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+                0x00000166       0x20 ./Core/Src/stm32f4xx_hal_timebase_tim.o
  .debug_rnglists
-                0x00000171       0x5b ./Core/Src/stm32f4xx_it.o
+                0x00000186       0x5b ./Core/Src/stm32f4xx_it.o
  .debug_rnglists
-                0x000001cc       0x1a ./Core/Src/system_stm32f4xx.o
+                0x000001e1       0x1a ./Core/Src/system_stm32f4xx.o
  .debug_rnglists
-                0x000001e6       0x19 ./Core/Startup/startup_stm32f446retx.o
+                0x000001fb       0x19 ./Core/Startup/startup_stm32f446retx.o
  .debug_rnglists
-                0x000001ff       0xaf ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+                0x00000214       0xaf ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_rnglists
-                0x000002ae       0xe0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+                0x000002c3       0xe0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
  .debug_rnglists
-                0x0000038e       0x70 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+                0x000003a3       0x70 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
  .debug_rnglists
-                0x000003fe       0x3f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+                0x00000413       0x3f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
  .debug_rnglists
-                0x0000043d       0x66 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+                0x00000452       0x66 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
  .debug_rnglists
-                0x000004a3       0x5e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+                0x000004b8       0x5e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
  .debug_rnglists
-                0x00000501      0x31a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+                0x00000516      0x31a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
  .debug_rnglists
-                0x0000081b      0x125 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+                0x00000830      0x125 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
  .debug_rnglists
-                0x00000940      0x1bc ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+                0x00000955      0x1bc ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_macro    0x00000000    0x21879
+.debug_macro    0x00000000    0x21885
  .debug_macro   0x00000000      0x214 ./Core/Src/main.o
  .debug_macro   0x00000214      0x2a7 ./Core/Src/main.o
  .debug_macro   0x000004bb       0x2e ./Core/Src/main.o
@@ -5642,78 +5666,78 @@ LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.extern
  .debug_macro   0x0001f577      0x2aa ./Core/Src/main.o
  .debug_macro   0x0001f821      0x126 ./Core/Src/main.o
  .debug_macro   0x0001f947       0x58 ./Core/Src/main.o
- .debug_macro   0x0001f99f       0x52 ./Core/Src/main.o
- .debug_macro   0x0001f9f1      0x350 ./Core/Src/static_tuner.o
- .debug_macro   0x0001fd41       0x4c ./Core/Src/static_tuner.o
- .debug_macro   0x0001fd8d       0x5e ./Core/Src/static_tuner.o
- .debug_macro   0x0001fdeb       0x56 ./Core/Src/static_tuner.o
- .debug_macro   0x0001fe41      0x205 ./Core/Src/stm32f4xx_hal_msp.o
- .debug_macro   0x00020046      0x1f6 ./Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_macro   0x0002023c      0x20f ./Core/Src/stm32f4xx_it.o
- .debug_macro   0x0002044b      0x1f6 ./Core/Src/system_stm32f4xx.o
- .debug_macro   0x00020641      0x256 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_macro   0x00020897      0x1f6 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_macro   0x00020a8d      0x1fc ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_macro   0x00020c89      0x1fc ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_macro   0x00020e85      0x21a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_macro   0x0002109f      0x1f6 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_macro   0x00021295      0x1f7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_macro   0x0002148c      0x1f6 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_macro   0x00021682      0x1f7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_macro   0x0001f99f       0x58 ./Core/Src/main.o
+ .debug_macro   0x0001f9f7      0x350 ./Core/Src/static_tuner.o
+ .debug_macro   0x0001fd47       0x52 ./Core/Src/static_tuner.o
+ .debug_macro   0x0001fd99       0x5e ./Core/Src/static_tuner.o
+ .debug_macro   0x0001fdf7       0x56 ./Core/Src/static_tuner.o
+ .debug_macro   0x0001fe4d      0x205 ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_macro   0x00020052      0x1f6 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_macro   0x00020248      0x20f ./Core/Src/stm32f4xx_it.o
+ .debug_macro   0x00020457      0x1f6 ./Core/Src/system_stm32f4xx.o
+ .debug_macro   0x0002064d      0x256 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_macro   0x000208a3      0x1f6 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_macro   0x00020a99      0x1fc ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_macro   0x00020c95      0x1fc ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_macro   0x00020e91      0x21a ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_macro   0x000210ab      0x1f6 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_macro   0x000212a1      0x1f7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_macro   0x00021498      0x1f6 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_macro   0x0002168e      0x1f7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_line     0x00000000    0x12bca
+.debug_line     0x00000000    0x12ce7
  .debug_line    0x00000000      0xa41 ./Core/Src/main.o
- .debug_line    0x00000a41     0x13fd ./Core/Src/static_tuner.o
- .debug_line    0x00001e3e      0x93f ./Core/Src/stm32f4xx_hal_msp.o
- .debug_line    0x0000277d      0x811 ./Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_line    0x00002f8e      0x8af ./Core/Src/stm32f4xx_it.o
- .debug_line    0x0000383d      0x81b ./Core/Src/system_stm32f4xx.o
- .debug_line    0x00004058       0x7a ./Core/Startup/startup_stm32f446retx.o
- .debug_line    0x000040d2      0xa97 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_line    0x00004b69      0xd57 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_line    0x000058c0     0x1003 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_line    0x000068c3      0xbdb ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_line    0x0000749e      0xeb2 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_line    0x00008350     0x1563 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_line    0x000098b3     0x380c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_line    0x0000d0bf     0x19f7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_line    0x0000eab6     0x25df ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
- .debug_line    0x00011095      0x1a6 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_line    0x0001123b      0x2f7 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_line    0x00011532      0x783 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_line    0x00011cb5      0x3e9 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
- .debug_line    0x0001209e      0x16c D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_line    0x0001220a      0x168 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_line    0x00012372      0x129 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
- .debug_line    0x0001249b       0x98 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
- .debug_line    0x00012533      0x697 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_line    0x00000a41     0x151a ./Core/Src/static_tuner.o
+ .debug_line    0x00001f5b      0x93f ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_line    0x0000289a      0x811 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_line    0x000030ab      0x8af ./Core/Src/stm32f4xx_it.o
+ .debug_line    0x0000395a      0x81b ./Core/Src/system_stm32f4xx.o
+ .debug_line    0x00004175       0x7a ./Core/Startup/startup_stm32f446retx.o
+ .debug_line    0x000041ef      0xa97 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_line    0x00004c86      0xd57 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_line    0x000059dd     0x1003 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_line    0x000069e0      0xbdb ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_line    0x000075bb      0xeb2 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_line    0x0000846d     0x1563 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_line    0x000099d0     0x380c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_line    0x0000d1dc     0x19f7 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_line    0x0000ebd3     0x25df ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_line    0x000111b2      0x1a6 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_line    0x00011358      0x2f7 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_line    0x0001164f      0x783 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_line    0x00011dd2      0x3e9 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
+ .debug_line    0x000121bb      0x16c D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_line    0x00012327      0x168 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_line    0x0001248f      0x129 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_line    0x000125b8       0x98 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_bitreversal2.o)
+ .debug_line    0x00012650      0x697 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
-.debug_str      0x00000000    0xdf0fe
- .debug_str     0x00000000    0xdf0fe ./Core/Src/main.o
-                              0xd6a9e (size before relaxing)
- .debug_str     0x000df0fe    0xda75a ./Core/Src/static_tuner.o
- .debug_str     0x000df0fe    0xd658d ./Core/Src/stm32f4xx_hal_msp.o
- .debug_str     0x000df0fe    0xd5f33 ./Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_str     0x000df0fe    0xd59aa ./Core/Src/stm32f4xx_it.o
- .debug_str     0x000df0fe    0xd540a ./Core/Src/system_stm32f4xx.o
- .debug_str     0x000df0fe       0x96 ./Core/Startup/startup_stm32f446retx.o
- .debug_str     0x000df0fe    0xd5fcf ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_str     0x000df0fe    0xd5d21 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_str     0x000df0fe    0xd57ff ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_str     0x000df0fe    0xd5585 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_str     0x000df0fe    0xd5843 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_str     0x000df0fe    0xd5876 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_str     0x000df0fe    0xd676f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_str     0x000df0fe    0xd5f7b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_str     0x000df0fe    0xd5dfa ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
- .debug_str     0x000df0fe      0x517 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_str     0x000df0fe      0x2f4 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_str     0x000df0fe      0x35f D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_str     0x000df0fe      0x2ad D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
- .debug_str     0x000df0fe      0x242 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_str     0x000df0fe      0x242 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_str     0x000df0fe      0x704 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
- .debug_str     0x000df0fe      0x256 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+.debug_str      0x00000000    0xdf351
+ .debug_str     0x00000000    0xdf351 ./Core/Src/main.o
+                              0xd6b0c (size before relaxing)
+ .debug_str     0x000df351    0xda9b3 ./Core/Src/static_tuner.o
+ .debug_str     0x000df351    0xd658d ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_str     0x000df351    0xd5f33 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_str     0x000df351    0xd59aa ./Core/Src/stm32f4xx_it.o
+ .debug_str     0x000df351    0xd540a ./Core/Src/system_stm32f4xx.o
+ .debug_str     0x000df351       0x96 ./Core/Startup/startup_stm32f446retx.o
+ .debug_str     0x000df351    0xd5fcf ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_str     0x000df351    0xd5d21 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_str     0x000df351    0xd57ff ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_str     0x000df351    0xd5585 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_str     0x000df351    0xd5843 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_str     0x000df351    0xd5876 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_str     0x000df351    0xd676f ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_str     0x000df351    0xd5f7b ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_str     0x000df351    0xd5dfa ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_str     0x000df351      0x517 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_str     0x000df351      0x2f4 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_str     0x000df351      0x35f D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_str     0x000df351      0x2ad D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
+ .debug_str     0x000df351      0x242 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_str     0x000df351      0x242 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_str     0x000df351      0x704 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
+ .debug_str     0x000df351      0x256 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
 .comment        0x00000000       0xb3
  .comment       0x00000000       0xb3 ./Core/Src/main.o
@@ -5741,36 +5765,36 @@ LOAD D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.extern
  .comment       0x000000b3       0x71 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_common_tables.o)
  .comment       0x000000b3       0x71 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
 
-.debug_frame    0x00000000     0x3ecc
+.debug_frame    0x00000000     0x3f40
  .debug_frame   0x00000000      0x180 ./Core/Src/main.o
- .debug_frame   0x00000180      0x418 ./Core/Src/static_tuner.o
- .debug_frame   0x00000598      0x154 ./Core/Src/stm32f4xx_hal_msp.o
- .debug_frame   0x000006ec       0x74 ./Core/Src/stm32f4xx_hal_timebase_tim.o
- .debug_frame   0x00000760      0x178 ./Core/Src/stm32f4xx_it.o
- .debug_frame   0x000008d8       0x58 ./Core/Src/system_stm32f4xx.o
- .debug_frame   0x00000930      0x374 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_frame   0x00000ca4      0x508 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_frame   0x000011ac      0x250 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_frame   0x000013fc      0x14c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_frame   0x00001548      0x1f4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_frame   0x0000173c      0x1e8 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
- .debug_frame   0x00001924     0x11c0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_frame   0x00002ae4      0x638 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_frame   0x0000311c      0x954 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
- .debug_frame   0x00003a70       0x28 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
- .debug_frame   0x00003a98       0x64 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
- .debug_frame   0x00003afc       0xa8 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
- .debug_frame   0x00003ba4       0x38 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
- .debug_frame   0x00003bdc       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
- .debug_frame   0x00003bfc       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
- .debug_frame   0x00003c1c       0x54 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
- .debug_frame   0x00003c70       0x4c D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubsf3.o)
- .debug_frame   0x00003cbc       0x2c D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x00003ce8       0x34 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_frame   0x00003d1c      0x144 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-findfp.o)
- .debug_frame   0x00003e60       0x20 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-memset.o)
- .debug_frame   0x00003e80       0x20 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-errno.o)
- .debug_frame   0x00003ea0       0x2c D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
+ .debug_frame   0x00000180      0x48c ./Core/Src/static_tuner.o
+ .debug_frame   0x0000060c      0x154 ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_frame   0x00000760       0x74 ./Core/Src/stm32f4xx_hal_timebase_tim.o
+ .debug_frame   0x000007d4      0x178 ./Core/Src/stm32f4xx_it.o
+ .debug_frame   0x0000094c       0x58 ./Core/Src/system_stm32f4xx.o
+ .debug_frame   0x000009a4      0x374 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_frame   0x00000d18      0x508 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_frame   0x00001220      0x250 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_frame   0x00001470      0x14c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_frame   0x000015bc      0x1f4 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_frame   0x000017b0      0x1e8 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+ .debug_frame   0x00001998     0x11c0 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_frame   0x00002b58      0x638 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_frame   0x00003190      0x954 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_frame   0x00003ae4       0x28 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_init_f32.o)
+ .debug_frame   0x00003b0c       0x64 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_rfft_fast_f32.o)
+ .debug_frame   0x00003b70       0xa8 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_f32.o)
+ .debug_frame   0x00003c18       0x38 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_correlate_f32.o)
+ .debug_frame   0x00003c50       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_sin_f32.o)
+ .debug_frame   0x00003c70       0x20 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cos_f32.o)
+ .debug_frame   0x00003c90       0x54 D:\APP5\Architecture_calcul_rapide_DSP\TP\stCube_workspace\TP_Calcul_Rapide\Drivers\CMSIS\Lib\GCC\libarm_cortexM4lf_math.a(arm_cfft_radix8_f32.o)
+ .debug_frame   0x00003ce4       0x4c D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubsf3.o)
+ .debug_frame   0x00003d30       0x2c D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x00003d5c       0x34 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x00003d90      0x144 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-findfp.o)
+ .debug_frame   0x00003ed4       0x20 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-memset.o)
+ .debug_frame   0x00003ef4       0x20 D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-errno.o)
+ .debug_frame   0x00003f14       0x2c D:/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
 
 .debug_line_str
                 0x00000000       0x7a
