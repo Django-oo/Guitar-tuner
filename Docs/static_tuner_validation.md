@@ -131,14 +131,20 @@ For proof in STM32CubeIDE, watch:
 
 To analyze the real audio:
 
-1. Set `tunerAutoDemoEnabled` to `0`.
-2. Set `tunerInputSource` to `1`.
-3. Set `tunerRunRequest` to `1`.
+1. Build/debug the branch.
+2. Leave `tunerInputSource = 1`.
+3. Leave `tunerRealAutoReplayEnabled = 1`.
+4. Wait until `tunerDiag.real_sequence_done = 1`.
 
 Each real-audio run analyzes a 4096-sample frame and advances by
 `STATIC_TUNER_REAL_REPLAY_HOP = 1024` samples. At 16 kHz, the analysis frame is
 256 ms and the replay advances by 64 ms per run. `real_replay_time_ms` tells
 you where the current frame starts inside the embedded excerpt.
+
+The firmware advances one replay frame every
+`tunerRealAutoReplayPeriodMs = 250` by default. Set
+`tunerRealAutoReplayEnabled = 0` only if you want to step frames manually with
+`tunerRunRequest = 1`.
 
 Real-audio runs do not increment `pass_count` or `fail_count`, because the WAV
 is an external recording, not one of the 18 synthetic flat/in-tune/sharp test

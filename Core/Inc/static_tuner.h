@@ -132,6 +132,8 @@ extern volatile uint32_t tunerSelectedTest;
 extern volatile uint32_t tunerRunRequest;
 extern volatile uint32_t tunerAutoDemoEnabled;
 extern volatile uint32_t tunerAutoDemoPeriodMs;
+extern volatile uint32_t tunerRealAutoReplayEnabled;
+extern volatile uint32_t tunerRealAutoReplayPeriodMs;
 
 void StaticTuner_Init(void);
 void StaticTuner_Task(void);

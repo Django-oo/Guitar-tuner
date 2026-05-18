@@ -83,6 +83,8 @@ volatile uint32_t tunerSelectedTest;
 volatile uint32_t tunerRunRequest;
 volatile uint32_t tunerAutoDemoEnabled;
 volatile uint32_t tunerAutoDemoPeriodMs;
+volatile uint32_t tunerRealAutoReplayEnabled;
+volatile uint32_t tunerRealAutoReplayPeriodMs;
 
 static float tunerYinDiff[(STATIC_TUNER_SAMPLE_RATE_HZ / 70U) + 2U];
 static arm_rfft_fast_instance_f32 tunerFftInstance;
@@ -95,6 +97,7 @@ static uint32_t tunerAutoDemoLastTickMs;
 static uint32_t tunerAutoDemoTestIndex;
 static uint32_t tunerRealReplayFrameStart;
 static uint32_t tunerRealReplayFrameIndex;
+static uint32_t tunerRealAutoReplayLastTickMs;
 
 static const StaticTunerStringInfo tunerStrings[STATIC_TUNER_STRING_COUNT] = {
   { 82.41f },
@@ -1033,11 +1036,14 @@ void StaticTuner_Init(void)
       (uint32_t)tunerRealAudioSourceSha256Keep[0] +
       (uint32_t)tunerRealAudioLicenseKeep[0];
   tunerSelectedTest = 16U;
-  tunerRunRequest = 1U;
+  tunerRunRequest = 0U;
   tunerAutoDemoEnabled = 0U;
   tunerAutoDemoPeriodMs = 1000U;
   tunerAutoDemoLastTickMs = HAL_GetTick();
   tunerAutoDemoTestIndex = tunerSelectedTest;
+  tunerRealAutoReplayEnabled = 1U;
+  tunerRealAutoReplayPeriodMs = 250U;
+  tunerRealAutoReplayLastTickMs = HAL_GetTick();
   StaticTuner_RunAllTests();
   StaticTuner_RunSelectedTest(tunerSelectedTest);
 }
@@ -1046,6 +1052,16 @@ void StaticTuner_Task(void)
 {
   uint32_t request = tunerRunRequest;
   uint32_t now = HAL_GetTick();
+
+  if ((tunerRealAutoReplayEnabled != 0U) &&
+      (tunerInputSource == STATIC_TUNER_INPUT_REAL) &&
+      (tunerDiag.real_sequence_done == 0U) &&
+      ((now - tunerRealAutoReplayLastTickMs) >= tunerRealAutoReplayPeriodMs))
+  {
+    tunerRealAutoReplayLastTickMs = now;
+    StaticTuner_RunSelectedTest(tunerSelectedTest);
+    return;
+  }
 
   if ((tunerAutoDemoEnabled != 0U) &&
       ((now - tunerAutoDemoLastTickMs) >= tunerAutoDemoPeriodMs))
