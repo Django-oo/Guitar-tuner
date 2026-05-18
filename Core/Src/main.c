@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "microphone_dma.h"
+#include "static_tuner.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,7 +54,6 @@ UART_HandleTypeDef huart2;
 
 
 /* USER CODE BEGIN PV */
-volatile uint32_t micDmaProcessedBlocks = 0;
 volatile uint32_t appDebugStep = 0;
 
 
@@ -75,20 +74,6 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc)
-{
-    MicrophoneDma_OnAdcHalfCplt(hadc);
-}
-
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
-{
-    MicrophoneDma_OnAdcCplt(hadc);
-}
-
-void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc)
-{
-    MicrophoneDma_OnAdcError(hadc);
-}
 /* USER CODE END 0 */
 
 /**
@@ -122,24 +107,11 @@ int main(void)
   appDebugStep = 10;
   MX_GPIO_Init();
   appDebugStep = 11;
-  MX_DMA_Init();
-  appDebugStep = 12;
   MX_USART2_UART_Init();
-  appDebugStep = 13;
-  MX_ADC1_Init();
-  appDebugStep = 16;
-  MX_TIM2_Init();
-  appDebugStep = 17;
+  appDebugStep = 12;
   /* USER CODE BEGIN 2 */
-  appDebugStep = 1;
-
-  if (MicrophoneDma_Start(&hadc1, &htim2) != HAL_OK)
-  {
-    appDebugStep = 90;
-    Error_Handler();
-  }
-
-  appDebugStep = 2;
+  StaticTuner_Init();
+  appDebugStep = 20;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -149,8 +121,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    micDmaProcessedBlocks += MicrophoneDma_Task();
-    appDebugStep = 3;
+    StaticTuner_Task();
+    appDebugStep = 30;
   }
   /* USER CODE END 3 */
 }

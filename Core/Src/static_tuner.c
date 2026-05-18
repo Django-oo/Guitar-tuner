@@ -1,0 +1,417 @@
+#include "static_tuner.h"
+
+#include "arm_math.h"
+
+#include <stddef.h>
+
+#define STATIC_TUNER_MIN_FREQ_HZ      70.0f
+#define STATIC_TUNER_MAX_FREQ_HZ      400.0f
+#define STATIC_TUNER_YIN_THRESHOLD    0.18f
+#define STATIC_TUNER_SIGNAL_MIN_AMP   200U
+#define STATIC_TUNER_PI               3.14159265358979323846f
+#define STATIC_TUNER_TWO_PI           (2.0f * STATIC_TUNER_PI)
+
+typedef struct
+{
+  float frequency_hz;
+} StaticTunerStringInfo;
+
+typedef struct
+{
+  float detected_hz;
+  float target_hz;
+  float confidence;
+  uint32_t detected_string;
+  StaticTunerState state;
+  int32_t cents_error_x10;
+  uint32_t signal_amplitude;
+  uint32_t yin_tau;
+} StaticTunerResult;
+
+int16_t tunerStaticInput[STATIC_TUNER_FRAME_LENGTH];
+volatile StaticTunerDiagnostics tunerDiag;
+volatile uint32_t tunerSelectedTest;
+volatile uint32_t tunerRunRequest;
+
+static float tunerYinDiff[(STATIC_TUNER_SAMPLE_RATE_HZ / 70U) + 2U];
+
+static const StaticTunerStringInfo tunerStrings[STATIC_TUNER_STRING_COUNT] = {
+  { 82.41f },
+  { 110.00f },
+  { 146.83f },
+  { 196.00f },
+  { 246.94f },
+  { 329.63f }
+};
+
+static const int32_t tunerTestOffsetsX10[STATIC_TUNER_TESTS_PER_STRING] = {
+  -200,
+  0,
+  200
+};
+
+static const StaticTunerState tunerExpectedStates[STATIC_TUNER_TESTS_PER_STRING] = {
+  STATIC_TUNER_STATE_FLAT,
+  STATIC_TUNER_STATE_IN_TUNE,
+  STATIC_TUNER_STATE_SHARP
+};
+
+static float StaticTuner_AbsF(float value)
+{
+  return (value < 0.0f) ? -value : value;
+}
+
+static int32_t StaticTuner_RoundToI32(float value)
+{
+  if (value >= 0.0f)
+  {
+    return (int32_t)(value + 0.5f);
+  }
+
+  return (int32_t)(value - 0.5f);
+}
+
+static float StaticTuner_CentsFactor(int32_t cents_x10)
+{
+  float cents = (float)cents_x10 * 0.1f;
+
+  return 1.0f + (cents * 0.00057762265f);
+}
+
+static uint32_t StaticTuner_GetStringIndex(uint32_t test_index)
+{
+  return test_index / STATIC_TUNER_TESTS_PER_STRING;
+}
+
+static uint32_t StaticTuner_GetOffsetIndex(uint32_t test_index)
+{
+  return test_index % STATIC_TUNER_TESTS_PER_STRING;
+}
+
+static uint32_t StaticTuner_IsValidTest(uint32_t test_index)
+{
+  return test_index < STATIC_TUNER_TEST_COUNT;
+}
+
+static uint32_t StaticTuner_GetSignalAmplitude(const int16_t *samples,
+                                               uint32_t length)
+{
+  int16_t min_value = 32767;
+  int16_t max_value = -32768;
+
+  for (uint32_t i = 0U; i < length; i++)
+  {
+    if (samples[i] < min_value)
+    {
+      min_value = samples[i];
+    }
+
+    if (samples[i] > max_value)
+    {
+      max_value = samples[i];
+    }
+  }
+
+  return (uint32_t)((int32_t)max_value - (int32_t)min_value);
+}
+
+static void StaticTuner_GenerateTone(uint32_t string_index,
+                                     int32_t cents_offset_x10,
+                                     int16_t *samples,
+                                     uint32_t length)
+{
+  float base_hz = tunerStrings[string_index].frequency_hz;
+  float frequency_hz = base_hz * StaticTuner_CentsFactor(cents_offset_x10);
+  float phase = 0.0f;
+  float phase_step =
+      STATIC_TUNER_TWO_PI * frequency_hz / (float)STATIC_TUNER_SAMPLE_RATE_HZ;
+
+  for (uint32_t i = 0U; i < length; i++)
+  {
+    float envelope = 1.0f - (0.25f * (float)i / (float)length);
+    float sample =
+        (0.80f * arm_sin_f32(phase)) +
+        (0.15f * arm_sin_f32(2.0f * phase)) +
+        (0.05f * arm_sin_f32(3.0f * phase));
+
+    samples[i] = (int16_t)(sample * envelope * 14000.0f);
+    phase += phase_step;
+
+    while (phase >= STATIC_TUNER_TWO_PI)
+    {
+      phase -= STATIC_TUNER_TWO_PI;
+    }
+  }
+}
+
+static float StaticTuner_GetMean(const int16_t *samples, uint32_t length)
+{
+  int64_t sum = 0;
+
+  for (uint32_t i = 0U; i < length; i++)
+  {
+    sum += samples[i];
+  }
+
+  return (float)sum / (float)length;
+}
+
+static uint32_t StaticTuner_FindNearestString(float frequency_hz)
+{
+  uint32_t nearest = STATIC_TUNER_STRING_UNKNOWN;
+  float best_error = 1000000.0f;
+
+  for (uint32_t i = 0U; i < STATIC_TUNER_STRING_COUNT; i++)
+  {
+    float target = tunerStrings[i].frequency_hz;
+    float relative_error = StaticTuner_AbsF((frequency_hz - target) / target);
+
+    if (relative_error < best_error)
+    {
+      best_error = relative_error;
+      nearest = i;
+    }
+  }
+
+  return nearest;
+}
+
+static float StaticTuner_InterpolateTau(uint32_t tau, uint32_t max_lag)
+{
+  float better_tau = (float)tau;
+
+  if ((tau > 1U) && (tau < max_lag))
+  {
+    float previous = tunerYinDiff[tau - 1U];
+    float current = tunerYinDiff[tau];
+    float next = tunerYinDiff[tau + 1U];
+    float denominator = previous - (2.0f * current) + next;
+
+    if (StaticTuner_AbsF(denominator) > 0.000001f)
+    {
+      better_tau += 0.5f * (previous - next) / denominator;
+    }
+  }
+
+  return better_tau;
+}
+
+static void StaticTuner_Analyze(const int16_t *samples,
+                                uint32_t length,
+                                StaticTunerResult *result)
+{
+  uint32_t min_lag = STATIC_TUNER_SAMPLE_RATE_HZ / (uint32_t)STATIC_TUNER_MAX_FREQ_HZ;
+  uint32_t max_lag = STATIC_TUNER_SAMPLE_RATE_HZ / (uint32_t)STATIC_TUNER_MIN_FREQ_HZ;
+  uint32_t analysis_length = length - max_lag;
+  float mean = StaticTuner_GetMean(samples, length);
+  float running_sum = 0.0f;
+  uint32_t best_tau = 0U;
+  float best_cmnd = 1000000.0f;
+
+  result->detected_hz = 0.0f;
+  result->target_hz = 0.0f;
+  result->confidence = 0.0f;
+  result->detected_string = STATIC_TUNER_STRING_UNKNOWN;
+  result->state = STATIC_TUNER_STATE_NO_SIGNAL;
+  result->cents_error_x10 = 0;
+  result->signal_amplitude = StaticTuner_GetSignalAmplitude(samples, length);
+  result->yin_tau = 0U;
+
+  if (result->signal_amplitude < STATIC_TUNER_SIGNAL_MIN_AMP)
+  {
+    return;
+  }
+
+  tunerYinDiff[0] = 1.0f;
+
+  for (uint32_t tau = 1U; tau <= max_lag; tau++)
+  {
+    float difference = 0.0f;
+
+    for (uint32_t i = 0U; i < analysis_length; i++)
+    {
+      float a = (float)samples[i] - mean;
+      float b = (float)samples[i + tau] - mean;
+      float delta = a - b;
+
+      difference += delta * delta;
+    }
+
+    running_sum += difference;
+
+    if (running_sum > 0.0f)
+    {
+      tunerYinDiff[tau] = difference * (float)tau / running_sum;
+    }
+    else
+    {
+      tunerYinDiff[tau] = 1.0f;
+    }
+  }
+
+  for (uint32_t tau = min_lag; tau <= max_lag; tau++)
+  {
+    float cmnd = tunerYinDiff[tau];
+
+    if (cmnd < best_cmnd)
+    {
+      best_cmnd = cmnd;
+      best_tau = tau;
+    }
+
+    if (cmnd < STATIC_TUNER_YIN_THRESHOLD)
+    {
+      while ((tau + 1U <= max_lag) && (tunerYinDiff[tau + 1U] < tunerYinDiff[tau]))
+      {
+        tau++;
+      }
+
+      best_tau = tau;
+      best_cmnd = tunerYinDiff[tau];
+      break;
+    }
+  }
+
+  if (best_tau == 0U)
+  {
+    result->state = STATIC_TUNER_STATE_ERROR;
+    return;
+  }
+
+  {
+    float better_tau = StaticTuner_InterpolateTau(best_tau, max_lag);
+    float detected_hz = (float)STATIC_TUNER_SAMPLE_RATE_HZ / better_tau;
+    uint32_t nearest_string = StaticTuner_FindNearestString(detected_hz);
+    float target_hz = tunerStrings[nearest_string].frequency_hz;
+    float relative_error = (detected_hz - target_hz) / target_hz;
+    int32_t cents_x10 = StaticTuner_RoundToI32(relative_error * 17312.34f);
+
+    result->detected_hz = detected_hz;
+    result->target_hz = target_hz;
+    result->confidence = 1.0f - best_cmnd;
+    result->detected_string = nearest_string;
+    result->cents_error_x10 = cents_x10;
+    result->yin_tau = best_tau;
+
+    if (cents_x10 > STATIC_TUNER_IN_TUNE_LIMIT_X10)
+    {
+      result->state = STATIC_TUNER_STATE_SHARP;
+    }
+    else if (cents_x10 < -STATIC_TUNER_IN_TUNE_LIMIT_X10)
+    {
+      result->state = STATIC_TUNER_STATE_FLAT;
+    }
+    else
+    {
+      result->state = STATIC_TUNER_STATE_IN_TUNE;
+    }
+  }
+}
+
+static void StaticTuner_PublishResult(uint32_t test_index,
+                                      uint32_t expected_string,
+                                      StaticTunerState expected_state,
+                                      int32_t cents_offset_x10,
+                                      float input_hz,
+                                      const StaticTunerResult *result)
+{
+  tunerDiag.run_count++;
+  tunerDiag.selected_test = test_index;
+  tunerDiag.expected_string = expected_string;
+  tunerDiag.detected_string = result->detected_string;
+  tunerDiag.expected_state = expected_state;
+  tunerDiag.tuning_state = result->state;
+  tunerDiag.input_cents_offset_x10 = cents_offset_x10;
+  tunerDiag.cents_error_x10 = result->cents_error_x10;
+  tunerDiag.input_hz = input_hz;
+  tunerDiag.detected_hz = result->detected_hz;
+  tunerDiag.target_hz = result->target_hz;
+  tunerDiag.confidence = result->confidence;
+  tunerDiag.signal_amplitude = result->signal_amplitude;
+  tunerDiag.yin_tau = result->yin_tau;
+
+  if ((result->detected_string == expected_string) &&
+      (result->state == expected_state))
+  {
+    tunerDiag.pass_count++;
+  }
+  else
+  {
+    tunerDiag.fail_count++;
+  }
+}
+
+void StaticTuner_RunSelectedTest(uint32_t test_index)
+{
+  StaticTunerResult result;
+  uint32_t string_index;
+  uint32_t offset_index;
+  int32_t cents_offset_x10;
+  float input_hz;
+
+  if (StaticTuner_IsValidTest(test_index) == 0U)
+  {
+    tunerDiag.last_error = 1U;
+    return;
+  }
+
+  string_index = StaticTuner_GetStringIndex(test_index);
+  offset_index = StaticTuner_GetOffsetIndex(test_index);
+  cents_offset_x10 = tunerTestOffsetsX10[offset_index];
+  input_hz = tunerStrings[string_index].frequency_hz *
+             StaticTuner_CentsFactor(cents_offset_x10);
+
+  StaticTuner_GenerateTone(string_index,
+                           cents_offset_x10,
+                           tunerStaticInput,
+                           STATIC_TUNER_FRAME_LENGTH);
+  StaticTuner_Analyze(tunerStaticInput, STATIC_TUNER_FRAME_LENGTH, &result);
+  StaticTuner_PublishResult(test_index,
+                            string_index,
+                            tunerExpectedStates[offset_index],
+                            cents_offset_x10,
+                            input_hz,
+                            &result);
+}
+
+void StaticTuner_RunAllTests(void)
+{
+  tunerDiag.pass_count = 0U;
+  tunerDiag.fail_count = 0U;
+  tunerDiag.all_tests_run_count++;
+
+  for (uint32_t test = 0U; test < STATIC_TUNER_TEST_COUNT; test++)
+  {
+    StaticTuner_RunSelectedTest(test);
+  }
+}
+
+void StaticTuner_Init(void)
+{
+  tunerDiag.initialized = 1U;
+  tunerDiag.last_error = 0U;
+  tunerSelectedTest = 1U;
+  tunerRunRequest = 0U;
+  StaticTuner_RunAllTests();
+  StaticTuner_RunSelectedTest(tunerSelectedTest);
+}
+
+void StaticTuner_Task(void)
+{
+  uint32_t request = tunerRunRequest;
+
+  if (request == 0U)
+  {
+    return;
+  }
+
+  tunerRunRequest = 0U;
+
+  if (request == STATIC_TUNER_RUN_ALL_TESTS)
+  {
+    StaticTuner_RunAllTests();
+    return;
+  }
+
+  StaticTuner_RunSelectedTest(tunerSelectedTest);
+}
