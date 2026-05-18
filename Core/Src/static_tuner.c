@@ -1,4 +1,5 @@
 #include "static_tuner.h"
+#include "static_tuner_real_sample.h"
 
 #include "arm_math.h"
 #include "stm32f4xx_hal.h"
@@ -58,6 +59,20 @@ volatile int32_t tunerGraphCentsErrorX10;
 volatile float tunerGraphCorrHz;
 volatile int32_t tunerGraphCorrCentsErrorX10;
 volatile StaticTunerDiagnostics tunerDiag;
+const char tunerRealAudioSourceFile[] = STATIC_TUNER_REAL_SAMPLE_SOURCE_FILE;
+const char tunerRealAudioSourceUrl[] = STATIC_TUNER_REAL_SAMPLE_SOURCE_URL;
+const char tunerRealAudioSourceSha256[] = STATIC_TUNER_REAL_SAMPLE_SOURCE_SHA256;
+const char tunerRealAudioLicense[] = STATIC_TUNER_REAL_SAMPLE_LICENSE;
+static const char * volatile tunerRealAudioSourceFileKeep =
+    tunerRealAudioSourceFile;
+static const char * volatile tunerRealAudioSourceUrlKeep =
+    tunerRealAudioSourceUrl;
+static const char * volatile tunerRealAudioSourceSha256Keep =
+    tunerRealAudioSourceSha256;
+static const char * volatile tunerRealAudioLicenseKeep =
+    tunerRealAudioLicense;
+volatile uint32_t tunerRealAudioMetadataKeepAlive;
+volatile uint32_t tunerInputSource;
 volatile uint32_t tunerSelectedTest;
 volatile uint32_t tunerRunRequest;
 volatile uint32_t tunerAutoDemoEnabled;
@@ -352,6 +367,26 @@ static void StaticTuner_GenerateTone(uint32_t string_index,
     {
       phase -= STATIC_TUNER_TWO_PI;
     }
+  }
+}
+
+static void StaticTuner_LoadRealAudioInput(int16_t *samples, uint32_t length)
+{
+  uint32_t copy_length = length;
+
+  if (copy_length > STATIC_TUNER_REAL_SAMPLE_COUNT)
+  {
+    copy_length = STATIC_TUNER_REAL_SAMPLE_COUNT;
+  }
+
+  for (uint32_t i = 0U; i < copy_length; i++)
+  {
+    samples[i] = staticTunerRealSample[i];
+  }
+
+  for (uint32_t i = copy_length; i < length; i++)
+  {
+    samples[i] = 0;
   }
 }
 
@@ -698,6 +733,7 @@ static void StaticTuner_PublishResult(uint32_t test_index,
                                       const StaticTunerResult *result)
 {
   tunerDiag.run_count++;
+  tunerDiag.input_source = tunerInputSource;
   tunerDiag.selected_test = test_index;
   tunerDiag.expected_string = expected_string;
   tunerDiag.detected_string = result->detected_string;
@@ -720,6 +756,12 @@ static void StaticTuner_PublishResult(uint32_t test_index,
   tunerGraphCentsErrorX10 = result->cents_error_x10;
   tunerGraphCorrHz = result->corr_detected_hz;
   tunerGraphCorrCentsErrorX10 = result->corr_cents_error_x10;
+
+  if ((expected_string == STATIC_TUNER_STRING_UNKNOWN) ||
+      (expected_state == STATIC_TUNER_STATE_UNDEFINED))
+  {
+    return;
+  }
 
   if ((result->detected_string == expected_string) &&
       (result->state == expected_state))
@@ -749,6 +791,9 @@ void StaticTuner_RunSelectedTest(uint32_t test_index)
   uint32_t offset_index;
   int32_t cents_offset_x10;
   float input_hz;
+  uint32_t expected_string;
+  StaticTunerState expected_state;
+  uint32_t input_source = tunerInputSource;
 
   if (StaticTuner_IsValidTest(test_index) == 0U)
   {
@@ -761,16 +806,39 @@ void StaticTuner_RunSelectedTest(uint32_t test_index)
   cents_offset_x10 = tunerTestOffsetsX10[offset_index];
   input_hz = tunerStrings[string_index].frequency_hz *
              StaticTuner_CentsFactor(cents_offset_x10);
+  expected_string = string_index;
+  expected_state = tunerExpectedStates[offset_index];
 
-  StaticTuner_GenerateTone(string_index,
-                           cents_offset_x10,
-                           tunerStaticInput,
-                           STATIC_TUNER_FRAME_LENGTH);
+  if (input_source == STATIC_TUNER_INPUT_REAL)
+  {
+    StaticTuner_LoadRealAudioInput(tunerStaticInput, STATIC_TUNER_FRAME_LENGTH);
+    expected_string = STATIC_TUNER_STRING_UNKNOWN;
+    expected_state = STATIC_TUNER_STATE_UNDEFINED;
+    cents_offset_x10 = 0;
+    input_hz = 0.0f;
+  }
+  else if (input_source == STATIC_TUNER_INPUT_SYNTH)
+  {
+    StaticTuner_GenerateTone(string_index,
+                             cents_offset_x10,
+                             tunerStaticInput,
+                             STATIC_TUNER_FRAME_LENGTH);
+  }
+  else
+  {
+    tunerDiag.last_error = 3U;
+    tunerInputSource = STATIC_TUNER_INPUT_SYNTH;
+    StaticTuner_GenerateTone(string_index,
+                             cents_offset_x10,
+                             tunerStaticInput,
+                             STATIC_TUNER_FRAME_LENGTH);
+  }
+
   StaticTuner_UpdateFftDiagnostics(tunerStaticInput, STATIC_TUNER_FRAME_LENGTH);
   StaticTuner_Analyze(tunerStaticInput, STATIC_TUNER_FRAME_LENGTH, &result);
   StaticTuner_PublishResult(test_index,
-                            string_index,
-                            tunerExpectedStates[offset_index],
+                            expected_string,
+                            expected_state,
                             cents_offset_x10,
                             input_hz,
                             &result);
@@ -794,6 +862,20 @@ void StaticTuner_Init(void)
 {
   tunerDiag.initialized = 1U;
   tunerDiag.last_error = 0U;
+  tunerInputSource = STATIC_TUNER_INPUT_SYNTH;
+  tunerDiag.input_source = tunerInputSource;
+  tunerDiag.real_sample_count = STATIC_TUNER_REAL_SAMPLE_COUNT;
+  tunerDiag.real_sample_rate_hz = STATIC_TUNER_REAL_SAMPLE_RATE_HZ;
+  tunerDiag.real_sample_original_rate_hz =
+      STATIC_TUNER_REAL_SAMPLE_ORIGINAL_RATE_HZ;
+  tunerDiag.real_sample_start_output_frame =
+      STATIC_TUNER_REAL_SAMPLE_START_OUTPUT_FRAME;
+  tunerDiag.real_sample_checksum = STATIC_TUNER_REAL_SAMPLE_CHECKSUM;
+  tunerRealAudioMetadataKeepAlive =
+      (uint32_t)tunerRealAudioSourceFileKeep[0] +
+      (uint32_t)tunerRealAudioSourceUrlKeep[0] +
+      (uint32_t)tunerRealAudioSourceSha256Keep[0] +
+      (uint32_t)tunerRealAudioLicenseKeep[0];
   tunerSelectedTest = 16U;
   tunerRunRequest = 0U;
   tunerAutoDemoEnabled = 1U;

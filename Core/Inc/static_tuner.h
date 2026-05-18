@@ -13,6 +13,8 @@
 #define STATIC_TUNER_SPECTRUM_MAX_HZ      500U
 #define STATIC_TUNER_RUN_ALL_TESTS        0xFFFFFFFFU
 #define STATIC_TUNER_IN_TUNE_LIMIT_X10    50
+#define STATIC_TUNER_INPUT_SYNTH          0U
+#define STATIC_TUNER_INPUT_REAL           1U
 
 typedef enum
 {
@@ -42,6 +44,7 @@ typedef struct
   volatile uint32_t all_tests_run_count;
   volatile uint32_t pass_count;
   volatile uint32_t fail_count;
+  volatile uint32_t input_source;
   volatile uint32_t selected_test;
   volatile uint32_t expected_string;
   volatile uint32_t detected_string;
@@ -71,6 +74,11 @@ typedef struct
   volatile float corr_confidence;
   volatile uint32_t corr_pass_count;
   volatile uint32_t corr_fail_count;
+  volatile uint32_t real_sample_count;
+  volatile uint32_t real_sample_rate_hz;
+  volatile uint32_t real_sample_original_rate_hz;
+  volatile uint32_t real_sample_start_output_frame;
+  volatile uint32_t real_sample_checksum;
   volatile uint32_t fft_peak_bin;
   volatile uint32_t last_error;
 } StaticTunerDiagnostics;
@@ -90,6 +98,12 @@ extern volatile int32_t tunerGraphCentsErrorX10;
 extern volatile float tunerGraphCorrHz;
 extern volatile int32_t tunerGraphCorrCentsErrorX10;
 extern volatile StaticTunerDiagnostics tunerDiag;
+extern const char tunerRealAudioSourceFile[];
+extern const char tunerRealAudioSourceUrl[];
+extern const char tunerRealAudioSourceSha256[];
+extern const char tunerRealAudioLicense[];
+extern volatile uint32_t tunerRealAudioMetadataKeepAlive;
+extern volatile uint32_t tunerInputSource;
 extern volatile uint32_t tunerSelectedTest;
 extern volatile uint32_t tunerRunRequest;
 extern volatile uint32_t tunerAutoDemoEnabled;

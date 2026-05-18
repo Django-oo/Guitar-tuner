@@ -1,5 +1,6 @@
 Core/Src/static_tuner.o: ../Core/Src/static_tuner.c \
- ../Core/Inc/static_tuner.h ../Drivers/CMSIS/DSP/Include/arm_math.h \
+ ../Core/Inc/static_tuner.h ../Core/Inc/static_tuner_real_sample.h \
+ ../Drivers/CMSIS/DSP/Include/arm_math.h \
  ../Drivers/CMSIS/DSP/Include/core_cm4.h \
  ../Drivers/CMSIS/DSP/Include/core_cmInstr.h \
  ../Drivers/CMSIS/DSP/Include/core_cmFunc.h \
@@ -34,6 +35,7 @@ Core/Src/static_tuner.o: ../Core/Src/static_tuner.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 ../Core/Inc/static_tuner.h:
+../Core/Inc/static_tuner_real_sample.h:
 ../Drivers/CMSIS/DSP/Include/arm_math.h:
 ../Drivers/CMSIS/DSP/Include/core_cm4.h:
 ../Drivers/CMSIS/DSP/Include/core_cmInstr.h:

@@ -1,7 +1,7 @@
 # Static Tuner Validation
 
-This branch validates the guitar tuner algorithm with synthetic inputs instead
-of the microphone.
+This branch validates the guitar tuner algorithm with synthetic inputs and an
+embedded real-audio WAV slice instead of the microphone.
 
 ## Debug Variables
 
@@ -9,7 +9,9 @@ Add these to Live Expressions:
 
 - `tunerSelectedTest`
 - `tunerRunRequest`
+- `tunerInputSource`
 - `tunerDiag.initialized`
+- `tunerDiag.input_source`
 - `tunerDiag.pass_count`
 - `tunerDiag.fail_count`
 - `tunerDiag.selected_test`
@@ -29,6 +31,11 @@ Add these to Live Expressions:
 - `tunerDiag.corr_state`
 - `tunerDiag.corr_pass_count`
 - `tunerDiag.corr_fail_count`
+- `tunerDiag.real_sample_count`
+- `tunerDiag.real_sample_rate_hz`
+- `tunerDiag.real_sample_original_rate_hz`
+- `tunerDiag.real_sample_start_output_frame`
+- `tunerDiag.real_sample_checksum`
 - `tunerDiag.fft_low_e_mag`
 - `tunerDiag.fft_a_mag`
 - `tunerDiag.fft_d_mag`
@@ -84,6 +91,35 @@ For example:
 The firmware enables `tunerAutoDemoEnabled = 1` by default and advances to the
 next in-tune string every `tunerAutoDemoPeriodMs = 1000`, so the graph changes
 once per second without manually editing `tunerSelectedTest`.
+
+## Input Source
+
+The tuner can analyze two input sources:
+
+- `tunerInputSource = 0`: synthetic generated guitar tone
+- `tunerInputSource = 1`: embedded real WAV slice
+
+The real input is generated from `Samples/static_tuner/gc.wav`, a CC0 acoustic
+guitar WAV from `pdx-cs-sound/wavs`. The converter stores the source URL,
+source SHA-256, and sample checksum in `Core/Inc/static_tuner_real_sample.h`.
+
+For proof in STM32CubeIDE, watch:
+
+- `tunerRealAudioSourceFile`
+- `tunerRealAudioSourceUrl`
+- `tunerRealAudioSourceSha256`
+- `tunerRealAudioLicense`
+- `tunerDiag.real_sample_checksum`
+
+To analyze the real audio:
+
+1. Set `tunerAutoDemoEnabled` to `0`.
+2. Set `tunerInputSource` to `1`.
+3. Set `tunerRunRequest` to `1`.
+
+Real-audio runs do not increment `pass_count` or `fail_count`, because the WAV
+is an external recording, not one of the 18 synthetic flat/in-tune/sharp test
+cases.
 
 ## Test Index Map
 
