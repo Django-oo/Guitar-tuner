@@ -1254,17 +1254,15 @@ void StaticTuner_Init(void)
       (uint32_t)tunerRealAudioSourceUrlKeep[0] +
       (uint32_t)tunerRealAudioSourceSha256Keep[0] +
       (uint32_t)tunerRealAudioLicenseKeep[0];
-  tunerSelectedTest = 16U;
+  tunerSelectedTest = 1U;
   tunerRunRequest = 0U;
-  tunerAutoDemoEnabled = 0U;
+  tunerAutoDemoEnabled = 1U;
   tunerAutoDemoPeriodMs = 1000U;
   tunerAutoDemoLastTickMs = HAL_GetTick();
   tunerAutoDemoTestIndex = tunerSelectedTest;
   tunerRealAutoReplayEnabled = 1U;
   tunerRealAutoReplayPeriodMs = 250U;
   tunerRealAutoReplayLastTickMs = HAL_GetTick();
-  StaticTuner_RunAllTests();
-  StaticTuner_RunSelectedTest(tunerSelectedTest);
 }
 
 void StaticTuner_Task(void)
@@ -1286,15 +1284,17 @@ void StaticTuner_Task(void)
       ((now - tunerAutoDemoLastTickMs) >= tunerAutoDemoPeriodMs))
   {
     tunerAutoDemoLastTickMs = now;
-    tunerAutoDemoTestIndex += STATIC_TUNER_TESTS_PER_STRING;
 
     if (tunerAutoDemoTestIndex >= STATIC_TUNER_TEST_COUNT)
     {
-      tunerAutoDemoTestIndex = 1U;
+      tunerAutoDemoEnabled = 0U;
+      tunerDiag.all_tests_run_count++;
+      return;
     }
 
     tunerSelectedTest = tunerAutoDemoTestIndex;
     StaticTuner_RunSelectedTest(tunerSelectedTest);
+    tunerAutoDemoTestIndex += STATIC_TUNER_TESTS_PER_STRING;
     return;
   }
 

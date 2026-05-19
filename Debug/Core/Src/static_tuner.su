@@ -30,4 +30,4 @@
 ../Core/Src/static_tuner.c:1145:6:StaticTuner_RunSelectedTest	120	static
 ../Core/Src/static_tuner.c:1213:6:StaticTuner_RunAllTests	16	static
 ../Core/Src/static_tuner.c:1227:6:StaticTuner_Init	8	static
-../Core/Src/static_tuner.c:1270:6:StaticTuner_Task	16	static
+../Core/Src/static_tuner.c:1268:6:StaticTuner_Task	16	static

@@ -1,0 +1,11 @@
+../Core/Src/leds.c:49:13:Leds_RecordError	16	static
+../Core/Src/leds.c:55:17:Leds_InitHardware	72	static
+../Core/Src/leds.c:131:13:Leds_SetAll	24	static
+../Core/Src/leds.c:139:13:Leds_SetStatusCluster	24	static
+../Core/Src/leds.c:149:13:Leds_UpdateTunedStringMask	16	static
+../Core/Src/leds.c:169:17:Leds_GetCurrentStatus	4	static
+../Core/Src/leds.c:207:13:Leds_UpdateModel	24	static
+../Core/Src/leds.c:249:13:Leds_BuildPwmData	32	static
+../Core/Src/leds.c:282:13:Leds_Send	8	static
+../Core/Src/leds.c:302:6:Leds_Task	16	static
+../Core/Src/leds.c:321:6:HAL_TIM_PWM_PulseFinishedCallback	16	static

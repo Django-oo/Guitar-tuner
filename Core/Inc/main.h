@@ -73,6 +73,8 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+#define LED_RING_DATA_Pin GPIO_PIN_6
+#define LED_RING_DATA_GPIO_Port GPIOB
 
 /* USER CODE END Private defines */
 

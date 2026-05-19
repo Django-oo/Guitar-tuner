@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "static_tuner.h"
+#include "leds.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -122,6 +123,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     StaticTuner_Task();
+    Leds_Task();
     appDebugStep = 30;
   }
   /* USER CODE END 3 */
