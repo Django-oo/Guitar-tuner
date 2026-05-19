@@ -7,8 +7,8 @@ embedded real-audio WAV slice instead of the microphone.
 
 | Check | What it proves | Expected result |
 | --- | --- | --- |
-| Synthetic YIN tests | The main pitch detector classifies known generated inputs. | `tunerDiag.fail_count = 0` |
-| Synthetic correlation tests | The `arm_correlate_f32` detector agrees on known generated inputs. | `tunerDiag.corr_fail_count = 0` |
+| Synthetic active-detector tests | The active detector classifies known generated inputs. | `tunerDiag.fail_count = 0` |
+| Synthetic correlation diagnostics | The `arm_correlate_f32` detector classifies known generated inputs. | `tunerDiag.corr_fail_count = 0` |
 | Real WAV provenance | The embedded input comes from the stored `gc.wav` file. | `tunerDiag.real_sample_checksum = 0xC1E6FA47` |
 | Real replay sequence | The firmware analyzes a stream of overlapping frames, not one fixed sample. | `tunerDiag.real_sequence_done = 1` |
 
@@ -31,6 +31,7 @@ Add these to Live Expressions:
 - `tunerRunRequest`
 - `tunerInputSource`
 - `tunerDiag.initialized`
+- `tunerDiag.active_detector`
 - `tunerDiag.input_source`
 - `tunerDiag.pass_count`
 - `tunerDiag.fail_count`
@@ -70,7 +71,28 @@ Add these to Live Expressions:
 - `tunerDiag.real_sequence_g_count`
 - `tunerDiag.real_sequence_b_count`
 - `tunerDiag.real_sequence_high_e_count`
+- `tunerDiag.real_sequence_first_string`
+- `tunerDiag.real_sequence_last_string`
+- `tunerDiag.real_sequence_longest_string`
+- `tunerDiag.real_sequence_longest_start_ms`
+- `tunerDiag.real_sequence_longest_duration_ms`
+- `tunerDiag.real_sequence_longest_frame_count`
+- `tunerDiag.real_sequence_avg_hz_x100`
+- `tunerDiag.real_sequence_avg_confidence_x1000`
 - `tunerDiag.real_sample_checksum`
+- `tunerDiag.display_string`
+- `tunerDiag.display_state`
+- `tunerDiag.display_frequency_x100`
+- `tunerDiag.display_cents_x10`
+- `tunerDiag.display_confidence_x1000`
+- `tunerDiag.perf_fft_cycles`
+- `tunerDiag.perf_fft_us`
+- `tunerDiag.perf_corr_cycles`
+- `tunerDiag.perf_corr_us`
+- `tunerDiag.perf_yin_cycles`
+- `tunerDiag.perf_yin_us`
+- `tunerDiag.perf_total_cycles`
+- `tunerDiag.perf_total_us`
 - `tunerDiag.fft_low_e_mag`
 - `tunerDiag.fft_a_mag`
 - `tunerDiag.fft_d_mag`
@@ -95,6 +117,10 @@ For graph-style views, also add individual spectrum entries:
 `tunerSpectrum64` spans about 0 to 500 Hz, so each entry represents roughly
 7.8 Hz. The six named `fft_*_mag` fields are easier for SWV timeline graphs
 focused on standard guitar strings.
+
+`tunerGraphLowE`, `tunerGraphA`, `tunerGraphD`, `tunerGraphG`, `tunerGraphB`,
+and `tunerGraphHighE` are normalized to `0..1000` for SWV graph readability.
+The raw magnitudes remain available in `tunerDiag.fft_*_mag`.
 
 ## SWV Graph Variables
 
@@ -199,6 +225,16 @@ String values are:
 The summary counters show the distribution of detected strings across the pass,
 for example `real_sequence_a_count` and `real_sequence_d_count`.
 
+Additional summary values:
+
+- `real_sequence_first_string`: first confident string in the pass
+- `real_sequence_last_string`: last confident string in the pass
+- `real_sequence_longest_string`: longest contiguous confident string segment
+- `real_sequence_longest_start_ms`: start time of that segment
+- `real_sequence_longest_duration_ms`: duration of that segment
+- `real_sequence_avg_hz_x100`: average confident-frame frequency times 100
+- `real_sequence_avg_confidence_x1000`: average confidence times 1000
+
 ## Full WAV Analysis
 
 The firmware embeds a 2.048 s excerpt for STM32-side validation. The complete
@@ -259,10 +295,12 @@ The in-tune tolerance is `+/-5 cents`, reported as `+/-50` in
 
 ## Correlation Detector
 
-The branch now runs a second detector based on CMSIS-DSP
-`arm_correlate_f32`. The original YIN-style detector still drives
-`tunerDiag.detected_hz`, `tunerDiag.cents_error_x10`, and
-`tunerDiag.tuning_state`.
+The branch now uses CMSIS-DSP `arm_correlate_f32` as the active detector.
+`tunerDiag.active_detector = 2` means correlation is active.
+
+The original YIN-style detector is kept in source but compiled out for now with
+`STATIC_TUNER_ENABLE_YIN = 0`. Therefore `tunerDiag.perf_yin_us` should stay
+at `0`.
 
 The correlation detector uses a 2048-sample frame and chooses the first strong
 autocorrelation peak. This avoids octave errors where a later, larger peak
@@ -280,6 +318,26 @@ The correlation result is published separately:
 
 For the correlation detector, `corr_fail_count` should also stay at `0` after
 the startup test run.
+
+## Performance Timing
+
+Timing is measured with the Cortex-M DWT cycle counter:
+
+- `tunerDiag.perf_fft_us`: FFT/FFT diagnostics time
+- `tunerDiag.perf_corr_us`: correlation detector time
+- `tunerDiag.perf_yin_us`: YIN detector time, currently `0`
+- `tunerDiag.perf_total_us`: total analysis path time for one frame
+
+These values measure computation time only. They do not include the artificial
+auto-replay delay from `tunerRealAutoReplayPeriodMs`.
+
+## Branch Structure
+
+| Branch | Purpose |
+| --- | --- |
+| `master` | Original STM32 tutorial baseline. |
+| `microphone_DMA` | Microphone/ADC DMA acquisition diagnostics and capture tooling. |
+| `static_tuner` | Tuner algorithm validation using synthetic tones and real WAV replay. |
 
 ## Running Tests
 

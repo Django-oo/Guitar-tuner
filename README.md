@@ -45,10 +45,11 @@ The `static_tuner` branch validates the tuner algorithm before returning to micr
 
 The firmware runs:
 
-- a YIN-style pitch detector, used as the main result
-- a CMSIS-DSP `arm_correlate_f32` autocorrelation detector, exposed for comparison
-- FFT diagnostics for SWV/Data Trace graphing
+- a CMSIS-DSP `arm_correlate_f32` autocorrelation detector, used as the active result
+- a YIN-style detector kept in source but compiled out for now
+- FFT diagnostics for SWV/Data Trace graphing, scaled to `0..1000`
 - a real-audio replay sequence history for checking frame-by-frame results
+- DWT cycle timing for FFT, correlation, and total frame analysis
 
 ## Real Audio Provenance
 
@@ -79,8 +80,8 @@ Proof values:
 
 | Validation | Expected result | Status |
 | --- | --- | --- |
-| Synthetic YIN tests | 18/18 pass | Passing, `tunerDiag.fail_count = 0` |
-| Synthetic correlation tests | 18/18 pass | Passing, `tunerDiag.corr_fail_count = 0` |
+| Synthetic active-detector tests | 18/18 pass | Passing, `tunerDiag.fail_count = 0` |
+| Synthetic correlation diagnostics | 18/18 pass | Passing, `tunerDiag.corr_fail_count = 0` |
 | Real replay provenance | SHA/checksum visible in firmware | Passing |
 | Real replay sequence | 29 frames from real WAV excerpt | Passing, `tunerDiag.real_sequence_done = 1` |
 
@@ -118,6 +119,24 @@ tunerRealHistoryHz[0..28]
 tunerRealHistoryConfidence[0..28]
 ```
 
+Useful summary/debug fields:
+
+```c
+tunerDiag.display_string
+tunerDiag.display_state
+tunerDiag.display_frequency_x100
+tunerDiag.display_cents_x10
+tunerDiag.display_confidence_x1000
+tunerDiag.real_sequence_longest_string
+tunerDiag.real_sequence_longest_start_ms
+tunerDiag.real_sequence_longest_duration_ms
+tunerDiag.real_sequence_avg_hz_x100
+tunerDiag.real_sequence_avg_confidence_x1000
+tunerDiag.perf_fft_us
+tunerDiag.perf_corr_us
+tunerDiag.perf_total_us
+```
+
 For synthetic validation, set:
 
 ```c
@@ -153,6 +172,17 @@ Samples/static_tuner/analysis/gc_full_analysis.md
 ```
 
 The current full-file analysis covers `403` frames over `26.011 s`.
+
+## Branch Structure
+
+| Branch | Purpose |
+| --- | --- |
+| `master` | Original STM32 tutorial baseline. |
+| `microphone_DMA` | Microphone/ADC DMA acquisition diagnostics and capture tooling. |
+| `static_tuner` | Tuner algorithm validation using synthetic tones and real WAV replay. |
+
+The intended future merge path is to keep `static_tuner` as the algorithm
+baseline, then feed microphone DMA frames into the same analysis path.
 
 ## Next Engineering Steps
 

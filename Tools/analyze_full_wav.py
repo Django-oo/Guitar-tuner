@@ -198,7 +198,7 @@ def analyze(samples: np.ndarray) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
     for frame_index, start in enumerate(range(0, len(samples) - FRAME_LENGTH + 1, HOP_LENGTH)):
         frame = samples[start : start + FRAME_LENGTH]
-        detected_hz, confidence, yin_tau = yin_pitch(frame)
+        detected_hz, confidence, corr_tau = corr_pitch(frame)
         string_id, string_name, cents_x10 = nearest_string(detected_hz)
         state_id, state_name = tuning_state(cents_x10, confidence)
 
@@ -206,7 +206,8 @@ def analyze(samples: np.ndarray) -> list[dict[str, object]]:
             string_id = 255
             string_name = "unknown"
 
-        corr_hz, corr_confidence, corr_tau = corr_pitch(frame)
+        corr_hz = detected_hz
+        corr_confidence = confidence
         corr_string_id, corr_string_name, corr_cents_x10 = nearest_string(corr_hz)
 
         rows.append(
@@ -220,7 +221,7 @@ def analyze(samples: np.ndarray) -> list[dict[str, object]]:
                 "state_name": state_name,
                 "cents_x10": cents_x10,
                 "confidence": confidence,
-                "yin_tau": yin_tau,
+                "yin_tau": 0,
                 "corr_hz": corr_hz,
                 "corr_string_id": corr_string_id,
                 "corr_string_name": corr_string_name,

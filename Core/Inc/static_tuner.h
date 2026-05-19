@@ -18,6 +18,7 @@
 #define STATIC_TUNER_REAL_REPLAY_HOP      1024U
 #define STATIC_TUNER_REAL_HISTORY_LENGTH  \
   (((32768U - STATIC_TUNER_FRAME_LENGTH) / STATIC_TUNER_REAL_REPLAY_HOP) + 1U)
+#define STATIC_TUNER_DETECTOR_CORRELATION 2U
 
 typedef enum
 {
@@ -47,6 +48,7 @@ typedef struct
   volatile uint32_t all_tests_run_count;
   volatile uint32_t pass_count;
   volatile uint32_t fail_count;
+  volatile uint32_t active_detector;
   volatile uint32_t input_source;
   volatile uint32_t selected_test;
   volatile uint32_t expected_string;
@@ -96,7 +98,28 @@ typedef struct
   volatile uint32_t real_sequence_g_count;
   volatile uint32_t real_sequence_b_count;
   volatile uint32_t real_sequence_high_e_count;
+  volatile uint32_t real_sequence_first_string;
+  volatile uint32_t real_sequence_last_string;
+  volatile uint32_t real_sequence_longest_string;
+  volatile uint32_t real_sequence_longest_start_ms;
+  volatile uint32_t real_sequence_longest_duration_ms;
+  volatile uint32_t real_sequence_longest_frame_count;
+  volatile uint32_t real_sequence_avg_hz_x100;
+  volatile uint32_t real_sequence_avg_confidence_x1000;
   volatile uint32_t real_sample_checksum;
+  volatile uint32_t display_string;
+  volatile uint32_t display_state;
+  volatile uint32_t display_frequency_x100;
+  volatile int32_t display_cents_x10;
+  volatile uint32_t display_confidence_x1000;
+  volatile uint32_t perf_fft_cycles;
+  volatile uint32_t perf_fft_us;
+  volatile uint32_t perf_corr_cycles;
+  volatile uint32_t perf_corr_us;
+  volatile uint32_t perf_yin_cycles;
+  volatile uint32_t perf_yin_us;
+  volatile uint32_t perf_total_cycles;
+  volatile uint32_t perf_total_us;
   volatile uint32_t fft_peak_bin;
   volatile uint32_t last_error;
 } StaticTunerDiagnostics;
@@ -110,6 +133,8 @@ extern volatile uint32_t tunerRealHistoryState[STATIC_TUNER_REAL_HISTORY_LENGTH]
 extern volatile float tunerRealHistoryHz[STATIC_TUNER_REAL_HISTORY_LENGTH];
 extern volatile int32_t tunerRealHistoryCentsX10[STATIC_TUNER_REAL_HISTORY_LENGTH];
 extern volatile float tunerRealHistoryConfidence[STATIC_TUNER_REAL_HISTORY_LENGTH];
+extern volatile float tunerRealAvgHzByString[STATIC_TUNER_STRING_COUNT];
+extern volatile uint32_t tunerRealAvgConfidenceX1000ByString[STATIC_TUNER_STRING_COUNT];
 extern volatile float tunerGraphLowE;
 extern volatile float tunerGraphA;
 extern volatile float tunerGraphD;

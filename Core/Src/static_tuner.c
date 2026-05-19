@@ -20,6 +20,8 @@
   ((2U * STATIC_TUNER_CORR_FRAME_LENGTH) - 1U)
 #define STATIC_TUNER_CORR_MIN_CONFIDENCE 0.30f
 #define STATIC_TUNER_CORR_FIRST_PEAK_RATIO 0.75f
+#define STATIC_TUNER_ENABLE_YIN 0U
+#define STATIC_TUNER_GRAPH_SCALE 1000.0f
 
 typedef struct
 {
@@ -53,6 +55,8 @@ volatile uint32_t tunerRealHistoryState[STATIC_TUNER_REAL_HISTORY_LENGTH];
 volatile float tunerRealHistoryHz[STATIC_TUNER_REAL_HISTORY_LENGTH];
 volatile int32_t tunerRealHistoryCentsX10[STATIC_TUNER_REAL_HISTORY_LENGTH];
 volatile float tunerRealHistoryConfidence[STATIC_TUNER_REAL_HISTORY_LENGTH];
+volatile float tunerRealAvgHzByString[STATIC_TUNER_STRING_COUNT];
+volatile uint32_t tunerRealAvgConfidenceX1000ByString[STATIC_TUNER_STRING_COUNT];
 volatile float tunerGraphLowE;
 volatile float tunerGraphA;
 volatile float tunerGraphD;
@@ -86,7 +90,9 @@ volatile uint32_t tunerAutoDemoPeriodMs;
 volatile uint32_t tunerRealAutoReplayEnabled;
 volatile uint32_t tunerRealAutoReplayPeriodMs;
 
+#if STATIC_TUNER_ENABLE_YIN
 static float tunerYinDiff[(STATIC_TUNER_SAMPLE_RATE_HZ / 70U) + 2U];
+#endif
 static arm_rfft_fast_instance_f32 tunerFftInstance;
 static uint32_t tunerFftInitialized;
 static float tunerFftInput[STATIC_TUNER_FRAME_LENGTH];
@@ -122,6 +128,30 @@ static const StaticTunerState tunerExpectedStates[STATIC_TUNER_TESTS_PER_STRING]
 
 static float StaticTuner_GetMean(const int16_t *samples, uint32_t length);
 
+static void StaticTuner_EnableCycleCounter(void)
+{
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+  DWT->CYCCNT = 0U;
+  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+}
+
+static uint32_t StaticTuner_GetCycleCount(void)
+{
+  return DWT->CYCCNT;
+}
+
+static uint32_t StaticTuner_CyclesToUs(uint32_t cycles)
+{
+  uint32_t core_clock = SystemCoreClock;
+
+  if (core_clock == 0U)
+  {
+    return 0U;
+  }
+
+  return cycles / (core_clock / 1000000U);
+}
+
 static void StaticTuner_ResetRealSequence(void)
 {
   tunerDiag.real_sequence_done = 0U;
@@ -134,6 +164,20 @@ static void StaticTuner_ResetRealSequence(void)
   tunerDiag.real_sequence_g_count = 0U;
   tunerDiag.real_sequence_b_count = 0U;
   tunerDiag.real_sequence_high_e_count = 0U;
+  tunerDiag.real_sequence_first_string = STATIC_TUNER_STRING_UNKNOWN;
+  tunerDiag.real_sequence_last_string = STATIC_TUNER_STRING_UNKNOWN;
+  tunerDiag.real_sequence_longest_string = STATIC_TUNER_STRING_UNKNOWN;
+  tunerDiag.real_sequence_longest_start_ms = 0U;
+  tunerDiag.real_sequence_longest_duration_ms = 0U;
+  tunerDiag.real_sequence_longest_frame_count = 0U;
+  tunerDiag.real_sequence_avg_hz_x100 = 0U;
+  tunerDiag.real_sequence_avg_confidence_x1000 = 0U;
+
+  for (uint32_t i = 0U; i < STATIC_TUNER_STRING_COUNT; i++)
+  {
+    tunerRealAvgHzByString[i] = 0.0f;
+    tunerRealAvgConfidenceX1000ByString[i] = 0U;
+  }
 
   for (uint32_t i = 0U; i < STATIC_TUNER_REAL_HISTORY_LENGTH; i++)
   {
@@ -180,6 +224,102 @@ static void StaticTuner_CountRealSequenceString(uint32_t string_index)
   }
 }
 
+static void StaticTuner_FinalizeRealSequenceSummary(void)
+{
+  uint32_t current_string = STATIC_TUNER_STRING_UNKNOWN;
+  uint32_t current_start = 0U;
+  uint32_t current_count = 0U;
+  uint32_t best_string = STATIC_TUNER_STRING_UNKNOWN;
+  uint32_t best_start = 0U;
+  uint32_t best_count = 0U;
+  uint32_t first_string = STATIC_TUNER_STRING_UNKNOWN;
+  uint32_t last_string = STATIC_TUNER_STRING_UNKNOWN;
+  float total_hz = 0.0f;
+  uint32_t total_confidence_x1000 = 0U;
+  uint32_t confident_count = 0U;
+  float string_hz_sum[STATIC_TUNER_STRING_COUNT] = { 0.0f };
+  uint32_t string_confidence_sum[STATIC_TUNER_STRING_COUNT] = { 0U };
+  uint32_t string_count[STATIC_TUNER_STRING_COUNT] = { 0U };
+
+  for (uint32_t i = 0U; i < tunerDiag.real_sequence_frame_count; i++)
+  {
+    uint32_t string_index = tunerRealHistoryString[i];
+
+    if (string_index < STATIC_TUNER_STRING_COUNT)
+    {
+      uint32_t confidence_x1000 =
+          (uint32_t)((tunerRealHistoryConfidence[i] * 1000.0f) + 0.5f);
+
+      if (first_string == STATIC_TUNER_STRING_UNKNOWN)
+      {
+        first_string = string_index;
+      }
+
+      last_string = string_index;
+      confident_count++;
+      total_hz += tunerRealHistoryHz[i];
+      total_confidence_x1000 += confidence_x1000;
+      string_hz_sum[string_index] += tunerRealHistoryHz[i];
+      string_confidence_sum[string_index] += confidence_x1000;
+      string_count[string_index]++;
+
+      if (string_index == current_string)
+      {
+        current_count++;
+      }
+      else
+      {
+        current_string = string_index;
+        current_start = i;
+        current_count = 1U;
+      }
+
+      if (current_count > best_count)
+      {
+        best_string = current_string;
+        best_start = current_start;
+        best_count = current_count;
+      }
+    }
+    else
+    {
+      current_string = STATIC_TUNER_STRING_UNKNOWN;
+      current_count = 0U;
+    }
+  }
+
+  tunerDiag.real_sequence_first_string = first_string;
+  tunerDiag.real_sequence_last_string = last_string;
+  tunerDiag.real_sequence_longest_string = best_string;
+  tunerDiag.real_sequence_longest_frame_count = best_count;
+
+  if (best_count > 0U)
+  {
+    tunerDiag.real_sequence_longest_start_ms = tunerRealHistoryTimeMs[best_start];
+    tunerDiag.real_sequence_longest_duration_ms =
+        (best_count * STATIC_TUNER_REAL_REPLAY_HOP * 1000U) /
+        STATIC_TUNER_SAMPLE_RATE_HZ;
+  }
+
+  if (confident_count > 0U)
+  {
+    tunerDiag.real_sequence_avg_hz_x100 =
+        (uint32_t)(((total_hz * 100.0f) / (float)confident_count) + 0.5f);
+    tunerDiag.real_sequence_avg_confidence_x1000 =
+        total_confidence_x1000 / confident_count;
+  }
+
+  for (uint32_t i = 0U; i < STATIC_TUNER_STRING_COUNT; i++)
+  {
+    if (string_count[i] > 0U)
+    {
+      tunerRealAvgHzByString[i] = string_hz_sum[i] / (float)string_count[i];
+      tunerRealAvgConfidenceX1000ByString[i] =
+          string_confidence_sum[i] / string_count[i];
+    }
+  }
+}
+
 static void StaticTuner_RecordRealSequenceFrame(const StaticTunerResult *result)
 {
   uint32_t index = tunerDiag.real_replay_frame_index;
@@ -198,15 +338,16 @@ static void StaticTuner_RecordRealSequenceFrame(const StaticTunerResult *result)
   if (result->confidence < 0.70f)
   {
     detected_string = STATIC_TUNER_STRING_UNKNOWN;
+    tunerRealHistoryState[index] = STATIC_TUNER_STATE_NO_SIGNAL;
   }
   else
   {
     tunerDiag.real_sequence_confident_count++;
+    tunerRealHistoryState[index] = result->state;
   }
 
   tunerRealHistoryTimeMs[index] = tunerDiag.real_replay_time_ms;
   tunerRealHistoryString[index] = detected_string;
-  tunerRealHistoryState[index] = result->state;
   tunerRealHistoryHz[index] = result->detected_hz;
   tunerRealHistoryCentsX10[index] = result->cents_error_x10;
   tunerRealHistoryConfidence[index] = result->confidence;
@@ -217,6 +358,7 @@ static void StaticTuner_RecordRealSequenceFrame(const StaticTunerResult *result)
   if ((index + 1U) >= STATIC_TUNER_REAL_HISTORY_LENGTH)
   {
     tunerDiag.real_sequence_done = 1U;
+    StaticTuner_FinalizeRealSequenceSummary();
   }
 }
 
@@ -312,9 +454,20 @@ static float StaticTuner_GetLocalFftMagnitude(float frequency_hz)
   return best_magnitude;
 }
 
+static float StaticTuner_ScaleGraphMagnitude(float magnitude, float reference)
+{
+  if (reference <= 0.000001f)
+  {
+    return 0.0f;
+  }
+
+  return (magnitude * STATIC_TUNER_GRAPH_SCALE) / reference;
+}
+
 static void StaticTuner_UpdateFftDiagnostics(const int16_t *samples,
                                              uint32_t length)
 {
+  uint32_t start_cycles = StaticTuner_GetCycleCount();
   float mean = StaticTuner_GetMean(samples, length);
   uint32_t peak_bin = 0U;
   float peak_magnitude = 0.0f;
@@ -418,14 +571,23 @@ static void StaticTuner_UpdateFftDiagnostics(const int16_t *samples,
   tunerDiag.fft_peak_hz = (float)peak_bin * STATIC_TUNER_FFT_BIN_HZ;
   tunerDiag.fft_peak_mag = peak_magnitude;
 
-  tunerGraphLowE = tunerDiag.fft_low_e_mag;
-  tunerGraphA = tunerDiag.fft_a_mag;
-  tunerGraphD = tunerDiag.fft_d_mag;
-  tunerGraphG = tunerDiag.fft_g_mag;
-  tunerGraphB = tunerDiag.fft_b_mag;
-  tunerGraphHighE = tunerDiag.fft_high_e_mag;
+  tunerGraphLowE = StaticTuner_ScaleGraphMagnitude(tunerDiag.fft_low_e_mag,
+                                                   peak_magnitude);
+  tunerGraphA = StaticTuner_ScaleGraphMagnitude(tunerDiag.fft_a_mag,
+                                                peak_magnitude);
+  tunerGraphD = StaticTuner_ScaleGraphMagnitude(tunerDiag.fft_d_mag,
+                                                peak_magnitude);
+  tunerGraphG = StaticTuner_ScaleGraphMagnitude(tunerDiag.fft_g_mag,
+                                                peak_magnitude);
+  tunerGraphB = StaticTuner_ScaleGraphMagnitude(tunerDiag.fft_b_mag,
+                                                peak_magnitude);
+  tunerGraphHighE = StaticTuner_ScaleGraphMagnitude(tunerDiag.fft_high_e_mag,
+                                                    peak_magnitude);
   tunerGraphPeakHz = tunerDiag.fft_peak_hz;
-  tunerGraphPeakMagnitude = tunerDiag.fft_peak_mag;
+  tunerGraphPeakMagnitude = StaticTuner_ScaleGraphMagnitude(peak_magnitude,
+                                                            peak_magnitude);
+  tunerDiag.perf_fft_cycles = StaticTuner_GetCycleCount() - start_cycles;
+  tunerDiag.perf_fft_us = StaticTuner_CyclesToUs(tunerDiag.perf_fft_cycles);
 }
 
 static uint32_t StaticTuner_GetSignalAmplitude(const int16_t *samples,
@@ -566,6 +728,7 @@ static uint32_t StaticTuner_FindNearestString(float frequency_hz)
   return nearest;
 }
 
+#if STATIC_TUNER_ENABLE_YIN
 static float StaticTuner_InterpolateTau(uint32_t tau, uint32_t max_lag)
 {
   float better_tau = (float)tau;
@@ -585,6 +748,7 @@ static float StaticTuner_InterpolateTau(uint32_t tau, uint32_t max_lag)
 
   return better_tau;
 }
+#endif
 
 static StaticTunerState StaticTuner_GetTuningState(int32_t cents_x10)
 {
@@ -601,6 +765,7 @@ static StaticTunerState StaticTuner_GetTuningState(int32_t cents_x10)
   return STATIC_TUNER_STATE_IN_TUNE;
 }
 
+#if STATIC_TUNER_ENABLE_YIN
 static void StaticTuner_FillPitchResult(float detected_hz,
                                         float confidence,
                                         uint32_t tau,
@@ -618,6 +783,26 @@ static void StaticTuner_FillPitchResult(float detected_hz,
   result->cents_error_x10 = cents_x10;
   result->yin_tau = tau;
   result->state = StaticTuner_GetTuningState(cents_x10);
+}
+#endif
+
+static void StaticTuner_PromoteCorrelationResult(StaticTunerResult *result)
+{
+  result->detected_hz = result->corr_detected_hz;
+  result->confidence = result->corr_confidence;
+  result->detected_string = result->corr_detected_string;
+  result->cents_error_x10 = result->corr_cents_error_x10;
+  result->state = result->corr_state;
+  result->yin_tau = 0U;
+
+  if (result->corr_detected_string < STATIC_TUNER_STRING_COUNT)
+  {
+    result->target_hz = tunerStrings[result->corr_detected_string].frequency_hz;
+  }
+  else
+  {
+    result->target_hz = 0.0f;
+  }
 }
 
 static float StaticTuner_GetCorrScore(uint32_t tau, float zero_lag)
@@ -639,6 +824,7 @@ static void StaticTuner_AnalyzeCorrelation(const int16_t *samples,
                                            uint32_t length,
                                            StaticTunerResult *result)
 {
+  uint32_t start_cycles = StaticTuner_GetCycleCount();
   uint32_t min_lag =
       STATIC_TUNER_SAMPLE_RATE_HZ / (uint32_t)STATIC_TUNER_MAX_FREQ_HZ;
   uint32_t max_lag =
@@ -664,6 +850,8 @@ static void StaticTuner_AnalyzeCorrelation(const int16_t *samples,
   if ((result->signal_amplitude < STATIC_TUNER_SIGNAL_MIN_AMP) ||
       (corr_length != STATIC_TUNER_CORR_FRAME_LENGTH))
   {
+    tunerDiag.perf_corr_cycles = StaticTuner_GetCycleCount() - start_cycles;
+    tunerDiag.perf_corr_us = StaticTuner_CyclesToUs(tunerDiag.perf_corr_cycles);
     return;
   }
 
@@ -684,6 +872,8 @@ static void StaticTuner_AnalyzeCorrelation(const int16_t *samples,
 
   if (zero_lag <= 0.000001f)
   {
+    tunerDiag.perf_corr_cycles = StaticTuner_GetCycleCount() - start_cycles;
+    tunerDiag.perf_corr_us = StaticTuner_CyclesToUs(tunerDiag.perf_corr_cycles);
     return;
   }
 
@@ -710,6 +900,8 @@ static void StaticTuner_AnalyzeCorrelation(const int16_t *samples,
   if ((best_tau == 0U) || (best_score < STATIC_TUNER_CORR_MIN_CONFIDENCE))
   {
     result->corr_state = STATIC_TUNER_STATE_ERROR;
+    tunerDiag.perf_corr_cycles = StaticTuner_GetCycleCount() - start_cycles;
+    tunerDiag.perf_corr_us = StaticTuner_CyclesToUs(tunerDiag.perf_corr_cycles);
     return;
   }
 
@@ -766,12 +958,16 @@ static void StaticTuner_AnalyzeCorrelation(const int16_t *samples,
     result->corr_cents_error_x10 = cents_x10;
     result->corr_state = StaticTuner_GetTuningState(cents_x10);
   }
+
+  tunerDiag.perf_corr_cycles = StaticTuner_GetCycleCount() - start_cycles;
+  tunerDiag.perf_corr_us = StaticTuner_CyclesToUs(tunerDiag.perf_corr_cycles);
 }
 
 static void StaticTuner_Analyze(const int16_t *samples,
                                 uint32_t length,
                                 StaticTunerResult *result)
 {
+#if STATIC_TUNER_ENABLE_YIN
   uint32_t min_lag = STATIC_TUNER_SAMPLE_RATE_HZ / (uint32_t)STATIC_TUNER_MAX_FREQ_HZ;
   uint32_t max_lag = STATIC_TUNER_SAMPLE_RATE_HZ / (uint32_t)STATIC_TUNER_MIN_FREQ_HZ;
   uint32_t analysis_length = length - max_lag;
@@ -779,6 +975,8 @@ static void StaticTuner_Analyze(const int16_t *samples,
   float running_sum = 0.0f;
   uint32_t best_tau = 0U;
   float best_cmnd = 1000000.0f;
+  uint32_t yin_start_cycles;
+#endif
 
   result->detected_hz = 0.0f;
   result->target_hz = 0.0f;
@@ -794,14 +992,19 @@ static void StaticTuner_Analyze(const int16_t *samples,
   result->corr_detected_string = STATIC_TUNER_STRING_UNKNOWN;
   result->corr_state = STATIC_TUNER_STATE_NO_SIGNAL;
   result->corr_cents_error_x10 = 0;
+  tunerDiag.perf_yin_cycles = 0U;
+  tunerDiag.perf_yin_us = 0U;
 
   StaticTuner_AnalyzeCorrelation(samples, length, result);
+  StaticTuner_PromoteCorrelationResult(result);
 
   if (result->signal_amplitude < STATIC_TUNER_SIGNAL_MIN_AMP)
   {
     return;
   }
 
+#if STATIC_TUNER_ENABLE_YIN
+  yin_start_cycles = StaticTuner_GetCycleCount();
   tunerYinDiff[0] = 1.0f;
 
   for (uint32_t tau = 1U; tau <= max_lag; tau++)
@@ -867,6 +1070,10 @@ static void StaticTuner_Analyze(const int16_t *samples,
                                 best_tau,
                                 result);
   }
+
+  tunerDiag.perf_yin_cycles = StaticTuner_GetCycleCount() - yin_start_cycles;
+  tunerDiag.perf_yin_us = StaticTuner_CyclesToUs(tunerDiag.perf_yin_cycles);
+#endif
 }
 
 static void StaticTuner_PublishResult(uint32_t test_index,
@@ -897,6 +1104,13 @@ static void StaticTuner_PublishResult(uint32_t test_index,
   tunerDiag.corr_cents_error_x10 = result->corr_cents_error_x10;
   tunerDiag.corr_detected_hz = result->corr_detected_hz;
   tunerDiag.corr_confidence = result->corr_confidence;
+  tunerDiag.display_string = result->detected_string;
+  tunerDiag.display_state = result->state;
+  tunerDiag.display_frequency_x100 =
+      (uint32_t)((result->detected_hz * 100.0f) + 0.5f);
+  tunerDiag.display_cents_x10 = result->cents_error_x10;
+  tunerDiag.display_confidence_x1000 =
+      (uint32_t)((result->confidence * 1000.0f) + 0.5f);
   tunerGraphCentsErrorX10 = result->cents_error_x10;
   tunerGraphCorrHz = result->corr_detected_hz;
   tunerGraphCorrCentsErrorX10 = result->corr_cents_error_x10;
@@ -938,6 +1152,7 @@ void StaticTuner_RunSelectedTest(uint32_t test_index)
   uint32_t expected_string;
   StaticTunerState expected_state;
   uint32_t input_source = tunerInputSource;
+  uint32_t total_start_cycles = StaticTuner_GetCycleCount();
 
   if (StaticTuner_IsValidTest(test_index) == 0U)
   {
@@ -991,6 +1206,8 @@ void StaticTuner_RunSelectedTest(uint32_t test_index)
                             cents_offset_x10,
                             input_hz,
                             &result);
+  tunerDiag.perf_total_cycles = StaticTuner_GetCycleCount() - total_start_cycles;
+  tunerDiag.perf_total_us = StaticTuner_CyclesToUs(tunerDiag.perf_total_cycles);
 }
 
 void StaticTuner_RunAllTests(void)
@@ -1009,9 +1226,11 @@ void StaticTuner_RunAllTests(void)
 
 void StaticTuner_Init(void)
 {
+  StaticTuner_EnableCycleCounter();
   tunerDiag.initialized = 1U;
   tunerDiag.last_error = 0U;
-  tunerInputSource = STATIC_TUNER_INPUT_REAL;
+  tunerDiag.active_detector = STATIC_TUNER_DETECTOR_CORRELATION;
+  tunerInputSource = STATIC_TUNER_INPUT_SYNTH;
   tunerDiag.input_source = tunerInputSource;
   tunerDiag.real_sample_count = STATIC_TUNER_REAL_SAMPLE_COUNT;
   tunerDiag.real_sample_rate_hz = STATIC_TUNER_REAL_SAMPLE_RATE_HZ;
